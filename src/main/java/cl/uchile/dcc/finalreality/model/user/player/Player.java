@@ -3,7 +3,7 @@ package cl.uchile.dcc.finalreality.model.user.player;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.user.AbstractPlayer;
-import cl.uchile.dcc.finalreality.model.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 
 import java.util.Arrays;
 import java.util.Objects;

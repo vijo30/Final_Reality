@@ -1,4 +1,6 @@
-package cl.uchile.dcc.finalreality.model.weapon;
+package cl.uchile.dcc.finalreality.model.object.weapon;
+
+import cl.uchile.dcc.finalreality.model.object.AbstractObject;
 
 import java.util.Objects;
 
@@ -8,11 +10,11 @@ import java.util.Objects;
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author ~Your name~
  */
-public class Weapon {
+public class Weapon extends AbstractObject {
 
   private final String name;
   private final int damage;
-  private final int weight;
+
   private final WeaponType type;
 
   /**
@@ -20,9 +22,9 @@ public class Weapon {
    */
   public Weapon(final String name, final int damage, final int weight,
       final WeaponType type) {
+    super(weight);
     this.name = name;
     this.damage = damage;
-    this.weight = weight;
     this.type = type;
   }
 

@@ -2,6 +2,7 @@ package cl.uchile.dcc.finalreality.model.character;
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
+import cl.uchile.dcc.finalreality.model.AbstractEntity;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -15,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author ~Your name~
  */
-public abstract class AbstractCharacter implements GameCharacter {
+public abstract class AbstractCharacter extends AbstractEntity implements GameCharacter {
 
   private int currentHp;
   protected int maxHp;
   protected int defense;
   protected final BlockingQueue<GameCharacter> turnsQueue;
-  protected final String name;
+
   private ScheduledExecutorService scheduledExecutor;
 
   /**
@@ -38,13 +39,13 @@ public abstract class AbstractCharacter implements GameCharacter {
    */
   protected AbstractCharacter(@NotNull String name, int maxHp, int defense,
       @NotNull BlockingQueue<GameCharacter> turnsQueue) throws InvalidStatValueException {
+    super(name);
     Require.statValueAtLeast(1, maxHp, "Max HP");
     Require.statValueAtLeast(0, defense, "Defense");
     this.maxHp = maxHp;
     this.currentHp = maxHp;
     this.defense = defense;
     this.turnsQueue = turnsQueue;
-    this.name = name;
   }
 
   @Override

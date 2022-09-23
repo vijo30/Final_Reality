@@ -3,7 +3,7 @@ package cl.uchile.dcc.finalreality.model.user;
 
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
-import cl.uchile.dcc.finalreality.model.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 
 
 /**

@@ -1,8 +1,6 @@
 package cl.uchile.dcc.finalreality.main;
 
 
-import cl.uchile.dcc.finalreality.model.weapon.Weapon;
-
 public class Main {
     /**
      * A class that is meant for testing.
