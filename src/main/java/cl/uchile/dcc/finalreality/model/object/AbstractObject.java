@@ -1,5 +1,7 @@
 package cl.uchile.dcc.finalreality.model.object;
 
+import cl.uchile.dcc.finalreality.model.AbstractEntity;
+
 /**
  * An abstract class that holds the common behaviour of all the objects in the game.
  *
@@ -10,18 +12,21 @@ package cl.uchile.dcc.finalreality.model.object;
 
 
 
-public abstract class AbstractObject {
+public abstract class AbstractObject extends AbstractEntity {
 
     protected final int weight;
 
     /**
      * Creates a new entity.
+     * @param name
+     *     the object's name
      *
      * @param weight
      *     the object's weight
      */
 
-    public AbstractObject(int weight) {
+    public AbstractObject(final String name, int weight) {
+        super(name);
         this.weight = weight;
     }
 }

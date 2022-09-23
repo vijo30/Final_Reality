@@ -12,7 +12,6 @@ import java.util.Objects;
  */
 public class Weapon extends AbstractObject {
 
-  private final String name;
   private final int damage;
 
   private final WeaponType type;
@@ -22,8 +21,7 @@ public class Weapon extends AbstractObject {
    */
   public Weapon(final String name, final int damage, final int weight,
       final WeaponType type) {
-    super(weight);
-    this.name = name;
+    super(name, weight);
     this.damage = damage;
     this.type = type;
   }
