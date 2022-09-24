@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements
     PlayerCharacter {
 
-  private Weapon equippedWeapon = null;
+  protected Weapon equippedWeapon = null;
 
   /**
    * Creates a new character.
@@ -47,10 +47,11 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
       final int defense, @NotNull final BlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
+
   }
 
   @Override
-  public void equip(Weapon weapon) {
+  public void equip(Weapon weapon) throws InvalidStatValueException {
     this.equippedWeapon = weapon;
   }
 

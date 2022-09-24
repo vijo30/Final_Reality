@@ -41,7 +41,7 @@ public class Weapon extends AbstractObject {
     return weight;
   }
 
-  private WeaponType getType() {
+  public WeaponType getType() {
     return type;
   }
 

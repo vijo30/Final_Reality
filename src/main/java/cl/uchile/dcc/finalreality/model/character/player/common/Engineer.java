@@ -6,12 +6,17 @@
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
 
-package cl.uchile.dcc.finalreality.model.character.player;
+package cl.uchile.dcc.finalreality.model.character.player.common;
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
+import cl.uchile.dcc.finalreality.model.character.player.AbstractPlayerCharacter;
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -21,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author ~Your name~
  */
-public class Engineer extends AbstractPlayerCharacter {
+public class Engineer extends AbstractCommonCharacter {
 
 
   /**
@@ -64,5 +69,14 @@ public class Engineer extends AbstractPlayerCharacter {
         && name.equals(that.name)
         && maxHp == that.maxHp
         && defense == that.defense;
+  }
+
+  @Override
+  public void equip(Weapon weapon) throws InvalidStatValueException {
+    if (weapon.getType().equals(WeaponType.AXE) || weapon.getType().equals(WeaponType.BOW)) {
+      this.equippedWeapon = weapon;
+    } else {
+      throw new InvalidStatValueException("Invalid weapon type.");
+    }
   }
 }

@@ -6,13 +6,17 @@
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
 
-package cl.uchile.dcc.finalreality.model.character.player;
+package cl.uchile.dcc.finalreality.model.character.player.mage;
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
+import cl.uchile.dcc.finalreality.model.character.player.AbstractPlayerCharacter;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -22,10 +26,8 @@ import org.jetbrains.annotations.NotNull;
  * @author ~Your name~
  * @version 2.0
  */
-public class BlackMage extends AbstractPlayerCharacter {
+public class BlackMage extends AbstractMage {
 
-  private int currentMp;
-  private final int maxMp;
 
   /**
    * Creates a new Black Mage.
@@ -38,33 +40,18 @@ public class BlackMage extends AbstractPlayerCharacter {
    *     the character's defense
    * @param turnsQueue
    *     the queue with the characters waiting for their turn
+   * @param maxMp
+   *     the character's max mp
+   * @param currentMp
+   *     the character's current mp
    */
-  protected BlackMage(final @NotNull String name, final int maxHp, final int defense,
-      int maxMp, final @NotNull BlockingQueue<GameCharacter> turnsQueue)
+  public BlackMage(final @NotNull String name, final int maxHp, final int defense,
+      int maxMp, int currentMp, final @NotNull BlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
-    super(name, maxHp, defense, turnsQueue);
+    super(name, maxHp, defense, maxMp, currentMp, turnsQueue);
     Require.statValueAtLeast(0, maxMp, "Max MP");
-    this.maxMp = maxMp;
-    this.currentMp = maxMp;
   }
 
-  // region : ACCESSORS
-
-  /**
-   * Returns the character's current MP.
-   */
-  private int getCurrentMp() {
-    return currentMp;
-  }
-
-  /**
-   * Sets the character's current MP.
-   */
-  private void setCurrentMp(final int currentMp) throws InvalidStatValueException {
-    Require.statValueAtLeast(0, currentMp, "Current MP");
-    Require.statValueAtMost(maxMp, currentMp, "Current MP");
-    this.currentMp = currentMp;
-  }
 
   /**
    * Returns the character's max MP.
@@ -99,6 +86,15 @@ public class BlackMage extends AbstractPlayerCharacter {
   @Override
   public int hashCode() {
     return Objects.hash(BlackMage.class, name, maxHp, defense, maxMp);
+  }
+
+  @Override
+  public void equip(Weapon weapon) throws InvalidStatValueException {
+    if (weapon.getType().equals(WeaponType.STAFF) || weapon.getType().equals(WeaponType.KNIFE)) {
+      this.equippedWeapon = weapon;
+    } else {
+      throw new InvalidStatValueException("Invalid weapon type.");
+    }
   }
   // endregion
 }

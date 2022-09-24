@@ -4,8 +4,9 @@ package cl.uchile.dcc.finalreality.main;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
-import cl.uchile.dcc.finalreality.model.character.player.Engineer;
+import cl.uchile.dcc.finalreality.model.character.player.common.Engineer;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
+import cl.uchile.dcc.finalreality.model.character.player.mage.WhiteMage;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
 import cl.uchile.dcc.finalreality.model.user.player.Player;
@@ -37,5 +38,15 @@ public class Main {
         Enemy[] en = {enemy};
         Player player0 = new Player(Lplc, en, Lweapon);
         System.out.println(player0);
+        System.out.println(engineer.getEquippedWeapon());
+        engineer.equip(weapon);
+        System.out.println(engineer.getEquippedWeapon());
+        PlayerCharacter mage = new WhiteMage("ty", 100, 100, 100, 100, queue);
+        System.out.println(weapon.getType().equals(WeaponType.STAFF));
+        System.out.println(engineer.getEquippedWeapon().getType());
+        /*mage.equip(weapon); throws an exception
+        System.out.println(mage.getEquippedWeapon().getType().equals(WeaponType.STAFF));
+        System.out.println(mage.getEquippedWeapon());*/
+
     }
 }

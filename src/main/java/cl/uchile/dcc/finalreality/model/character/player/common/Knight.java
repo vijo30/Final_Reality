@@ -6,19 +6,24 @@
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
 
-package cl.uchile.dcc.finalreality.model.character.player;
+package cl.uchile.dcc.finalreality.model.character.player.common;
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
+import cl.uchile.dcc.finalreality.model.character.player.AbstractPlayerCharacter;
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link PlayerCharacter} that can equip {@code Sword}s,{@code Knife}s and
  * {@code Axe}s.
  */
-public class Knight extends AbstractPlayerCharacter {
+public class Knight extends AbstractCommonCharacter {
 
   /**
    * Creates a new Knight.
@@ -61,4 +66,15 @@ public class Knight extends AbstractPlayerCharacter {
         && maxHp == that.maxHp
         && defense == that.defense;
   }
+
+  @Override
+  public void equip(Weapon weapon) throws InvalidStatValueException {
+    if (!weapon.getType().equals(WeaponType.STAFF) || !weapon.getType().equals(WeaponType.BOW)) {
+      this.equippedWeapon = weapon;
+    } else {
+      throw new InvalidStatValueException("Invalid weapon type.");
+    }
+  }
+
+
 }
