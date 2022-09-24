@@ -16,4 +16,70 @@ enemies controlled by the computer.
 
 ---
 
-**The rest of the documentation is left for the users of this template to complete**
+
+## Classes
+
+------
+
+## Tests
+
+### Timer Example
+A test class with the purpose of being an example of use for the timer.
+
+### Main
+A class that is meant for generic testing.
+
+## Abstract Entity
+An abstract class that holds the common behaviour of all the entities in the game.
+
+## Model
+
+### AbstractCharacter
+An abstract class that holds the common behaviour of all the characters in the game.
+
+### Enemy
+Creates a new enemy with a name, a weight and the queue with the characters ready to play.
+
+### GameCharacter
+An interface which represents a character from the game. A character can be controlled by the player or by the CPU (an enemy).
+
+### AbstractPlayerCharacter
+A class that holds all the information of a player-controlled character in the game.
+
+### BlackMage
+Creates a new Black Mage.
+
+### Engineer
+Creates a new engineer.
+
+### Knight
+Creates a new knight.
+
+### Thief
+Creates a new thief.
+
+### WhiteMage
+Creates a new White Mage.
+
+### PlayerCharacter
+An interface with the method equip(Weapon weapon).
+
+## Object
+
+### AbstractObject
+An abstract class that holds the common behaviour of all the objects in the game.
+
+### Weapon
+A class that holds all the information of a weapon.
+
+### WeaponType
+Enumeration of all the weapon types.
+
+## User
+
+### AbstractPlayer
+An abstract class that holds the common behaviour of all players in the game.
+
+### Player
+A class that holds all the information of a single player of the game.
+

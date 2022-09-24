@@ -7,7 +7,7 @@ import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 
 
 /**
- * An abstract class that holds the common behaviour of all the players in the game.
+ * An abstract class that holds the common behaviour of all players in the game.
  *
  * @author <a href="https://www.github.com/vijo30">V30</a>
  * @author ~José Videla~
