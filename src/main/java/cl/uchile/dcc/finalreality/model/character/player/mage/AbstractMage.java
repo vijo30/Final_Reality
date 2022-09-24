@@ -30,9 +30,8 @@ public abstract class AbstractMage extends AbstractPlayerCharacter {
      * @param defense    the character's defense
      * @param turnsQueue the queue with the characters waiting for their turn
      * @param maxMp      the character's max mp
-     * @param currentMp  the character's current mp
      */
-    protected AbstractMage(final @NotNull String name, final int maxHp,final int defense, int maxMp, int currentMp, final @NotNull BlockingQueue<GameCharacter> turnsQueue) throws InvalidStatValueException {
+    protected AbstractMage(final @NotNull String name, final int maxHp,final int defense, int maxMp, final @NotNull BlockingQueue<GameCharacter> turnsQueue) throws InvalidStatValueException {
         super(name, maxHp, defense, turnsQueue);
         Require.statValueAtLeast(0, maxMp, "Max MP");
         this.maxMp = maxMp;

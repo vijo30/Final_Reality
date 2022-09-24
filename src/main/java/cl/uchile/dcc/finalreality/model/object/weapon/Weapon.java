@@ -26,11 +26,11 @@ public class Weapon extends AbstractObject {
     this.type = type;
   }
 
-  private String getName() {
+  public String getName() {
     return name;
   }
 
-  private int getDamage() {
+  public int getDamage() {
     return damage;
   }
 
