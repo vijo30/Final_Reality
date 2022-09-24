@@ -19,7 +19,6 @@ enemies controlled by the computer.
 
 ## Classes
 
-------
 
 ## Tests
 
@@ -29,14 +28,12 @@ A test class with the purpose of being an example of use for the timer.
 ### Main
 A class that is meant for generic testing.
 
------
 
 ## Abstract Entity
 An abstract class that holds the common behaviour of all the entities in the game.
 
 ## Model
 
------
 ## Character
 
 ### AbstractCharacter
@@ -50,6 +47,12 @@ An interface which represents a character from the game. A character can be cont
 
 ### AbstractPlayerCharacter
 A class that holds all the information of a player-controlled character in the game.
+
+### AbstractCommonCharacter
+A class that holds all the information of a common character in the game.
+
+### AbstractMage
+A class that holds all the information of a mage character in the game.
 
 ### BlackMage
 Creates a new Black Mage.
@@ -88,7 +91,6 @@ An abstract class that holds the common behaviour of all players in the game.
 ### Player
 A class that holds all the information of a single player of the game.
 
-----
 
 ## Exceptions
 
