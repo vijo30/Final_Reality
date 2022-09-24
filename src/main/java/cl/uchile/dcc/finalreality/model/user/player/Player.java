@@ -18,6 +18,9 @@ import java.util.Objects;
 public class Player extends AbstractPlayer {
 
 
+
+
+
     /**
      * Creates a new player
      *
@@ -25,7 +28,7 @@ public class Player extends AbstractPlayer {
      * @param enemies   the player's enemies
      * @param inventory the player's inventory
      */
-    protected Player(GameCharacter[] party, Enemy[] enemies, Weapon[] inventory) {
+    public Player(GameCharacter[] party, Enemy[] enemies, Weapon[] inventory) {
         super(party, enemies, inventory);
     }
 
@@ -50,6 +53,21 @@ public class Player extends AbstractPlayer {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Player{" +
+                "party=" + Arrays.toString(party) +
+                ", enemies=" + Arrays.toString(enemies) +
+                ", inventory=" + Arrays.toString(inventory) +
+                '}';
+    }
+    public GameCharacter[] getParty() {
+        return party;
+    }
+
+    public Enemy[] getEnemies() {
+        return enemies;
+    }
+
+    public Weapon[] getInventory() {
+        return inventory;
     }
 }

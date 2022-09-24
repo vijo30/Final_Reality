@@ -17,15 +17,7 @@ public class Enemy extends AbstractCharacter {
   private final int weight;
 
 
-  @Override
-  public String toString() {
-    return "Enemy{" +
-            "weight=" + weight +
-            ", maxHp=" + maxHp +
-            ", defense=" + defense +
-            ", name='" + name + '\'' +
-            '}';
-  }
+
 
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
@@ -66,5 +58,13 @@ public class Enemy extends AbstractCharacter {
     return Objects.hash(Enemy.class, name, weight, maxHp, defense);
   }
 
-
+  @Override
+  public String toString() {
+    return "Enemy{" +
+            "weight=" + weight +
+            ", maxHp=" + maxHp +
+            ", defense=" + defense +
+            ", name='" + name + '\'' +
+            '}';
+  }
 }

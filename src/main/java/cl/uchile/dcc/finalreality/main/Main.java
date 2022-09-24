@@ -8,7 +8,9 @@ import cl.uchile.dcc.finalreality.model.character.player.Engineer;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
+import cl.uchile.dcc.finalreality.model.user.player.Player;
 
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -25,8 +27,15 @@ public class Main {
         Weapon weapon = new Weapon("Destructor", 100, 10, WeaponType.AXE);
         PlayerCharacter engineer = new Engineer("Io", 100, 100, queue);
         Enemy enemy = new Enemy("Oi", 100, 100, 100, queue);
-        System.out.println(weapon.toString());
-        System.out.println(engineer.toString());
-        System.out.println(enemy.toString());
+        System.out.println(weapon);
+        System.out.println(engineer);
+        System.out.println(enemy);
+        Weapon[] Lweapon = {weapon, weapon};
+        System.out.println(Arrays.toString(Lweapon));
+        PlayerCharacter[] Lplc = {engineer,engineer,engineer};
+        System.out.println(Arrays.toString(Lplc));
+        Enemy[] en = {enemy};
+        Player player0 = new Player(Lplc, en, Lweapon);
+        System.out.println(player0);
     }
 }

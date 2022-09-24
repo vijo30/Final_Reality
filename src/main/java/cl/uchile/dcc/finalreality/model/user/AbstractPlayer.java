@@ -30,7 +30,7 @@ public abstract class AbstractPlayer {
      * @param inventory
      *      the player's inventory
      */
-    protected AbstractPlayer(GameCharacter[] party, Enemy[] enemies, Weapon[] inventory){
+    public AbstractPlayer(GameCharacter[] party, Enemy[] enemies, Weapon[] inventory){
         this.party = party;
         this.enemies = enemies;
         this.inventory = inventory;
