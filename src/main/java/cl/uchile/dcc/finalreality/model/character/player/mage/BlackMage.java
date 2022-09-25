@@ -51,13 +51,6 @@ public class BlackMage extends AbstractMage {
   }
 
 
-  /**
-   * Returns the character's max MP.
-   */
-  private int getMaxMp() {
-    return maxMp;
-  }
-  // endregion
 
   // region : UTILITY METHODS
   @Override

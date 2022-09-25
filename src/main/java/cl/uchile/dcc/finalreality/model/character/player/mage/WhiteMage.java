@@ -78,12 +78,7 @@ public class WhiteMage extends AbstractMage {
 
 
 
-  /**
-   * Returns the max MP of the character.
-   */
-  public int getMaxMp() {
-    return maxMp;
-  }
+
 
   @Override
   public void equip(Weapon weapon) throws InvalidStatValueException {

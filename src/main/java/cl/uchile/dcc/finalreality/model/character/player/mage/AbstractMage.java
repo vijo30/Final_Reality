@@ -53,4 +53,10 @@ public abstract class AbstractMage extends AbstractPlayerCharacter {
         Require.statValueAtMost(maxMp, newMp, "Current MP");
         this.currentMp = newMp;
     }
+    /**
+     * Returns the max MP of the character.
+     */
+    public int getMaxMp() {
+        return maxMp;
+    }
 }
