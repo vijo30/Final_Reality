@@ -110,7 +110,6 @@ public class Main {
     System.out.println(wh1.equals(wh3));
     System.out.println(wh1.hashCode());
     System.out.println(wh1);
-    System.out.println(wh1.getMaxMp());
     // w1.equip()
     // USER
     GameCharacter[] party = {en1, wh1, b1};
