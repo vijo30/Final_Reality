@@ -14,19 +14,20 @@ import cl.uchile.dcc.finalreality.model.AbstractEntity;
 
 public abstract class AbstractObject extends AbstractEntity {
 
-    protected final int weight;
+  protected final int weight;
 
-    /**
-     * Creates a new entity.
-     * @param name
-     *     the object's name
-     *
-     * @param weight
-     *     the object's weight
-     */
+  /**
+   * Creates a new entity.
+   *
+   * @param name
+   *     the object's name
+   *
+   * @param weight
+   *     the object's weight
+   */
 
-    public AbstractObject(final String name, int weight) {
-        super(name);
-        this.weight = weight;
-    }
+  public AbstractObject(final String name, int weight) {
+    super(name);
+    this.weight = weight;
+  }
 }

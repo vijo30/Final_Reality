@@ -1,7 +1,6 @@
 package cl.uchile.dcc.finalreality.model.object.weapon;
 
 import cl.uchile.dcc.finalreality.model.object.AbstractObject;
-
 import java.util.Objects;
 
 /**

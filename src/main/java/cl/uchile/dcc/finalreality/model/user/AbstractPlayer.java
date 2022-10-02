@@ -16,25 +16,25 @@ import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 
 
 public abstract class AbstractPlayer {
-    protected GameCharacter[] party;
-    protected Enemy[] enemies;
-    protected Weapon[] inventory;
+  protected GameCharacter[] party;
+  protected Enemy[] enemies;
+  protected Weapon[] inventory;
 
-    /**
-     * Creates a new player
-     *
-     * @param party
-     *      the player's party
-     * @param enemies
-     *      the player's enemies
-     * @param inventory
-     *      the player's inventory
-     */
-    public AbstractPlayer(GameCharacter[] party, Enemy[] enemies, Weapon[] inventory){
-        this.party = party;
-        this.enemies = enemies;
-        this.inventory = inventory;
+  /**
+   * Creates a new player.
+   *
+   * @param party
+   *      the player's party
+   * @param enemies
+   *      the player's enemies
+   * @param inventory
+   *      the player's inventory
+   */
+  public AbstractPlayer(GameCharacter[] party, Enemy[] enemies, Weapon[] inventory) {
+    this.party = party;
+    this.enemies = enemies;
+    this.inventory = inventory;
 
-    }
+  }
 
 }

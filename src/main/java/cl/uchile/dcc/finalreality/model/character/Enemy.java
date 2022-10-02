@@ -60,11 +60,11 @@ public class Enemy extends AbstractCharacter {
 
   @Override
   public String toString() {
-    return "Enemy{" +
-            "weight=" + weight +
-            ", maxHp=" + maxHp +
-            ", defense=" + defense +
-            ", name='" + name + '\'' +
-            '}';
+    return "Enemy{"
+        + "weight=" + weight
+        + ", maxHp=" + maxHp
+        + ", defense=" + defense
+        + ", name='" + name + '\''
+        + '}';
   }
 }

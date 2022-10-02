@@ -9,19 +9,19 @@ package cl.uchile.dcc.finalreality.model;
 
 public abstract class AbstractEntity {
 
-    protected String name;
+  protected String name;
 
 
-    /**
-     * Creates a new entity.
-     *
-     * @param name
-     *     the entity's name
-     */
+  /**
+   * Creates a new entity.
+   *
+   * @param name
+   *     the entity's name
+   */
 
-    protected AbstractEntity(final String name) {
-        this.name = name;
-    }
+  protected AbstractEntity(final String name) {
+    this.name = name;
+  }
 
 
 

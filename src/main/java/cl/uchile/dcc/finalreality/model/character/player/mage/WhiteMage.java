@@ -9,15 +9,12 @@
 package cl.uchile.dcc.finalreality.model.character.player.mage;
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
-import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
-import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
-
-import cl.uchile.dcc.finalreality.model.character.player.AbstractPlayerCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
+import java.util.Objects;
+import java.util.concurrent.BlockingQueue;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -87,10 +84,9 @@ public class WhiteMage extends AbstractMage {
 
   @Override
   public void equip(Weapon weapon) throws InvalidStatValueException {
-    if (weapon.getType().equals(WeaponType.STAFF)){
+    if (weapon.getType().equals(WeaponType.STAFF)) {
       this.equippedWeapon = weapon;
-    }
-    else{
+    } else {
       throw new InvalidStatValueException("Invalid weapon type.");
     }
 
