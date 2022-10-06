@@ -10,7 +10,11 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Thief;
 import cl.uchile.dcc.finalreality.model.character.player.mage.BlackMage;
 import cl.uchile.dcc.finalreality.model.character.player.mage.WhiteMage;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
-import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
 import cl.uchile.dcc.finalreality.model.user.player.Player;
 import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
@@ -35,16 +39,14 @@ public class Main {
     BlockingQueue<GameCharacter> queue = new LinkedBlockingQueue<>();
     // model
     // OBJECT
-    Weapon w1 = new Weapon("w1", 100, 10, WeaponType.AXE);
-    Weapon w2 = new Weapon("w2", 100, 10, WeaponType.SWORD);
-    Weapon w3 = new Weapon("w3", 100, 10, WeaponType.KNIFE);
-    Weapon w4 = new Weapon("w4", 100, 10, WeaponType.BOW);
-    Weapon w5 = new Weapon("w5", 100, 10, WeaponType.STAFF);
+    Axe w1 = new Axe("w1", 100, 10);
+    Sword w2 = new Sword("w2", 100, 10);
+    Knife w3 = new Knife("w3", 100, 10);
+    Bow w4 = new Bow("w4", 100, 10);
+    Staff w5 = new Staff("w5", 100, 10, 10);
     System.out.println(w1.getName());
     System.out.println(w1.getDamage());
     System.out.println(w1.getWeight());
-    System.out.println(w1.getType());
-    System.out.println(w1.equals(w2));
     System.out.println(w1.hashCode());
     System.out.println(w1);
     System.out.println(w2);

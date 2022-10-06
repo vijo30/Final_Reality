@@ -12,7 +12,6 @@ import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
-import cl.uchile.dcc.finalreality.model.object.weapon.WeaponType;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import org.jetbrains.annotations.NotNull;
@@ -72,11 +71,7 @@ public class Thief extends AbstractCommonCharacter {
   }
 
   @Override
-  public void equip(Weapon weapon) throws InvalidStatValueException {
-    if (!weapon.getType().equals(WeaponType.AXE) || !weapon.getType().equals(WeaponType.STAFF)) {
-      this.equippedWeapon = weapon;
-    } else {
-      throw new InvalidStatValueException("Invalid weapon type.");
-    }
+  public void equip(Weapon weapon) {
+    this.equippedWeapon = weapon;
   }
 }

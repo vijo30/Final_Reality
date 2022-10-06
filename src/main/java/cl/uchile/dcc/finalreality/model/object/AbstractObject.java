@@ -16,6 +16,10 @@ public abstract class AbstractObject extends AbstractEntity {
 
   protected final int weight;
 
+  public int getWeight() {
+    return weight;
+  }
+
   /**
    * Creates a new entity.
    *

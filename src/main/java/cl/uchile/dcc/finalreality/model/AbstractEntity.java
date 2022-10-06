@@ -12,6 +12,10 @@ public abstract class AbstractEntity {
   protected String name;
 
 
+  public String getName() {
+    return name;
+  }
+
   /**
    * Creates a new entity.
    *
