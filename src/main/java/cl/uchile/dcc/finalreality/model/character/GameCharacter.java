@@ -41,4 +41,9 @@ public interface GameCharacter {
    * Sets this character's current HP to {@code newHp}.
    */
   void setCurrentHp(int hp) throws InvalidStatValueException;
+
+  /**
+   * Sets wait turn depending on the case
+   */
+  void setWaitTurn();
 }
