@@ -80,23 +80,18 @@ An abstract class that holds the common behaviour of all the objects in the game
 ### Weapon
 A class that holds all the information of a weapon.
 
-### WeaponType
-Enumeration of all the weapon types.
+### Axe
+A class that holds all the information of an axe.
 
-## User
+### Bow
+A class that holds all the information of a bow.
 
-### AbstractPlayer
-An abstract class that holds the common behaviour of all players in the game.
+### Knife
+A class that holds all the information of a knife.
 
-### Player
-A class that holds all the information of a single player of the game.
+### Staff
+A class that holds all the information of a staff.
 
-
-## Exceptions
-
-### InvalidStatValueException
-This error is used to represent an invalid stat value.
-
-### Require
-Class containing a series of methods to check if a condition is met. If the condition is not met, an exception is thrown.
+### Sword
+A class that holds all the information of a sword.
 

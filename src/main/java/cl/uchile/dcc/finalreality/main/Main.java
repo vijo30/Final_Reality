@@ -9,14 +9,11 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Knight;
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief;
 import cl.uchile.dcc.finalreality.model.character.player.mage.BlackMage;
 import cl.uchile.dcc.finalreality.model.character.player.mage.WhiteMage;
-import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
-import cl.uchile.dcc.finalreality.model.user.player.Player;
-import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -113,18 +110,7 @@ public class Main {
     System.out.println(wh1.hashCode());
     System.out.println(wh1);
     // w1.equip()
-    // USER
-    GameCharacter[] party = {en1, wh1, b1};
-    Enemy[] enemies = {e1, e2, e3};
-    Weapon[] inventory = {w1, w2, w3};
-    Player p1 = new Player(party, enemies, inventory);
-    Player p2 = new Player(party, enemies, inventory);
-    System.out.println(p1.hashCode());
-    System.out.println(p1.equals(p2));
-    System.out.println(p1);
-    System.out.println(Arrays.toString(p1.getParty()));
-    System.out.println(Arrays.toString(p1.getEnemies()));
-    System.out.println(Arrays.toString(p1.getInventory()));
+
 
   }
 }

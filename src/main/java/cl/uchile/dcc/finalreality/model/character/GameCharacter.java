@@ -43,7 +43,7 @@ public interface GameCharacter {
   void setCurrentHp(int hp) throws InvalidStatValueException;
 
   /**
-   * Sets wait turn depending on the case
+   * Sets wait turn depending on the case.
    */
   void setWaitTurn();
 }
