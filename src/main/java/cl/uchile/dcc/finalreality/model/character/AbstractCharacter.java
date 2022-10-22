@@ -63,10 +63,7 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
     scheduledExecutor.shutdown();
   }
 
-  @Override
-  public String getName() {
-    return name;
-  }
+
 
   @Override
   public int getCurrentHp() {

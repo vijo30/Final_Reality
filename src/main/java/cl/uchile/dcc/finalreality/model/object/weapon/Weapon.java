@@ -29,12 +29,7 @@ public abstract class Weapon extends AbstractObject {
     return damage;
   }
 
-  /**
-   * Returns the weight of the weapon.
-   */
-  public int getWeight() {
-    return weight;
-  }
+
 
 
 }

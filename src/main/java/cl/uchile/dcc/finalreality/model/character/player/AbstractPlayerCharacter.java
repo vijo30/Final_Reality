@@ -49,10 +49,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
   }
 
-  @Override
-  public void equip(Weapon weapon) throws InvalidStatValueException {
-    this.equippedWeapon = weapon;
-  }
+
 
   @Override
   public Weapon getEquippedWeapon() {

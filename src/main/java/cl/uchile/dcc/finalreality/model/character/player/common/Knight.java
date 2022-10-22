@@ -42,7 +42,7 @@ public class Knight extends AbstractCommonCharacter {
 
   @Override
   public String toString() {
-    return "Knight{maxHp=%d, defense=%d, name='%s'}".formatted(maxHp, defense, name);
+    return "Knight{name='%s', maxHp='%d', defense='%d'}".formatted(name, maxHp, defense);
   }
 
   @Override

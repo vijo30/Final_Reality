@@ -46,7 +46,7 @@ public class Engineer extends AbstractCommonCharacter {
 
   @Override
   public String toString() {
-    return "Engineer{maxHp=%d, defense=%d, name='%s'}".formatted(maxHp, defense, name);
+    return "Engineer{name='%s', maxHp='%d', defense='%d'}".formatted(name, maxHp, defense);
   }
 
   @Override

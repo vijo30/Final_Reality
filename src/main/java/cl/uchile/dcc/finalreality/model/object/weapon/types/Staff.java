@@ -28,16 +28,20 @@ public class Staff extends Weapon {
     this.magicDamage = magicDamage;
   }
 
+
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof final Staff other)) {
       return false;
     }
-    Staff staff = (Staff) o;
-    return magicDamage == staff.magicDamage;
+    return hashCode() == other.hashCode()
+        && damage == other.getDamage()
+        && weight == other.getWeight()
+        && name.equals(other.getName())
+        && magicDamage == other.magicDamage;
   }
 
   @Override

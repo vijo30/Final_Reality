@@ -67,7 +67,7 @@ public class Thief extends AbstractCommonCharacter {
 
   @Override
   public String toString() {
-    return "Thief{maxHp=%d, defense=%d, name='%s'}".formatted(maxHp, defense, name);
+    return "Thief{name='%s', maxHp='%d', defense='%d'}".formatted(name, maxHp, defense);
   }
 
   @Override

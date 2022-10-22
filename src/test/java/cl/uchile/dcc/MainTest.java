@@ -1,9 +1,14 @@
 package cl.uchile.dcc;
 
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer;
@@ -16,13 +21,16 @@ import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 /**
- * A class that tests all classes in the package character.
+ * A class which has all the tests of the project.
  *
  * @author <a href="https://www.github.com/vijo30">V30</a>
  * @author ~José Videla~
@@ -30,7 +38,8 @@ import org.junit.Test;
 
 
 public class MainTest {
-
+  private BlockingQueue<GameCharacter> queue;
+  private GameCharacter gc1;
   private Enemy e1;
   private Enemy e2;
   private Enemy e3;
@@ -64,12 +73,15 @@ public class MainTest {
   private Sword sw1;
   private Sword sw2;
   private Sword sw3;
+  private Random rng;
 
 
   @Before
   public void setUp() throws InvalidStatValueException {
     // Queue
-    BlockingQueue<GameCharacter> queue = new LinkedBlockingQueue<>();
+    queue = new LinkedBlockingQueue<>();
+    // GameCharacter
+    gc1 = new Enemy("e1", 100, 100, 100, queue);
     // Enemy
     e1 = new Enemy("e1", 100, 100, 100, queue);
     e2 = new Enemy("e1", 100, 100, 100, queue);
@@ -115,6 +127,8 @@ public class MainTest {
     sw1 = new Sword("sw1", 10, 10);
     sw2 = new Sword("sw1", 10, 10);
     sw3 = new Sword("sw3", 10, 10);
+    //
+    rng = new Random();
 
   }
 
@@ -132,6 +146,192 @@ public class MainTest {
     assertNotNull(sw1);
   }
 
+  @Test
+  public void testEquals() {
+    // Enemy
+    assertEquals(e1,e1);
+    assertEquals(e1,e2);
+    assertNotEquals(e3,ax1);
+    assertNotEquals(e1,e3);
+    // Engineer
+    assertEquals(en1,en1);
+    assertEquals(en1,en2);
+    assertNotEquals(en1,gc1);
+    assertNotEquals(en1,en3);
+    // Knight
+    assertEquals(k1,k1);
+    assertEquals(k1,k2);
+    assertNotEquals(k1,gc1);
+    assertNotEquals(k1,k3);
+    // Thief
+    assertEquals(t1,t1);
+    assertEquals(t1,t2);
+    assertNotEquals(t1,gc1);
+    assertNotEquals(t1,t3);
+    // Black Mage
+    assertEquals(bm1,bm1);
+    assertEquals(bm1,bm2);
+    assertNotEquals(bm1,gc1);
+    assertNotEquals(bm1,bm3);
+    // White Mage
+    assertEquals(wm1,wm1);
+    assertEquals(wm1,wm2);
+    assertNotEquals(wm1,gc1);
+    assertNotEquals(wm1,wm3);
+    // Axe
+    assertEquals(ax1,ax1);
+    assertEquals(ax1,ax2);
+    assertNotEquals(ax3,e1);
+    assertNotEquals(ax1,ax3);
+    // Bow
+    assertEquals(bw1,bw1);
+    assertEquals(bw1,bw2);
+    assertNotEquals(bw1,e1);
+    assertNotEquals(bw1,bw3);
+    // Knife
+    assertEquals(kf1,kf1);
+    assertEquals(kf1,kf2);
+    assertNotEquals(kf1,e1);
+    assertNotEquals(kf1,kf3);
+    // Staff
+    assertEquals(sf1,sf1);
+    assertEquals(sf1,sf2);
+    assertNotEquals(sf1,e1);
+    assertNotEquals(sf1,sf3);
+    // Sword
+    assertEquals(sw1,sw1);
+    assertEquals(sw1,sw2);
+    assertNotEquals(sw1,e1);
+    assertNotEquals(sw1,sw3);
+  }
 
+  @Test
+  public void testToString() {
+    assertNotNull(e1.toString());
+    assertNotNull(en1.toString());
+    assertNotNull(k1.toString());
+    assertNotNull(t1.toString());
+    assertNotNull(bm1.toString());
+    assertNotNull(wm1.toString());
+    assertNotNull(ax1.toString());
+    assertNotNull(bw1.toString());
+    assertNotNull(kf1.toString());
+    assertNotNull(sf1.toString());
+    assertNotNull(sw1.toString());
+  }
+
+  @Test
+  public void testSetCurrentHp() throws InvalidStatValueException {
+    e1.setCurrentHp(50);
+    assertEquals(e1.getCurrentHp(), 50);
+  }
+
+  @Test
+  public void testGetName() {
+    assertEquals(e1.getName(),"e1");
+  }
+
+  @Test
+  public void testGetMaxHp() {
+    assertEquals(e1.getMaxHp(), 100);
+  }
+
+  @Test
+  public void testGetDefense() {
+    assertEquals(e1.getDefense(), 100);
+  }
+
+  @Test
+  public void testEnemyGetWeight() {
+    assertEquals(e1.getWeight(), 100);
+  }
+
+  @Test
+  public void testWeaponGetWeight() {
+    assertEquals(ax1.getWeight(), 10);
+  }
+
+  @Test
+  public void testMageGetCurrentMp() {
+    assertEquals(bm1.getCurrentMp(), 100);
+  }
+
+  @Test
+  public void testMageSetCurrentMp() throws InvalidStatValueException{
+    bm1.setCurrentMp(50);
+    assertEquals(bm1.getCurrentMp(), 50);
+  }
+
+  @Test
+  public void testTimer() throws InterruptedException, InvalidStatValueException {
+    for (int i = 0; i < 10; i++) {
+      // Gives a random speed to each character to generate different waiting times
+      var weapon = new Knife("", 0, rng.nextInt(50));
+      var character = new Thief(Integer.toString(i), 10, 10, queue);
+      var enemy = new Enemy(Integer.toString(i), 10, 10, 10, queue);
+      character.equip(weapon);
+      character.waitTurn();
+      enemy.waitTurn();
+    }
+    // Waits for 6 seconds to ensure that all characters have finished waiting
+    Thread.sleep(6000);
+    // while (!queue.isEmpty()) {
+      // Pops and prints the names of the characters of the queue to illustrate the turns
+      // order
+      // System.out.println(queue.poll().toString());
+    }
+
+    @Test
+    public void testEquip() {
+      en1.equip(ax1);
+      assertEquals(en1.getEquippedWeapon(),ax1);
+      k1.equip(ax1);
+      assertEquals(k1.getEquippedWeapon(),ax1);
+      t1.equip(ax1);
+      assertEquals(t1.getEquippedWeapon(),ax1);
+      bm1.equip(ax1);
+      assertEquals(bm1.getEquippedWeapon(),ax1);
+      wm1.equip(ax1);
+      assertEquals(wm1.getEquippedWeapon(),ax1);
+    }
+
+    @DisplayName("Require.statValueAtLeast() throws InvalidStatValueException if the actualStat is "
+        + "less than least")
+    @Test
+    public void requireTest1() {
+      int least = rng.nextInt(51, 100);
+      int actualStat = rng.nextInt(50);
+      assertThrows(InvalidStatValueException.class,
+          () -> Require.statValueAtLeast(least, actualStat, "test"));
+    }
+    @DisplayName(
+      "Require.statValueAtLeast() does not throw InvalidStatValueException if the "
+          + "actualStat is greater than least")
+    @Test
+    public void requireTest2() {
+      int least =  rng.nextInt(50);
+      int actualStat = rng.nextInt(51, 100);
+      assertDoesNotThrow(() -> Require.statValueAtLeast(least, actualStat, "test"));
+    }
+
+    @DisplayName(
+        "Require.statValueAtLeast() does not throw InvalidStatValueException if the "
+            + "actualStat is equal to least")
+    @Test
+    public void requireTest3() {
+      int least =  rng.nextInt(50);
+      assertDoesNotThrow(() -> Require.statValueAtLeast(least, least, "test"));
+    }
+
+  @DisplayName("An invalid stat value exception can be thrown with a message.")
+  @Test
+  public void InvalidStatValueExceptionTest() {
+    final String PREFIX = "The provided value is not a valid stat value. ";
+    String generatedString = RandomStringUtils.randomAlphabetic(10);
+    InvalidStatValueException exception = assertThrows(InvalidStatValueException.class, () -> {
+      throw new InvalidStatValueException(generatedString);
+    });
+    assertEquals(PREFIX + generatedString, exception.getMessage());
+  }
 
 }
