@@ -19,16 +19,6 @@ enemies controlled by the computer.
 
 ## Classes
 
-
-## Tests
-
-### Timer Example
-A test class with the purpose of being an example of use for the timer.
-
-### Main
-A class that is meant for generic testing.
-
-
 ## Abstract Entity
 An abstract class that holds the common behaviour of all the entities in the game.
 
@@ -46,13 +36,13 @@ Creates a new enemy with a name, a weight and the queue with the characters read
 An interface which represents a character from the game. A character can be controlled by the player or by the CPU (an enemy).
 
 ### AbstractPlayerCharacter
-A class that holds all the information of a player-controlled character in the game.
+An abstract class that holds all the information of a player-controlled character in the game.
 
 ### AbstractCommonCharacter
-A class that holds all the information of a common character in the game.
+An abstract class that holds all the information of a common character in the game.
 
 ### AbstractMage
-A class that holds all the information of a mage character in the game.
+An abstract class that holds all the information of a mage character in the game.
 
 ### BlackMage
 Creates a new Black Mage.
@@ -78,7 +68,7 @@ An interface with the method equip(Weapon weapon).
 An abstract class that holds the common behaviour of all the objects in the game.
 
 ### Weapon
-A class that holds all the information of a weapon.
+An abstract class that holds all the information of a weapon.
 
 ### Axe
 A class that holds all the information of an axe.
@@ -94,4 +84,9 @@ A class that holds all the information of a staff.
 
 ### Sword
 A class that holds all the information of a sword.
+
+## Tests
+
+### MainTest
+A class which has all the tests of the project.
 
