@@ -21,6 +21,7 @@ import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -218,8 +219,78 @@ public class MainTest {
     assertNotNull(kf1.toString());
     assertNotNull(sf1.toString());
     assertNotNull(sw1.toString());
+    assertEquals(e1.toString(), "Enemy{name=e1, weight=100, maxHp='100', defense='100'}");
+    assertEquals(en1.toString(), "Engineer{name='en1', maxHp='100', defense='100'}");
+    assertEquals(k1.toString(), "Knight{name='k1', maxHp='100', defense='100'}");
+    assertEquals(t1.toString(), "Thief{name='t1', maxHp='100', defense='100'}");
+    assertEquals(bm1.toString(), "BlackMage{name='bm1', maxHp='100', defense='100', maxMp='100'}");
+    assertEquals(wm1.toString(), "WhiteMage{name='wm1', maxHp='100', defense='100', maxMp='100'}");
+    assertEquals(ax1.toString(), "Axe{name='ax1', damage=10, weight=10}");
+    assertEquals(bw1.toString(), "Bow{name='bw1', damage=10, weight=10}");
+    assertEquals(kf1.toString(), "Knife{name='kf1', damage=10, weight=10}");
+    assertEquals(sf1.toString(), "Staff{name='sf1', damage=10, weight=10, magicDamage=10}");
+    assertEquals(sw1.toString(), "Sword{name='sw1', damage=10, weight=10}");
   }
 
+  @Test
+  public void testHashCode() {
+    // Enemy
+    assertEquals(e1.hashCode(),e1.hashCode());
+    assertEquals(e1.hashCode(),e2.hashCode());
+    assertNotEquals(e3.hashCode(),ax1.hashCode());
+    assertNotEquals(e1.hashCode(),e3.hashCode());
+    // Engineer
+    assertEquals(en1.hashCode(),en1.hashCode());
+    assertEquals(en1.hashCode(),en2.hashCode());
+    assertNotEquals(en1.hashCode(),gc1.hashCode());
+    assertNotEquals(en1,en3);
+    // Knight
+    assertEquals(k1.hashCode(),k1.hashCode());
+    assertEquals(k1.hashCode(),k2.hashCode());
+    assertNotEquals(k1.hashCode(),gc1.hashCode());
+    assertNotEquals(k1.hashCode(),k3.hashCode());
+    // Thief
+    assertEquals(t1.hashCode(),t1.hashCode());
+    assertEquals(t1.hashCode(),t2.hashCode());
+    assertNotEquals(t1.hashCode(),gc1.hashCode());
+    assertNotEquals(t1.hashCode(),t3.hashCode());
+    // Black Mage
+    assertEquals(bm1.hashCode(),bm1.hashCode());
+    assertEquals(bm1.hashCode(),bm2.hashCode());
+    assertNotEquals(bm1.hashCode(),gc1.hashCode());
+    assertNotEquals(bm1.hashCode(),bm3.hashCode());
+    // White Mage
+    assertEquals(wm1.hashCode(),wm1.hashCode());
+    assertEquals(wm1.hashCode(),wm2.hashCode());
+    assertNotEquals(wm1.hashCode(),gc1.hashCode());
+    assertNotEquals(wm1.hashCode(),wm3.hashCode());
+    // Axe
+    assertEquals(ax1.hashCode(),ax1.hashCode());
+    assertEquals(ax1.hashCode(),ax2.hashCode());
+    assertNotEquals(ax3.hashCode(),e1.hashCode());
+    assertNotEquals(ax1.hashCode(),ax3.hashCode());
+    // Bow
+    assertEquals(bw1.hashCode(),bw1.hashCode());
+    assertEquals(bw1.hashCode(),bw2.hashCode());
+    assertNotEquals(bw1.hashCode(),e1.hashCode());
+    assertNotEquals(bw1.hashCode(),bw3.hashCode());
+    // Knife
+    assertEquals(kf1.hashCode(),kf1.hashCode());
+    assertEquals(kf1.hashCode(),kf2.hashCode());
+    assertNotEquals(kf1.hashCode(),e1.hashCode());
+    assertNotEquals(kf1.hashCode(),kf3.hashCode());
+    // Staff
+    assertEquals(sf1.hashCode(),sf1.hashCode());
+    assertEquals(sf1.hashCode(),sf2.hashCode());
+    assertNotEquals(sf1.hashCode(),e1.hashCode());
+    assertNotEquals(sf1.hashCode(),sf3.hashCode());
+    // Sword
+    assertEquals(sw1.hashCode(),sw1.hashCode());
+    assertEquals(sw1.hashCode(),sw2.hashCode());
+    assertNotEquals(sw1.hashCode(),e1.hashCode());
+    assertNotEquals(sw1.hashCode(),sw3.hashCode());
+
+  }
   @Test
   public void testSetCurrentHp() throws InvalidStatValueException {
     e1.setCurrentHp(50);
@@ -264,22 +335,28 @@ public class MainTest {
 
   @Test
   public void testTimer() throws InterruptedException, InvalidStatValueException {
+    var c1 = new Knight("c1", 10, 10, queue);
+    var w1 = new Sword("w1", 0, 1);
+    c1.equip(w1);
+    c1.waitTurn();
     for (int i = 0; i < 10; i++) {
       // Gives a random speed to each character to generate different waiting times
-      var weapon = new Knife("", 0, rng.nextInt(50));
+      var weapon = new Knife("", 0, rng.nextInt(2,50));
       var character = new Thief(Integer.toString(i), 10, 10, queue);
-      var enemy = new Enemy(Integer.toString(i), 10, 10, 10, queue);
+      var enemy = new Enemy(Integer.toString(i), rng.nextInt(2,50), 10, 10, queue);
       character.equip(weapon);
       character.waitTurn();
       enemy.waitTurn();
     }
     // Waits for 6 seconds to ensure that all characters have finished waiting
     Thread.sleep(6000);
-    // while (!queue.isEmpty()) {
+    assertEquals(Objects.requireNonNull(queue.poll()).toString(), c1.toString());
+    //while (!queue.isEmpty()) {
       // Pops and prints the names of the characters of the queue to illustrate the turns
       // order
-      // System.out.println(queue.poll().toString());
-    }
+      //System.out.println(queue.poll().toString());
+    //}
+  }
 
     @Test
     public void testEquip() {

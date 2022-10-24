@@ -46,22 +46,13 @@ public class Staff extends Weapon {
 
   @Override
   public int hashCode() {
-    return Objects.hash(magicDamage);
+    return Objects.hash(Weapon.class, name, damage, weight, magicDamage);
   }
 
   @Override
   public String toString() {
-    return "Staff{"
-        + "magicDamage="
-        + magicDamage
-        + ", damage="
-        + damage
-        + ", weight="
-        + weight
-        + ", name='"
-        + name
-        + '\''
-        + '}';
+    return "Staff{name='%s', damage=%d, weight=%d, magicDamage=%d}"
+        .formatted(name, damage, weight, magicDamage);
   }
 }
 

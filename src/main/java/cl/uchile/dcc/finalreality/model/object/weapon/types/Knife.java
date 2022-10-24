@@ -42,7 +42,7 @@ public class Knife extends Weapon {
 
   @Override
   public String toString() {
-    return "Weapon{name='%s', damage=%d, weight=%d}"
+    return "Knife{name='%s', damage=%d, weight=%d}"
         .formatted(name, damage, weight);
   }
 }
