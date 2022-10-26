@@ -372,6 +372,50 @@ public class MainTest {
       assertEquals(wm1.getEquippedWeapon(),sf1);
     }
 
+    @Test
+    public void testEquip2() throws InvalidStatValueException {
+      // Engineer
+      en1.equip(ax1);
+      assertEquals(en1.getEquippedWeapon(),ax1);
+      en1.equip(bw1);
+      assertEquals(en1.getEquippedWeapon(),bw1);
+      assertThrows(InvalidStatValueException.class, () -> en1.equip(kf1));
+      assertThrows(InvalidStatValueException.class, () -> en1.equip(sf1));
+      assertThrows(InvalidStatValueException.class, () -> en1.equip(sw1));
+      // Knight
+      k1.equip(sw1);
+      assertEquals(k1.getEquippedWeapon(),sw1);
+      k1.equip(ax1);
+      assertEquals(k1.getEquippedWeapon(),ax1);
+      k1.equip(kf1);
+      assertEquals(k1.getEquippedWeapon(),kf1);
+      assertThrows(InvalidStatValueException.class, () -> k1.equip(sf1));
+      assertThrows(InvalidStatValueException.class, () -> k1.equip(bw1));
+      // Thief
+      t1.equip(sw1);
+      assertEquals(t1.getEquippedWeapon(),sw1);
+      t1.equip(kf1);
+      assertEquals(t1.getEquippedWeapon(),kf1);
+      t1.equip(bw1);
+      assertEquals(t1.getEquippedWeapon(),bw1);
+      assertThrows(InvalidStatValueException.class, () -> t1.equip(sf1));
+      assertThrows(InvalidStatValueException.class, () -> t1.equip(ax1));
+      // Black Mage
+      bm1.equip(kf1);
+      assertEquals(bm1.getEquippedWeapon(),kf1);
+      bm1.equip(sf1);
+      assertEquals(bm1.getEquippedWeapon(),sf1);
+      assertThrows(InvalidStatValueException.class, () -> bm1.equip(ax1));
+      assertThrows(InvalidStatValueException.class, () -> bm1.equip(bw1));
+      assertThrows(InvalidStatValueException.class, () -> bm1.equip(sw1));
+      // White Mage
+      wm1.equip(sf1);
+      assertEquals(bm1.getEquippedWeapon(),sf1);
+      assertThrows(InvalidStatValueException.class, () -> wm1.equip(kf1));
+      assertThrows(InvalidStatValueException.class, () -> wm1.equip(ax1));
+      assertThrows(InvalidStatValueException.class, () -> wm1.equip(bw1));
+      assertThrows(InvalidStatValueException.class, () -> wm1.equip(sw1));
+    }
     @DisplayName("Require.statValueAtLeast() throws InvalidStatValueException if the actualStat is "
         + "less than least")
     @Test
