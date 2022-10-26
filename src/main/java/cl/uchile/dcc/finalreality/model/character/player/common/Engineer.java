@@ -70,12 +70,17 @@ public class Engineer extends AbstractCommonCharacter {
   }
 
 
-
+  /**
+   * Equips an axe.
+   */
   @Override
   public void equipAxe(Axe axe) {
     this.equippedWeapon = axe;
   }
 
+  /**
+   * Equips a bow.
+   */
   @Override
   public void equipBow(Bow bow) {
     this.equippedWeapon = bow;

@@ -72,16 +72,26 @@ public class Thief extends AbstractCommonCharacter {
     return "Thief{name='%s', maxHp='%d', defense='%d'}".formatted(name, maxHp, defense);
   }
 
+  /**
+   * Equips a sword.
+   */
   @Override
   public void equipSword(Sword sword) {
     this.equippedWeapon = sword;
   }
 
+  /**
+   * Equips a knife.
+   */
   @Override
   public void equipKnife(Knife knife) {
     this.equippedWeapon = knife;
   }
 
+
+  /**
+   * Equips a bow.
+   */
   @Override
   public void equipBow(Bow bow) {
     this.equippedWeapon = bow;

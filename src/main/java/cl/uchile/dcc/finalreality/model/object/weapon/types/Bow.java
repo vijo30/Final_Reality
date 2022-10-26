@@ -49,6 +49,10 @@ public class Bow extends Weapon {
         .formatted(name, damage, weight);
   }
 
+  /**
+   * Handles its type in a way the method in AbstractPlayerCharacher equip(Weapon weapon)
+   * can determinate which type of weapon it's being equipped.
+   */
   @Override
   public void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException {
     playerCharacter.equipBow(this);

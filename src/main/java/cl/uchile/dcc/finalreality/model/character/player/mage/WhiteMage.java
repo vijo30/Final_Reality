@@ -72,6 +72,9 @@ public class WhiteMage extends AbstractMage {
         .formatted(name, maxHp, defense, maxMp);
   }
 
+  /**
+   * Equips a staff.
+   */
   @Override
   public void equipStaff(Staff staff) {
     this.equippedWeapon = staff;

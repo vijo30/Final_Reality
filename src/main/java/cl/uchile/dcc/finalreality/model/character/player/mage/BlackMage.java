@@ -77,11 +77,17 @@ public class BlackMage extends AbstractMage {
     return Objects.hash(BlackMage.class, name, maxHp, defense, maxMp);
   }
 
+  /**
+   * Equips a knife.
+   */
   @Override
   public void equipKnife(Knife knife) {
     this.equippedWeapon = knife;
   }
 
+  /**
+   * Equips a staff.
+   */
   @Override
   public void equipStaff(Staff staff) {
     this.equippedWeapon = staff;

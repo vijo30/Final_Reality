@@ -66,16 +66,25 @@ public class Knight extends AbstractCommonCharacter {
         && defense == that.defense;
   }
 
+  /**
+   * Equips a sword.
+   */
   @Override
   public void equipSword(Sword sword) {
     this.equippedWeapon = sword;
   }
 
+  /**
+   * Equips an axe.
+   */
   @Override
   public void equipAxe(Axe axe) {
     this.equippedWeapon = axe;
   }
 
+  /**
+   * Equips a knife.
+   */
   @Override
   public void equipKnife(Knife knife) {
     this.equippedWeapon = knife;

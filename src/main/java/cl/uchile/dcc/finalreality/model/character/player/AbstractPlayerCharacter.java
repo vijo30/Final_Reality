@@ -72,27 +72,50 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         /* unit = */ TimeUnit.SECONDS);
   }
 
-
+  /**
+   * Equips a weapon, provided the character can equip it. Otherwise, throws an
+   * InvalidStatValueException
+   */
   public void equip(Weapon weapon) throws InvalidStatValueException {
     weapon.handle(this);
   }
 
+  /**
+   * Throws an InvalidStatValueException, in this case, the character can't
+   * equip this type of weapon.
+   */
   public void equipAxe(Axe axe) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
 
+  /**
+   * Throws an InvalidStatValueException, in this case, the character can't
+   * equip this type of weapon.
+   */
   public void equipBow(Bow bow) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
 
+  /**
+   * Throws an InvalidStatValueException, in this case, the character can't
+   * equip this type of weapon.
+   */
   public void equipKnife(Knife knife) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
 
+  /**
+   * Throws an InvalidStatValueException, in this case, the character can't
+   * equip this type of weapon.
+   */
   public void equipStaff(Staff staff) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
 
+  /**
+   * Throws an InvalidStatValueException, in this case, the character can't
+   * equip this type of weapon.
+   */
   public void equipSword(Sword sword) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
