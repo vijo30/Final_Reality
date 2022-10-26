@@ -1,5 +1,7 @@
 package cl.uchile.dcc.finalreality.model.object.weapon.types;
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 import java.util.Objects;
 
@@ -44,5 +46,10 @@ public class Knife extends Weapon {
   public String toString() {
     return "Knife{name='%s', damage=%d, weight=%d}"
         .formatted(name, damage, weight);
+  }
+
+  @Override
+  public void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException {
+    playerCharacter.equipKnife(this);
   }
 }

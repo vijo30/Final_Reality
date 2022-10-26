@@ -1,5 +1,7 @@
 package cl.uchile.dcc.finalreality.model.object.weapon;
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.object.AbstractObject;
 
 /**
@@ -8,7 +10,7 @@ import cl.uchile.dcc.finalreality.model.object.AbstractObject;
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author ~Your name~
  */
-public abstract class Weapon extends AbstractObject {
+public abstract class Weapon extends AbstractObject implements Equip {
 
   protected final int damage;
 
@@ -28,6 +30,8 @@ public abstract class Weapon extends AbstractObject {
   public int getDamage() {
     return damage;
   }
+
+  public abstract void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException;
 
 
 

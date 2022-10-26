@@ -11,7 +11,8 @@ package cl.uchile.dcc.finalreality.model.character.player.common;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
-import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import org.jetbrains.annotations.NotNull;
@@ -71,7 +72,12 @@ public class Thief extends AbstractCommonCharacter {
   }
 
   @Override
-  public void equip(Weapon weapon) {
-    this.equippedWeapon = weapon;
+  public void equipSword(Sword sword) {
+    this.equippedWeapon = sword;
+  }
+
+  @Override
+  public void equipKnife(Knife knife) {
+    this.equippedWeapon = knife;
   }
 }

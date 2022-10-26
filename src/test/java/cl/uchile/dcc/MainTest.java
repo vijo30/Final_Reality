@@ -359,17 +359,17 @@ public class MainTest {
   }
 
     @Test
-    public void testEquip() {
+    public void testEquip() throws InvalidStatValueException {
       en1.equip(ax1);
       assertEquals(en1.getEquippedWeapon(),ax1);
       k1.equip(ax1);
       assertEquals(k1.getEquippedWeapon(),ax1);
-      t1.equip(ax1);
-      assertEquals(t1.getEquippedWeapon(),ax1);
-      bm1.equip(ax1);
-      assertEquals(bm1.getEquippedWeapon(),ax1);
-      wm1.equip(ax1);
-      assertEquals(wm1.getEquippedWeapon(),ax1);
+      t1.equip(kf1);
+      assertEquals(t1.getEquippedWeapon(),kf1);
+      bm1.equip(sf1);
+      assertEquals(bm1.getEquippedWeapon(),sf1);
+      wm1.equip(sf1);
+      assertEquals(wm1.getEquippedWeapon(),sf1);
     }
 
     @DisplayName("Require.statValueAtLeast() throws InvalidStatValueException if the actualStat is "

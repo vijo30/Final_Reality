@@ -1,5 +1,7 @@
 package cl.uchile.dcc.finalreality.model.object.weapon.types;
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
 import java.util.Objects;
 
@@ -53,6 +55,11 @@ public class Staff extends Weapon {
   public String toString() {
     return "Staff{name='%s', damage=%d, weight=%d, magicDamage=%d}"
         .formatted(name, damage, weight, magicDamage);
+  }
+
+  @Override
+  public void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException {
+    playerCharacter.equipStaff(this);
   }
 }
 

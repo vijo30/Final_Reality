@@ -12,6 +12,11 @@ import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -66,4 +71,33 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         /* delay = */ this.getEquippedWeapon().getWeight() / 10,
         /* unit = */ TimeUnit.SECONDS);
   }
+
+
+  public void equip(Weapon weapon) throws InvalidStatValueException {
+    weapon.handle(this);
+  }
+
+  public void equipAxe(Axe axe) throws InvalidStatValueException {
+    throw new InvalidStatValueException("This weapon can't be equipped!");
+  }
+
+  public void equipBow(Bow bow) throws InvalidStatValueException {
+    throw new InvalidStatValueException("This weapon can't be equipped!");
+  }
+
+  public void equipKnife(Knife knife) throws InvalidStatValueException {
+    throw new InvalidStatValueException("This weapon can't be equipped!");
+  }
+
+  public void equipStaff(Staff staff) throws InvalidStatValueException {
+    throw new InvalidStatValueException("This weapon can't be equipped!");
+  }
+
+  public void equipSword(Sword sword) throws InvalidStatValueException {
+    throw new InvalidStatValueException("This weapon can't be equipped!");
+  }
+
+
+
+
 }

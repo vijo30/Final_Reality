@@ -11,6 +11,11 @@ package cl.uchile.dcc.finalreality.model.character.player;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
 
 /**
  * A {@link GameCharacter} that can equip a weapon.
@@ -20,6 +25,32 @@ public interface PlayerCharacter extends GameCharacter {
    * Equips a weapon to the character.
    */
   void equip(Weapon weapon) throws InvalidStatValueException;
+
+  /**
+   * Equips an axe to the character.
+   */
+  void equipAxe(Axe axe) throws InvalidStatValueException;
+
+  /**
+   * Equips a bow to the character.
+   */
+  void equipBow(Bow bow) throws InvalidStatValueException;
+
+  /**
+   * Equips a knife to the character.
+   */
+  void equipKnife(Knife knife) throws InvalidStatValueException;
+
+  /**
+   * Equips a staff to the character.
+   */
+  void equipStaff(Staff staff) throws InvalidStatValueException;
+
+  /**
+   * Equips a sword to the character.
+   */
+  void equipSword(Sword sword) throws InvalidStatValueException;
+
 
   /**
    * Return this character's equipped weapon.
