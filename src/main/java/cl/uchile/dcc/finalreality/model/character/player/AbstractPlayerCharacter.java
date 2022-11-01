@@ -64,6 +64,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   /**
   Sets waitTurn depending on the class.
    */
+  @Override
   public void setWaitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     scheduledExecutor.schedule(
@@ -76,6 +77,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    * Equips a weapon, provided the character can equip it. Otherwise, throws an
    * InvalidStatValueException
    */
+  @Override
   public void equip(Weapon weapon) throws InvalidStatValueException {
     weapon.handle(this);
   }
@@ -84,6 +86,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    * Throws an InvalidStatValueException, in this case, the character can't
    * equip this type of weapon.
    */
+  @Override
   public void equipAxe(Axe axe) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
@@ -92,6 +95,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    * Throws an InvalidStatValueException, in this case, the character can't
    * equip this type of weapon.
    */
+  @Override
   public void equipBow(Bow bow) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
@@ -100,6 +104,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    * Throws an InvalidStatValueException, in this case, the character can't
    * equip this type of weapon.
    */
+  @Override
   public void equipKnife(Knife knife) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
@@ -108,6 +113,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    * Throws an InvalidStatValueException, in this case, the character can't
    * equip this type of weapon.
    */
+  @Override
   public void equipStaff(Staff staff) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
@@ -116,6 +122,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    * Throws an InvalidStatValueException, in this case, the character can't
    * equip this type of weapon.
    */
+  @Override
   public void equipSword(Sword sword) throws InvalidStatValueException {
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }

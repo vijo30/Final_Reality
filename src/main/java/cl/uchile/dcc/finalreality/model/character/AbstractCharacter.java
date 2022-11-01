@@ -46,7 +46,7 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
   }
 
 
-  @Override
+
   public void waitTurn() {
     this.setWaitTurn();
   }

@@ -11,7 +11,9 @@ public abstract class AbstractEntity {
 
   protected String name;
 
-
+  /**
+   * Returns the name of the entity.
+   */
   public String getName() {
     return name;
   }

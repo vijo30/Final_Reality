@@ -16,6 +16,9 @@ public abstract class AbstractObject extends AbstractEntity {
 
   protected final int weight;
 
+  /**
+   * Returns the weight of the weapon.
+   */
   public int getWeight() {
     return weight;
   }

@@ -69,6 +69,7 @@ public class Enemy extends AbstractCharacter {
   /**
    Sets waitTurn depending on the class.
    */
+  @Override
   public void setWaitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     scheduledExecutor.schedule(

@@ -9,7 +9,7 @@
 package cl.uchile.dcc.finalreality.exceptions;
 
 /**
- * This error is used to represent an invalid stat value.
+   * This error is used to represent an invalid stat value.
  *
  * @author <a href="https://github.com/r8vnhill">R8V</a>
  * @author ~Your name~

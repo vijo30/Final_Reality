@@ -17,20 +17,38 @@ public abstract class Weapon extends AbstractObject implements Equip {
 
   /**
    * Creates a weapon with a name, a base damage, speed, and it's type.
+   *
+   * @param name
+   *         the weapon's name
+   *
+   * @param damage
+   *         the weapon's damage.
+   *
+   * @param weight
+   *         the weapon's weight
    */
   public Weapon(final String name, final int damage, final int weight) {
     super(name, weight);
     this.damage = damage;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  /**
+   * Returns the weapon's damage.
+   */
   public int getDamage() {
     return damage;
   }
 
+
+  /**
+   * Handles the type of player.
+   */
+  @Override
   public abstract void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException;
 
 

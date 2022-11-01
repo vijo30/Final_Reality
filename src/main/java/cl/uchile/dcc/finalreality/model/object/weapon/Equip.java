@@ -8,5 +8,9 @@ import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
  */
 
 public interface Equip {
+
+  /**
+   * Handles the type of player.
+   */
   void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException;
 }
