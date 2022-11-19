@@ -33,6 +33,6 @@ public class GameDriver {
     FinalReality game = new FinalReality(party, enemies, inventory);
     do {
       System.out.print(game);
-    } while (game.notOver());
+    } while (!game.isOver());
   }
 }

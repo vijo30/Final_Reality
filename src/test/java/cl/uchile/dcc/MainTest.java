@@ -5,7 +5,9 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
@@ -467,7 +469,7 @@ public class MainTest {
   }
 
   @Test
-  public void FinalRealityInit() {
+  public void finalRealityInit() {
     party1.add(en1);
     party1.add(k1);
     party1.add(t1);
@@ -486,6 +488,51 @@ public class MainTest {
     assertNotNull(finalReality.getParty());
     assertNotNull(finalReality.getEnemies());
     assertNotNull(finalReality.getInventory());
+  }
+
+  @Test
+  public void finalRealityIsOver1() throws InvalidStatValueException {
+    Knight knight = new Knight("Knight", 100, 10, queue);
+    Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
+    enemy.setCurrentHp(0);
+    e1.setCurrentHp(0);
+    party1.add(knight);
+    enemies1.add(enemy);
+    enemies1.add(e1);
+    finalReality = new FinalReality(party1, enemies1, weapons1);
+    assertTrue(finalReality.isOver());
+    assertTrue(finalReality.deadEnemy());
+    assertFalse(finalReality.deadPlayer());
+  }
+
+  @Test
+  public void finalRealityIsOver2() throws InvalidStatValueException {
+    Knight knight = new Knight("Knight", 100, 10, queue);
+    Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
+    knight.setCurrentHp(0);
+    t1.setCurrentHp(0);
+    party1.add(knight);
+    party1.add(t1);
+    enemies1.add(enemy);
+    finalReality = new FinalReality(party1, enemies1, weapons1);
+    assertTrue(finalReality.isOver());
+    assertTrue(finalReality.deadPlayer());
+    assertFalse(finalReality.deadEnemy());
+  }
+
+  @Test
+  public void finalRealityIsOver3() throws InvalidStatValueException {
+    Knight knight = new Knight("Knight", 100, 10, queue);
+    Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
+    party1.add(knight);
+    t1.setCurrentHp(0);
+    party1.add(t1);
+    enemies1.add(enemy);
+    enemies1.add(e1);
+    finalReality = new FinalReality(party1, enemies1, weapons1);
+    assertFalse(finalReality.isOver());
+    assertFalse(finalReality.deadPlayer());
+    assertFalse(finalReality.deadEnemy());
   }
 
 

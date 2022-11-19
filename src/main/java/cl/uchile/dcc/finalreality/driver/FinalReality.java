@@ -16,6 +16,9 @@ public class FinalReality {
   private final ArrayList<PlayerCharacter> party;
   private final ArrayList<Enemy> enemies;
   private final ArrayList<Weapons> inventory;
+  boolean isPlayerDead;
+  boolean isEnemyDead;
+
 
 
   /**
@@ -65,9 +68,33 @@ public class FinalReality {
     return inventory;
   }
 
+  /**
+   * Checks if all players' characters are dead.
+   */
+  public boolean deadPlayer() {
+    isPlayerDead = true;
+    for (PlayerCharacter playerCharacter : party) {
+      isPlayerDead &= playerCharacter.getCurrentHp() <= 0;
+    }
+    return isPlayerDead;
+  }
 
-  public boolean notOver() {
-    return false;
+  /**
+   * Checks if all enemies' characters are dead.
+   */
+  public boolean deadEnemy() {
+    isEnemyDead = true;
+    for (Enemy enemy : enemies) {
+      isEnemyDead &= enemy.getCurrentHp() <= 0;
+    }
+    return isEnemyDead;
+  }
+
+  /**
+   * Checks if the game is not over.
+   */
+  public boolean isOver() {
+    return deadPlayer() || deadEnemy();
   }
 
   public String toString() {
