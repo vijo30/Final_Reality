@@ -7,20 +7,24 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer;
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight;
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief;
 import cl.uchile.dcc.finalreality.model.character.player.mage.BlackMage;
 import cl.uchile.dcc.finalreality.model.character.player.mage.WhiteMage;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -75,6 +79,10 @@ public class MainTest {
   private Sword sw2;
   private Sword sw3;
   private Random rng;
+  private FinalReality finalReality;
+  private ArrayList<PlayerCharacter> party1;
+  private ArrayList<Enemy> enemies1;
+  private ArrayList<Weapons> weapons1;
 
 
   @Before
@@ -130,6 +138,9 @@ public class MainTest {
     sw3 = new Sword("sw3", 10, 10);
     //
     rng = new Random();
+    party1 = new ArrayList<>();
+    enemies1 = new ArrayList<>();
+    weapons1 = new ArrayList<>();
 
   }
 
@@ -454,5 +465,28 @@ public class MainTest {
     });
     assertEquals(PREFIX + generatedString, exception.getMessage());
   }
+
+  @Test
+  public void FinalRealityInit() {
+    party1.add(en1);
+    party1.add(k1);
+    party1.add(t1);
+    party1.add(wm1);
+    party1.add(bm1);
+
+    enemies1.add(e1);
+    enemies1.add(e2);
+    enemies1.add(e3);
+
+    weapons1.add(ax1);
+    weapons1.add(sf1);
+    finalReality = new FinalReality(party1, enemies1, weapons1);
+
+    assertNotNull(finalReality);
+    assertNotNull(finalReality.getParty());
+    assertNotNull(finalReality.getEnemies());
+    assertNotNull(finalReality.getInventory());
+  }
+
 
 }

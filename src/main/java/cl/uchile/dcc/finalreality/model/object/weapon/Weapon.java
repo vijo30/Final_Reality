@@ -10,7 +10,7 @@ import cl.uchile.dcc.finalreality.model.object.AbstractObject;
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author ~Your name~
  */
-public abstract class Weapon extends AbstractObject implements Equip {
+public abstract class Weapon extends AbstractObject implements Weapons {
 
   protected final int damage;
 
