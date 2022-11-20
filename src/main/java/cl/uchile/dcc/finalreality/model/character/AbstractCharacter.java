@@ -20,6 +20,7 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
   protected int maxHp;
   protected int defense;
   protected final LinkedBlockingQueue<GameCharacter> turnsQueue;
+  private State state;
 
   protected ScheduledExecutorService scheduledExecutor;
 
@@ -44,8 +45,47 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
     this.currentHp = maxHp;
     this.defense = defense;
     this.turnsQueue = turnsQueue;
+    this.setState(new Normal());
   }
 
+  @SuppressWarnings("checkstyle:ParameterName")
+  public void setState(State aState) {
+    state = aState;
+    state.setGameCharacter(this);
+  }
+
+  public void paralyze() {
+    state.paralyze();
+  }
+
+  public void burn() {
+    state.burn();
+  }
+
+
+  public void poison() {
+    state.poison();
+  }
+
+  public void undo() {
+    state.undo();
+  }
+
+  public boolean isParalyzed() {
+    return state.isParalyzed();
+  }
+
+  public boolean isBurned() {
+    return state.isBurned();
+  }
+
+  public boolean isPoisoned() {
+    return state.isPoisoned();
+  }
+
+  public boolean isNormal() {
+    return state.isNormal();
+  }
 
 
   public void waitTurn() {

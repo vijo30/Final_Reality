@@ -15,6 +15,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A class which contains the logic of the game.
+
+ *
+ * @author <a href="https://github.com/vijo30">V30</a>
+ * @author ~José Videla~
  */
 public class FinalReality {
 
@@ -24,7 +28,8 @@ public class FinalReality {
   private final Player player;
   boolean isPlayerDead;
   boolean isEnemyDead;
-  private Random random;
+
+
 
 
   /**
@@ -53,6 +58,7 @@ public class FinalReality {
 
   }
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -62,16 +68,15 @@ public class FinalReality {
       return false;
     }
     FinalReality that = (FinalReality) o;
-    return Objects.equals(getParty(), that.getParty())
-        && Objects.equals(getEnemies(), that.getEnemies())
-        && Objects.equals(getInventory(), that.getInventory());
+    return getParty().equals(that.getParty()) && getEnemies().equals(that.getEnemies())
+        && Objects.equals(getInventory(), that.getInventory())
+        && getPlayer().equals(that.getPlayer());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getParty(), getEnemies(), getInventory());
+    return Objects.hash(getParty(), getEnemies(), getInventory(), getPlayer());
   }
-
 
   public ArrayList<PlayerCharacter> getParty() {
     return party;
@@ -197,7 +202,7 @@ public class FinalReality {
    */
   public void attackParty(GameCharacter character) throws InvalidStatValueException {
     assert !this.isOver();
-    random = new Random();
+    Random random = new Random();
     ArrayList<PlayerCharacter> party = getParty();
     int index = (int) (Math.random() * party.size());
     PlayerCharacter partyMember = party.get(index);

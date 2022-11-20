@@ -13,6 +13,9 @@ import java.io.StringReader;
 
 /**
  * Manage interaction with user.
+ *
+ * @author <a href="https://github.com/vijo30">V30</a>
+ * @author ~José Videla~
  */
 public class Player {
   private final String name;

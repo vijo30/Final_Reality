@@ -20,6 +20,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A class that drives the game.
+ *
+ * @author <a href="https://github.com/vijo30">V30</a>
+ * @author ~José Videla~
  */
 public class GameDriver {
 
@@ -52,7 +55,7 @@ public class GameDriver {
     Random random = new Random();
     int r = random.nextInt(5 - 1) + 1;
     for (int i = 0; i < r; i++) {
-      Enemy enemy = new Enemy("Mindless Ghoul " + Integer.toString(i),
+      Enemy enemy = new Enemy("Mindless Ghoul " + i,
           10, 100, 3, queue);
       enemies.add(enemy);
     }

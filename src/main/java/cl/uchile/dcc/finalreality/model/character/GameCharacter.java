@@ -54,4 +54,6 @@ public interface GameCharacter {
 
   void execute(FinalReality finalReality, GameCharacter character) throws IOException,
       InvalidStatValueException;
+
+  void setState(State aState);
 }
