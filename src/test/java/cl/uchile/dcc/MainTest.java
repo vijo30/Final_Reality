@@ -87,6 +87,7 @@ public class MainTest {
   private ArrayList<Enemy> enemies1;
   private ArrayList<Weapons> weapons1;
   private Player player;
+  private Random random;
 
 
   @Before
@@ -571,17 +572,70 @@ public class MainTest {
   @Test
   public void finalRealityUpdate2()
       throws InvalidStatValueException, IOException, InterruptedException {
+
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
-    Axe ax1 = new Axe("Elacha2000", 10, 10);
+    Axe ax1 = new Axe("Elacha2000", 50, 10);
     knight.equip(ax1);
     knight.waitTurn();
     enemy.waitTurn();
     party1.add(knight);
     enemies1.add(enemy);
-    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    Player player2 = new Player("A", "A", "Enemy");
+    finalReality = new FinalReality(party1, enemies1, weapons1, player2);
     finalReality.update();
+    assertEquals(enemy.getCurrentHp(), 60);
 
+  }
+
+  @Test
+  public void finalRealityUpdate3()
+      throws InvalidStatValueException, IOException, InterruptedException {
+
+    Knight knight = new Knight("Knight", 100, 10, queue);
+    Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
+    Axe ax1 = new Axe("Elacha2000", 50, 10);
+    Knife kf1 = new Knife("El'kucharon", 50, 10);
+    knight.equip(ax1);
+    knight.waitTurn();
+    enemy.waitTurn();
+    party1.add(knight);
+    enemies1.add(enemy);
+    weapons1.add(kf1);
+    Player player2 = new Player("A", "E", "El'kucharon");
+    finalReality = new FinalReality(party1, enemies1, weapons1, player2);
+    finalReality.update();
+    assertEquals(knight.getEquippedWeapon(), kf1);
+
+  }
+
+  @Test
+  public void finalRealityUpdateBig()
+      throws InvalidStatValueException, InterruptedException, IOException {
+    random = new Random();
+    Knight roderick = new Knight("Sir Roderick", 100, 30, queue);
+    Thief jorge = new Thief("Don Jorge", 100, 10, queue);
+    Engineer marcus = new Engineer("Chief Engineer Marcus", 100, 5, queue);
+    Sword coldbringer = new Sword("The Coldbringer", 50, 20);
+    Knife gutsripper = new Knife("The Gutsripper", 30, 5);
+    Axe mech = new Axe("Engineer Battle Axe", 40, 10);
+    Staff rod = new Staff("Wisdom Rod", 10, 10, 40);
+    roderick.equip(coldbringer);
+    jorge.equip(gutsripper);
+    marcus.equip(mech);
+    party1.add(roderick);
+    party1.add(jorge);
+    party1.add(marcus);
+    weapons1.add(rod);
+    int r = random.nextInt(5 - 1) + 1;
+    for (int i = 0; i < r; i++) {
+      Enemy enemy = new Enemy("Mindless Ghoul " + Integer.toString(i),
+          10, 100, 3, queue);
+      enemies1.add(enemy);
+    }
+    Player n_player = new Player("Vijo30", "A", "Mindless Ghoul 0");
+    FinalReality fr = new FinalReality(party1, enemies1, weapons1, n_player);
+    fr.update();
   }
 
 

@@ -17,31 +17,39 @@ import java.io.StringReader;
 public class Player {
   private final String name;
   private final BufferedReader in;
+  private final BufferedReader in2;
 
   /**
    * Constructor to specify an alternative source of moves.
    *
    * @param name The name of the user.
-   * @param in An input from the player.
+   * @param in  An input from the player, in this case, what action is going to make.
+   * @param in2 A second input which reffers to which enemy is going to attack or
+   *            what weapon is going to equip
    */
-  public Player(String name, BufferedReader in) {
+  public Player(String name, BufferedReader in, BufferedReader in2) {
     this.name = name;
     this.in = in;
+    this.in2 = in2;
   }
 
   /**
    * The normal constructor to use.
+   *
+   * @param name The name of the user.
    */
   public Player(String name) {
-    this(name, new BufferedReader(new InputStreamReader((System.in))));
+    this(name, new BufferedReader(new InputStreamReader(System.in)),
+        new BufferedReader(new InputStreamReader(System.in)));
   }
 
   /**
-   * Special constructor meant for testing. Player that plays a fixed
-   * set of moves from a String.
+   * Special constructor meant for testing. Player that plays a premade action from a move1,
+   * and selects a target from a move2.
    */
-  public Player(String name, String moves) {
-    this(name, new BufferedReader(new StringReader((moves))));
+  public Player(String name, String move1, String move2) {
+    this(name, new BufferedReader(new StringReader(move1)),
+        new BufferedReader(new StringReader(move2)));
   }
 
   /**
@@ -59,10 +67,10 @@ public class Player {
       InvalidStatValueException, IOException {
     PlayerCharacter partyMember = (PlayerCharacter) character;
     System.out.println("It's " + character.getName() + " turn!");
-    System.out.println("HP = " + character.getCurrentHp());
-    System.out.println("Weapon = " + partyMember.getEquippedWeapon());
+    System.out.println("Your HP : " + character.getCurrentHp());
+    System.out.println("Your Weapon : " + partyMember.getEquippedWeapon());
     System.out.println("Type 'A' to attack. Type 'E' to equip. "
-        + "Type 'S' to cast a spell");
+        + "Type 'S' to cast a spell.");
     String line;
     line = in.readLine();
 
@@ -77,7 +85,7 @@ public class Player {
         default -> throw new InvalidStatValueException("Invalid command.");
       }
     } catch (InvalidStatValueException e) {
-      System.err.println("Invalid move!");
+      System.err.println("Invalid command.");
       action(finalReality, character);
     }
   }
@@ -90,10 +98,10 @@ public class Player {
     System.out.println("Select a weapon from the inventory. Type its name.");
     System.out.println("Your inventory: ");
     for (Weapons weapon : finalReality.getInventory()) {
-      System.out.println(weapon.getName());
+      System.out.println("* " + weapon.getName());
     }
     String line;
-    line = in.readLine();
+    line = in2.readLine();
     if (line == null) {
       throw new IOException("End of input.");
     }
@@ -107,7 +115,7 @@ public class Player {
   public void castS(FinalReality finalReality,
                      PlayerCharacter partyMember) throws IOException {
     String line;
-    line = in.readLine();
+    line = in2.readLine();
     if (line == null) {
       throw new IOException("End of input.");
     }
@@ -125,10 +133,10 @@ public class Player {
     System.out.println("Select an enemy to attack. Type its name.");
     System.out.println("Your enemies: ");
     for (Enemy enemy : finalReality.getEnemies()) {
-      System.out.println(enemy.getName() + " HP = " + enemy.getCurrentHp());
+      System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp());
     }
     String line;
-    line = in.readLine();
+    line = in2.readLine();
     if (line == null) {
       throw new IOException("End of input.");
     }

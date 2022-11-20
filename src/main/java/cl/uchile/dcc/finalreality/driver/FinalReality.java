@@ -9,6 +9,7 @@ import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -23,7 +24,7 @@ public class FinalReality {
   private final Player player;
   boolean isPlayerDead;
   boolean isEnemyDead;
-
+  private Random random;
 
 
   /**
@@ -127,7 +128,11 @@ public class FinalReality {
       refillQueue();
     }
     GameCharacter character = queue.poll();
-    Objects.requireNonNull(character).execute(this, character);
+    assert character != null;
+    if (character.getCurrentHp() > 0) {
+      character.execute(this, character);
+    }
+
   }
 
   public String toString() {
@@ -136,7 +141,7 @@ public class FinalReality {
 
 
   /**
-   * A party member attacks an enemy named by what's written in line.
+   * A party member attacks an enemy based on what's written in line.
    */
   public void attackEnemy(String line, PlayerCharacter partyMember)
       throws InvalidStatValueException {
@@ -192,14 +197,15 @@ public class FinalReality {
    */
   public void attackParty(GameCharacter character) throws InvalidStatValueException {
     assert !this.isOver();
+    random = new Random();
     ArrayList<PlayerCharacter> party = getParty();
     int index = (int) (Math.random() * party.size());
     PlayerCharacter partyMember = party.get(index);
     int hp = partyMember.getCurrentHp();
-    int enemyDamage = 20;
+    int enemyDamage = random.nextInt(30 - 10) + 10;
     int memberDefense = partyMember.getDefense();
-    int realDamage = (enemyDamage - memberDefense);
-    int newHp = Math.max(0, hp - (enemyDamage - memberDefense));
+    int realDamage = Math.max(0, (enemyDamage - memberDefense));
+    int newHp = (hp - realDamage);
     partyMember.setCurrentHp(newHp);
     System.out.println(character.getName() + " attacks "
         + partyMember.getName() + " dealing " + realDamage + " damage!");
