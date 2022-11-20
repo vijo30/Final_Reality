@@ -3,7 +3,7 @@ package cl.uchile.dcc.finalreality.model.character.player.common;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.AbstractPlayerCharacter;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -26,8 +26,10 @@ public abstract class AbstractCommonCharacter extends AbstractPlayerCharacter {
    */
   protected AbstractCommonCharacter(final @NotNull String name, final int maxHp,
                                     final int defense,
-                                    final @NotNull BlockingQueue<GameCharacter> turnsQueue)
+                                    final @NotNull LinkedBlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
   }
+
+
 }

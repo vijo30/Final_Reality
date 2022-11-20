@@ -15,7 +15,7 @@ import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -43,7 +43,7 @@ public class Thief extends AbstractCommonCharacter {
    *     the queue with the characters waiting for their turn
    */
   public Thief(final @NotNull String name, final int maxHp, final int defense,
-      final @NotNull BlockingQueue<GameCharacter> turnsQueue)
+      final @NotNull LinkedBlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
   }

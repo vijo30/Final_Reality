@@ -13,4 +13,6 @@ public interface Weapons {
    * Handles the type of player.
    */
   void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException;
+
+  String getName();
 }

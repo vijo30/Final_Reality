@@ -15,7 +15,7 @@ import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -37,7 +37,7 @@ public class Knight extends AbstractCommonCharacter {
    *     the queue with the characters waiting for their turn
    */
   public Knight(@NotNull final String name, int maxHp, int defense,
-      @NotNull final BlockingQueue<GameCharacter> turnsQueue)
+      @NotNull final LinkedBlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
   }

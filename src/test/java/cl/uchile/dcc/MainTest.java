@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
+import cl.uchile.dcc.finalreality.driver.Player;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
@@ -26,10 +27,10 @@ import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -45,7 +46,7 @@ import org.junit.jupiter.api.DisplayName;
 
 
 public class MainTest {
-  private BlockingQueue<GameCharacter> queue;
+  private LinkedBlockingQueue<GameCharacter> queue;
   private GameCharacter gc1;
   private Enemy e1;
   private Enemy e2;
@@ -85,6 +86,7 @@ public class MainTest {
   private ArrayList<PlayerCharacter> party1;
   private ArrayList<Enemy> enemies1;
   private ArrayList<Weapons> weapons1;
+  private Player player;
 
 
   @Before
@@ -143,6 +145,7 @@ public class MainTest {
     party1 = new ArrayList<>();
     enemies1 = new ArrayList<>();
     weapons1 = new ArrayList<>();
+    player = new Player("Tete");
 
   }
 
@@ -341,9 +344,16 @@ public class MainTest {
   }
 
   @Test
-  public void testMageSetCurrentMp() throws InvalidStatValueException{
+  public void testMageSetCurrentMp() throws InvalidStatValueException {
     bm1.setCurrentMp(50);
     assertEquals(bm1.getCurrentMp(), 50);
+  }
+
+  @Test
+  public void testGetQueue() throws InvalidStatValueException {
+    t1.equip(kf1);
+    t1.setWaitTurn();
+    assertEquals(t1.getQueue(), queue);
   }
 
   @Test
@@ -363,7 +373,8 @@ public class MainTest {
     }
     // Waits for 6 seconds to ensure that all characters have finished waiting
     Thread.sleep(6000);
-    assertEquals(Objects.requireNonNull(queue.poll()).toString(), c1.toString());
+    assertEquals(Objects.requireNonNull(queue.poll()), c1);
+    System.out.println(queue);
     //while (!queue.isEmpty()) {
       // Pops and prints the names of the characters of the queue to illustrate the turns
       // order
@@ -469,12 +480,10 @@ public class MainTest {
   }
 
   @Test
-  public void finalRealityInit() {
-    party1.add(en1);
+  public void finalRealityInit() throws InvalidStatValueException, InterruptedException {
+    k1.equip(ax1);
     party1.add(k1);
-    party1.add(t1);
-    party1.add(wm1);
-    party1.add(bm1);
+
 
     enemies1.add(e1);
     enemies1.add(e2);
@@ -482,7 +491,8 @@ public class MainTest {
 
     weapons1.add(ax1);
     weapons1.add(sf1);
-    finalReality = new FinalReality(party1, enemies1, weapons1);
+    Player player = new Player("A");
+    finalReality = new FinalReality(party1, enemies1, weapons1, player);
 
     assertNotNull(finalReality);
     assertNotNull(finalReality.getParty());
@@ -491,49 +501,89 @@ public class MainTest {
   }
 
   @Test
-  public void finalRealityIsOver1() throws InvalidStatValueException {
+  public void finalRealityIsOver1() throws InvalidStatValueException, InterruptedException {
     Knight knight = new Knight("Knight", 100, 10, queue);
+    knight.equip(ax1);
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
     enemy.setCurrentHp(0);
     e1.setCurrentHp(0);
     party1.add(knight);
     enemies1.add(enemy);
     enemies1.add(e1);
-    finalReality = new FinalReality(party1, enemies1, weapons1);
+    Player player = new Player("A");
+    finalReality = new FinalReality(party1, enemies1, weapons1, player);
     assertTrue(finalReality.isOver());
     assertTrue(finalReality.deadEnemy());
     assertFalse(finalReality.deadPlayer());
   }
 
   @Test
-  public void finalRealityIsOver2() throws InvalidStatValueException {
+  public void finalRealityIsOver2() throws InvalidStatValueException, InterruptedException {
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
+    knight.equip(ax1);
+    t1.equip(kf1);
     knight.setCurrentHp(0);
     t1.setCurrentHp(0);
     party1.add(knight);
     party1.add(t1);
     enemies1.add(enemy);
-    finalReality = new FinalReality(party1, enemies1, weapons1);
+    Player player = new Player("A");
+    finalReality = new FinalReality(party1, enemies1, weapons1, player);
     assertTrue(finalReality.isOver());
     assertTrue(finalReality.deadPlayer());
     assertFalse(finalReality.deadEnemy());
   }
 
   @Test
-  public void finalRealityIsOver3() throws InvalidStatValueException {
-    Knight knight = new Knight("Knight", 100, 10, queue);
+  public void finalRealityIsOver3() throws InvalidStatValueException, InterruptedException {
+    var knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
+    knight.equip(ax1);
+    t1.equip(kf1);
     party1.add(knight);
     t1.setCurrentHp(0);
     party1.add(t1);
     enemies1.add(enemy);
     enemies1.add(e1);
-    finalReality = new FinalReality(party1, enemies1, weapons1);
+    Player player = new Player("A");
+
+    finalReality = new FinalReality(party1, enemies1, weapons1, player);
     assertFalse(finalReality.isOver());
     assertFalse(finalReality.deadPlayer());
     assertFalse(finalReality.deadEnemy());
   }
+
+  @Test
+  public void finalRealityUpdate()
+      throws InvalidStatValueException, IOException, InterruptedException {
+    Knight knight = new Knight("Knight", 100, 10, queue);
+    Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
+    Axe ax1 = new Axe("Elacha2000", 10, 20);
+    knight.equip(ax1);
+    party1.add(knight);
+    enemies1.add(enemy);
+    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    finalReality.update();
+
+  }
+
+  @Test
+  public void finalRealityUpdate2()
+      throws InvalidStatValueException, IOException, InterruptedException {
+    Knight knight = new Knight("Knight", 100, 10, queue);
+    Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
+    Axe ax1 = new Axe("Elacha2000", 10, 10);
+    knight.equip(ax1);
+    knight.waitTurn();
+    enemy.waitTurn();
+    party1.add(knight);
+    enemies1.add(enemy);
+    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    finalReality.update();
+
+  }
+
 
 
 }

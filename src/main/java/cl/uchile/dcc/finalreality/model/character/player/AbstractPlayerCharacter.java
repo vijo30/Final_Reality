@@ -8,17 +8,20 @@
 
 package cl.uchile.dcc.finalreality.model.character.player;
 
+import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
-import java.util.concurrent.BlockingQueue;
+import java.io.IOException;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +51,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    */
   protected AbstractPlayerCharacter(@NotNull final String name, final int maxHp,
                                     final int defense,
-                                    @NotNull final BlockingQueue<GameCharacter> turnsQueue)
+                                    @NotNull final LinkedBlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
 
@@ -78,7 +81,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    * InvalidStatValueException
    */
   @Override
-  public void equip(Weapon weapon) throws InvalidStatValueException {
+  public void equip(Weapons weapon) throws InvalidStatValueException {
     weapon.handle(this);
   }
 
@@ -127,6 +130,10 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
 
+  public void execute(FinalReality finalReality, GameCharacter character) throws
+      InvalidStatValueException, IOException {
+    finalReality.getPlayer().action(finalReality, character);
+  }
 
 
 

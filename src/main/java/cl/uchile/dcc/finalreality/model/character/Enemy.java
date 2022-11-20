@@ -1,10 +1,11 @@
 package cl.uchile.dcc.finalreality.model.character;
 
+import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +27,7 @@ public class Enemy extends AbstractCharacter {
    * play.
    */
   public Enemy(@NotNull final String name, final int weight, int maxHp, int defense,
-      @NotNull final BlockingQueue<GameCharacter> turnsQueue)
+               @NotNull final LinkedBlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
     Require.statValueAtLeast(1, weight, "Weight");
@@ -39,6 +40,7 @@ public class Enemy extends AbstractCharacter {
   public int getWeight() {
     return weight;
   }
+
 
   @Override
   public boolean equals(final Object o) {
@@ -76,5 +78,15 @@ public class Enemy extends AbstractCharacter {
         /* command = */ this::addToQueue,
         /* delay = */ this.getWeight() / 10,
         /* unit = */ TimeUnit.SECONDS);
+  }
+
+
+  /**
+   * An enemy attacks a random member of the party.
+   */
+  public void execute(FinalReality finalReality, GameCharacter character)
+      throws InvalidStatValueException {
+    finalReality.attackParty(character);
+
   }
 }

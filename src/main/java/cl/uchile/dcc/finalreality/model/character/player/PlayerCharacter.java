@@ -8,9 +8,11 @@ package cl.uchile.dcc.finalreality.model.character.player;
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
 
+
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
+import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
@@ -24,7 +26,7 @@ public interface PlayerCharacter extends GameCharacter {
   /**
    * Equips a weapon to the character.
    */
-  void equip(Weapon weapon) throws InvalidStatValueException;
+  void equip(Weapons weapon) throws InvalidStatValueException;
 
   /**
    * Equips an axe to the character.
@@ -56,4 +58,6 @@ public interface PlayerCharacter extends GameCharacter {
    * Return this character's equipped weapon.
    */
   Weapon getEquippedWeapon();
+
+
 }

@@ -1,6 +1,9 @@
 package cl.uchile.dcc.finalreality.model.character;
 
+import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This represents a character from the game.
@@ -46,4 +49,9 @@ public interface GameCharacter {
    * Sets wait turn depending on the case.
    */
   void setWaitTurn();
+
+  LinkedBlockingQueue<GameCharacter> getQueue();
+
+  void execute(FinalReality finalReality, GameCharacter character) throws IOException,
+      InvalidStatValueException;
 }

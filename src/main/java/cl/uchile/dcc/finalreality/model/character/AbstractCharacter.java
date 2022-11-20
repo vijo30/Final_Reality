@@ -1,9 +1,10 @@
 package cl.uchile.dcc.finalreality.model.character;
 
+
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.AbstractEntity;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +19,7 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
   private int currentHp;
   protected int maxHp;
   protected int defense;
-  protected final BlockingQueue<GameCharacter> turnsQueue;
+  protected final LinkedBlockingQueue<GameCharacter> turnsQueue;
 
   protected ScheduledExecutorService scheduledExecutor;
 
@@ -35,7 +36,7 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
    *     the queue with the characters waiting for their turn
    */
   protected AbstractCharacter(@NotNull String name, int maxHp, int defense,
-      @NotNull BlockingQueue<GameCharacter> turnsQueue) throws InvalidStatValueException {
+      @NotNull LinkedBlockingQueue<GameCharacter> turnsQueue) throws InvalidStatValueException {
     super(name);
     Require.statValueAtLeast(1, maxHp, "Max HP");
     Require.statValueAtLeast(0, defense, "Defense");
@@ -85,5 +86,9 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
     Require.statValueAtLeast(0, hp, "Current HP");
     Require.statValueAtMost(maxHp, hp, "Current HP");
     currentHp = hp;
+  }
+
+  public LinkedBlockingQueue<GameCharacter> getQueue() {
+    return turnsQueue;
   }
 }
