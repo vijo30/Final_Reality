@@ -9,6 +9,7 @@ package cl.uchile.dcc.finalreality.model.character.player;
  */
 
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapon;
@@ -58,6 +59,37 @@ public interface PlayerCharacter extends GameCharacter {
    * Return this character's equipped weapon.
    */
   Weapon getEquippedWeapon();
+
+
+  /**
+   * Casts the spell Thunder.
+   */
+  void castThunder(GameCharacter gameCharacter)
+      throws InvalidSkillException, InvalidStatValueException;
+
+  /**
+   * Casts the spell Thunder.
+   */
+  void castFire(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException;
+
+  /**
+   * Casts the spell Fire.
+   */
+  void castHeal(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException;
+
+  /**
+   * Casts the spell Poison.
+   */
+  void castPoison(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException;
+
+  /**
+   * Casts the spell Paralysis.
+   */
+  void castParalysis(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException;
 
 
 

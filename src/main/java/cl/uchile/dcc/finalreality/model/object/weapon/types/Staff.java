@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class Staff extends Weapon {
 
-  private final int magicDamage;
+
 
   /**
    * Creates a weapon with a name, a base damage, speed, and it's type.
@@ -22,12 +22,11 @@ public class Staff extends Weapon {
    * @param name the object's name
    * @param damage the object's damage
    * @param weight the object's weight
-   * @param magicDamage the weapon's magic damage
+   * @param magicDamage the weapons' magic damage
    */
 
   public Staff(String name, int damage, int weight, int magicDamage) {
-    super(name, damage, weight);
-    this.magicDamage = magicDamage;
+    super(name, damage, weight, magicDamage);
   }
 
 

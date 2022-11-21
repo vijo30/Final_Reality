@@ -15,4 +15,6 @@ public interface Weapons {
   void handle(PlayerCharacter playerCharacter) throws InvalidStatValueException;
 
   String getName();
+
+  int getMagicDamage();
 }

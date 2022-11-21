@@ -14,6 +14,7 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 import org.jetbrains.annotations.NotNull;
 
@@ -92,5 +93,45 @@ public class BlackMage extends AbstractMage {
   public void equipStaff(Staff staff) {
     this.equippedWeapon = staff;
   }
-  // endregion
+
+  @Override
+  public void castThunder(GameCharacter gameCharacter) throws InvalidStatValueException {
+    assert getCurrentMp() - 15 >= 0;
+    Random random = new Random();
+    int hp = gameCharacter.getCurrentHp();
+    int weaponDamage = this.getEquippedWeapon().getMagicDamage();
+    int enemyDefense = gameCharacter.getDefense();
+    int realDamage = Math.max(0, weaponDamage - enemyDefense);
+    int newHp = Math.max(0, hp - realDamage);
+    gameCharacter.setCurrentHp(newHp);
+    this.setCurrentMp(Math.max(0, getCurrentMp() - 15));
+    int res = random.nextInt(100) + 1;
+    System.out.println(this.getName() + " smacks "
+        + gameCharacter.getName() + " with the power of thunder, "
+        + " dealing " + realDamage + " damage.");
+    if (!gameCharacter.isParalyzed() && res <= 30) {
+      gameCharacter.paralyze();
+      System.out.println(gameCharacter.getName() + " is paralyzed.");
+    }
+  }
+
+  @Override
+  public void castFire(GameCharacter gameCharacter) throws InvalidStatValueException {
+    assert getCurrentMp() - 15 >= 0;
+    Random random = new Random();
+    int hp = gameCharacter.getCurrentHp();
+    int weaponDamage = this.getEquippedWeapon().getMagicDamage();
+    int enemyDefense = gameCharacter.getDefense();
+    int realDamage = Math.max(0, weaponDamage - enemyDefense);
+    int newHp = Math.max(0, hp - realDamage);
+    gameCharacter.setCurrentHp(newHp);
+    this.setCurrentMp(Math.max(0, getCurrentMp() - 15));
+    int res = random.nextInt(100) + 1;
+    System.out.println(this.getName() + " toats "
+        + gameCharacter.getName() + " with the power of fire, dealing " + realDamage + " damage.");
+    if (!gameCharacter.isBurned() && res <= 20) {
+      gameCharacter.burn();
+      System.out.println(gameCharacter.getName() + " is burning.");
+    }
+  }
 }

@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.driver.Player;
+import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
@@ -87,7 +88,6 @@ public class MainTest {
   private ArrayList<Enemy> enemies1;
   private ArrayList<Weapons> weapons1;
   private Player player;
-  private Random random;
 
 
   @Before
@@ -557,7 +557,7 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate()
-      throws InvalidStatValueException, IOException, InterruptedException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
     Axe ax1 = new Axe("Elacha2000", 10, 20);
@@ -571,7 +571,7 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate2()
-      throws InvalidStatValueException, IOException, InterruptedException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
 
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
@@ -581,7 +581,7 @@ public class MainTest {
     enemy.waitTurn();
     party1.add(knight);
     enemies1.add(enemy);
-    Player player2 = new Player("A", "A", "Enemy");
+    Player player2 = new Player("A", "A", "Enemy", "T");
     finalReality = new FinalReality(party1, enemies1, weapons1, player2);
     finalReality.update();
     assertEquals(enemy.getCurrentHp(), 60);
@@ -590,7 +590,7 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate3()
-      throws InvalidStatValueException, IOException, InterruptedException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
 
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
@@ -602,7 +602,7 @@ public class MainTest {
     party1.add(knight);
     enemies1.add(enemy);
     weapons1.add(kf1);
-    Player player2 = new Player("A", "E", "El'kucharon");
+    Player player2 = new Player("A", "E", "El'kucharon", "T");
     finalReality = new FinalReality(party1, enemies1, weapons1, player2);
     finalReality.update();
     assertEquals(knight.getEquippedWeapon(), kf1);
@@ -611,8 +611,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdateBig()
-      throws InvalidStatValueException, InterruptedException, IOException {
-    random = new Random();
+      throws InvalidStatValueException, InterruptedException, IOException, InvalidSkillException {
+    Random random = new Random();
     Knight roderick = new Knight("Sir Roderick", 100, 30, queue);
     Thief jorge = new Thief("Don Jorge", 100, 10, queue);
     Engineer marcus = new Engineer("Chief Engineer Marcus", 100, 5, queue);
@@ -629,11 +629,11 @@ public class MainTest {
     weapons1.add(rod);
     int r = random.nextInt(5 - 1) + 1;
     for (int i = 0; i < r; i++) {
-      Enemy enemy = new Enemy("Mindless Ghoul " + Integer.toString(i),
+      Enemy enemy = new Enemy("Mindless Ghoul " + i,
           10, 100, 3, queue);
       enemies1.add(enemy);
     }
-    Player n_player = new Player("Vijo30", "A", "Mindless Ghoul 0");
+    Player n_player = new Player("Vijo30", "A", "Mindless Ghoul 0", "T");
     FinalReality fr = new FinalReality(party1, enemies1, weapons1, n_player);
     fr.update();
   }

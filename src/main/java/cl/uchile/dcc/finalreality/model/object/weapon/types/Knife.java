@@ -12,6 +12,8 @@ import java.util.Objects;
  * @author ~José Videla~
  */
 public class Knife extends Weapon {
+
+
   /**
    * Creates a weapon with a name, a base damage, speed, and it's type.
    *
@@ -20,7 +22,7 @@ public class Knife extends Weapon {
    * @param weight the object's weight
    */
   public Knife(String name, int damage, int weight) {
-    super(name, damage, weight);
+    super(name, damage, weight, 0);
   }
 
   @Override

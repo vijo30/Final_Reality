@@ -4,6 +4,7 @@ import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -88,5 +89,19 @@ public class Enemy extends AbstractCharacter {
       throws InvalidStatValueException {
     finalReality.attackParty(character);
 
+  }
+
+  /**
+   * Attacks a PlayerCharacter.
+   */
+  public void attack(GameCharacter gameCharacter) throws InvalidStatValueException {
+    Random random = new Random();
+    int hp = gameCharacter.getCurrentHp();
+    int enemyDamage = random.nextInt(30 - 10) + 10;
+    int memberDefense = gameCharacter.getDefense();
+    int realDamage = Math.max(0, (enemyDamage - memberDefense));
+    int newHp = (hp - realDamage);
+    gameCharacter.setCurrentHp(newHp);
+    System.out.print(realDamage + " damage!\n");
   }
 }

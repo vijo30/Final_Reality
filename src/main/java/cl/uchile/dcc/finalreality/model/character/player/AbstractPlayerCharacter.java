@@ -9,6 +9,7 @@
 package cl.uchile.dcc.finalreality.model.character.player;
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
+import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
@@ -131,10 +132,48 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   }
 
   public void execute(FinalReality finalReality, GameCharacter character) throws
-      InvalidStatValueException, IOException {
+      InvalidStatValueException, IOException, InvalidSkillException {
     finalReality.getPlayer().action(finalReality, character);
   }
 
 
+
+  public void castThunder(GameCharacter gameCharacter)
+      throws InvalidSkillException, InvalidStatValueException {
+    throw new InvalidSkillException("You can't do that!");
+  }
+
+  public void castFire(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException {
+    throw new InvalidSkillException("You can't do that!");
+  }
+
+  public void castHeal(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException {
+    throw new InvalidSkillException("You can't do that!");
+  }
+
+  public void castPoison(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException {
+    throw new InvalidSkillException("You can't do that!");
+  }
+
+  public void castParalysis(GameCharacter gameCharacter) throws InvalidSkillException,
+      InvalidStatValueException {
+    throw new InvalidSkillException("You can't do that!");
+  }
+
+  /**
+   * Attacks an enemy.
+   */
+  public void attack(GameCharacter gameCharacter) throws InvalidStatValueException {
+    int hp = gameCharacter.getCurrentHp();
+    int weaponDamage = this.getEquippedWeapon().getDamage();
+    int enemyDefense = gameCharacter.getDefense();
+    int realDamage = Math.max(0, weaponDamage - enemyDefense);
+    int newHp = Math.max(0, hp - realDamage);
+    gameCharacter.setCurrentHp(newHp);
+    System.out.print(realDamage + " damage!\n");
+  }
 
 }

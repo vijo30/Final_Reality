@@ -131,4 +131,8 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
   public LinkedBlockingQueue<GameCharacter> getQueue() {
     return turnsQueue;
   }
+
+
+
+
 }

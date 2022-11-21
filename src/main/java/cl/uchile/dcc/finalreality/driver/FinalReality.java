@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.driver;
 
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
@@ -9,7 +10,6 @@ import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -43,7 +43,7 @@ public class FinalReality {
   public FinalReality(ArrayList<PlayerCharacter> party, ArrayList<Enemy> enemies,
                       ArrayList<Weapons> inventory, Player player) throws InterruptedException {
     assert !party.isEmpty() && !enemies.isEmpty();
-    assert party.size() <= 5 && enemies.size() <= 5;
+    assert party.size() <= 5 && enemies.size() <= 10;
     this.party = party;
     this.enemies = enemies;
     this.inventory = inventory;
@@ -127,7 +127,7 @@ public class FinalReality {
    * Updates the game state.
    */
   public void update()
-      throws IOException, InvalidStatValueException, InterruptedException {
+      throws IOException, InvalidStatValueException, InterruptedException, InvalidSkillException {
     LinkedBlockingQueue<GameCharacter> queue = party.get(0).getQueue();
     if (queue.isEmpty()) {
       refillQueue();
@@ -154,14 +154,9 @@ public class FinalReality {
     boolean found = false;
     for (Enemy enemy : enemies) {
       if (line.equals(enemy.getName())) {
-        int hp = enemy.getCurrentHp();
-        int weaponDamage = partyMember.getEquippedWeapon().getDamage();
-        int enemyDefense = enemy.getDefense();
-        int realDamage = weaponDamage - enemyDefense;
-        int newHp = Math.max(0, hp - realDamage);
-        enemy.setCurrentHp(newHp);
-        System.out.println(partyMember.getName() + " attacks "
-            + enemy.getName() + " dealing " + realDamage + " damage!");
+        System.out.print(partyMember.getName() + " attacks "
+            + enemy.getName() + " dealing ");
+        partyMember.attack(enemy);
         found = true;
       }
     }
@@ -171,9 +166,101 @@ public class FinalReality {
 
   }
 
-  public void castSpell(String line, PlayerCharacter partyMember) {
+  /**
+   * A party member casts a spell to an enemy.
+   */
+  public void castSpell(String line, String line2, PlayerCharacter partyMember)
+      throws InvalidStatValueException, InvalidSkillException {
     assert !this.isOver();
+    try {
+      switch (line) {
+        case "T" -> castSpellThunder(line2, partyMember);
+        case "F" -> castSpellFire(line2, partyMember);
+        case "H" -> castSpellHeal(line2, partyMember);
+        case "Po" -> castSpellPoison(line2, partyMember);
+        case "Pa" -> castSpellParalysis(line2, partyMember);
+        default -> throw new InvalidStatValueException("Invalid option.");
+      }
+    } catch (InvalidSkillException e) {
+      throw new InvalidSkillException("Invalid skill.");
+    }
 
+  }
+
+  private void castSpellThunder(String line2, PlayerCharacter partyMember)
+      throws InvalidSkillException, InvalidStatValueException {
+    assert !this.isOver();
+    boolean found = false;
+    for (Enemy enemy : enemies) {
+      if (line2.equals(enemy.getName())) {
+        found = true;
+        partyMember.castThunder(enemy);
+      }
+    }
+    if (!found) {
+      throw new InvalidStatValueException("Enemy not found.");
+    }
+  }
+
+  private void castSpellFire(String line2, PlayerCharacter partyMember)
+      throws InvalidSkillException, InvalidStatValueException {
+    assert !this.isOver();
+    boolean found = false;
+    for (Enemy enemy : enemies) {
+      if (line2.equals(enemy.getName())) {
+        found = true;
+        partyMember.castFire(enemy);
+      }
+    }
+    if (!found) {
+      throw new InvalidStatValueException("Enemy not found.");
+    }
+  }
+
+  private void castSpellHeal(String line2, PlayerCharacter partyMember)
+      throws InvalidSkillException, InvalidStatValueException {
+    assert !this.isOver();
+    boolean found = false;
+    for (PlayerCharacter ally : party) {
+      if (line2.equals(ally.getName())) {
+        found = true;
+        partyMember.castHeal(ally);
+      }
+    }
+    if (!found) {
+      throw new InvalidStatValueException("Ally not found.");
+    }
+
+  }
+
+  private void castSpellPoison(String line2, PlayerCharacter partyMember)
+      throws InvalidSkillException, InvalidStatValueException {
+    assert !this.isOver();
+    boolean found = false;
+    for (Enemy enemy : enemies) {
+      if (line2.equals(enemy.getName())) {
+        found = true;
+        partyMember.castPoison(enemy);
+      }
+    }
+    if (!found) {
+      throw new InvalidStatValueException("Enemy not found.");
+    }
+  }
+
+  private void castSpellParalysis(String line2, PlayerCharacter partyMember)
+      throws InvalidSkillException, InvalidStatValueException {
+    assert !this.isOver();
+    boolean found = false;
+    for (Enemy enemy : enemies) {
+      if (line2.equals(enemy.getName())) {
+        found = true;
+        partyMember.castParalysis(enemy);
+      }
+    }
+    if (!found) {
+      throw new InvalidStatValueException("Enemy not found.");
+    }
   }
 
   /**
@@ -202,18 +289,12 @@ public class FinalReality {
    */
   public void attackParty(GameCharacter character) throws InvalidStatValueException {
     assert !this.isOver();
-    Random random = new Random();
     ArrayList<PlayerCharacter> party = getParty();
     int index = (int) (Math.random() * party.size());
     PlayerCharacter partyMember = party.get(index);
-    int hp = partyMember.getCurrentHp();
-    int enemyDamage = random.nextInt(30 - 10) + 10;
-    int memberDefense = partyMember.getDefense();
-    int realDamage = Math.max(0, (enemyDamage - memberDefense));
-    int newHp = (hp - realDamage);
-    partyMember.setCurrentHp(newHp);
-    System.out.println(character.getName() + " attacks "
-        + partyMember.getName() + " dealing " + realDamage + " damage!");
+    System.out.print(character.getName() + " attacks "
+        + partyMember.getName() + " dealing ");
+    character.attack(partyMember);
   }
 
   /**

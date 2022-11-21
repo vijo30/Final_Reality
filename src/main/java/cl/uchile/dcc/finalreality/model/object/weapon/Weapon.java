@@ -13,7 +13,7 @@ import cl.uchile.dcc.finalreality.model.object.AbstractObject;
 public abstract class Weapon extends AbstractObject implements Weapons {
 
   protected final int damage;
-
+  protected final int magicDamage;
 
   /**
    * Creates a weapon with a name, a base damage, speed, and it's type.
@@ -27,9 +27,10 @@ public abstract class Weapon extends AbstractObject implements Weapons {
    * @param weight
    *         the weapon's weight
    */
-  public Weapon(final String name, final int damage, final int weight) {
+  public Weapon(final String name, final int damage, final int weight, final int magicDamage) {
     super(name, weight);
     this.damage = damage;
+    this.magicDamage = magicDamage;
   }
 
   @Override
@@ -42,6 +43,10 @@ public abstract class Weapon extends AbstractObject implements Weapons {
    */
   public int getDamage() {
     return damage;
+  }
+
+  public int getMagicDamage() {
+    return magicDamage;
   }
 
 

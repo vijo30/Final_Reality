@@ -21,7 +21,7 @@ public class Bow extends Weapon {
    * @param weight the object's weight
    */
   public Bow(String name, int damage, int weight) {
-    super(name, damage, weight);
+    super(name, damage, weight, 0);
   }
 
   @Override

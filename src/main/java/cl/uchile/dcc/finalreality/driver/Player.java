@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.driver;
 
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
@@ -21,6 +22,7 @@ public class Player {
   private final String name;
   private final BufferedReader in;
   private final BufferedReader in2;
+  private final BufferedReader in3;
 
   /**
    * Constructor to specify an alternative source of moves.
@@ -30,10 +32,11 @@ public class Player {
    * @param in2 A second input which reffers to which enemy is going to attack or
    *            what weapon is going to equip
    */
-  public Player(String name, BufferedReader in, BufferedReader in2) {
+  public Player(String name, BufferedReader in, BufferedReader in2, BufferedReader in3) {
     this.name = name;
     this.in = in;
     this.in2 = in2;
+    this.in3 = in3;
   }
 
   /**
@@ -43,6 +46,7 @@ public class Player {
    */
   public Player(String name) {
     this(name, new BufferedReader(new InputStreamReader(System.in)),
+        new BufferedReader(new InputStreamReader(System.in)),
         new BufferedReader(new InputStreamReader(System.in)));
   }
 
@@ -50,9 +54,10 @@ public class Player {
    * Special constructor meant for testing. Player that plays a premade action from a move1,
    * and selects a target from a move2.
    */
-  public Player(String name, String move1, String move2) {
+  public Player(String name, String move1, String move2, String move3) {
     this(name, new BufferedReader(new StringReader(move1)),
-        new BufferedReader(new StringReader(move2)));
+        new BufferedReader(new StringReader(move2)),
+        new BufferedReader(new StringReader(move3)));
   }
 
   /**
@@ -67,7 +72,7 @@ public class Player {
    * write 'E' for equipping.
    */
   public void action(FinalReality finalReality, GameCharacter character) throws
-      InvalidStatValueException, IOException {
+      InvalidStatValueException, IOException, InvalidSkillException {
     PlayerCharacter partyMember = (PlayerCharacter) character;
     System.out.println("It's " + character.getName() + " turn!");
     System.out.println("Your HP : " + character.getCurrentHp());
@@ -90,6 +95,11 @@ public class Player {
     } catch (InvalidStatValueException e) {
       System.err.println("Invalid command.");
       action(finalReality, character);
+    } catch (InvalidSkillException e) {
+      System.err.println("You can't use that skill.");
+      action(finalReality, character);
+    } catch (AssertionError e) {
+      System.err.println("Not enough mana.");
     }
   }
 
@@ -116,13 +126,31 @@ public class Player {
    */
 
   public void castS(FinalReality finalReality,
-                     PlayerCharacter partyMember) throws IOException {
+                     PlayerCharacter partyMember)
+      throws IOException, InvalidStatValueException, InvalidSkillException {
+    System.out.println("Casters can cast the following spells: ");
+    System.out.println("* Thunder (Black Mage) (Type 'T')");
+    System.out.println("* Fire (Black Mage) (Type 'F')");
+    System.out.println("* Heal (White Mage) (Type 'H')");
+    System.out.println("* Poison (White Mage) (Type 'Po')");
+    System.out.println("* Paralysis (White Mage) (Type 'Pa')");
     String line;
     line = in2.readLine();
     if (line == null) {
       throw new IOException("End of input.");
     }
-    finalReality.castSpell(line, partyMember);
+    System.out.println("Select an enemy or ally to cast a spell. Type its name.");
+    System.out.println("Your enemies: ");
+    for (Enemy enemy : finalReality.getEnemies()) {
+      System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp());
+    }
+    System.out.println("Your allies: ");
+    for (PlayerCharacter ally : finalReality.getParty()) {
+      System.out.println("* Ally name: " + ally.getName() + " | HP : " + ally.getCurrentHp());
+    }
+    String line2;
+    line2 = in3.readLine();
+    finalReality.castSpell(line, line2, partyMember);
 
 
   }
@@ -133,7 +161,7 @@ public class Player {
   public void attackE(FinalReality finalReality,
                           PlayerCharacter partyMember) throws IOException,
       InvalidStatValueException {
-    System.out.println("Select an enemy to attack. Type its name.");
+    System.out.println("Select an enemy to attack or an ally to heal. Type its name.");
     System.out.println("Your enemies: ");
     for (Enemy enemy : finalReality.getEnemies()) {
       System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp());
