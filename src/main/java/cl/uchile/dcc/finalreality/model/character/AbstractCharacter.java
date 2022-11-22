@@ -4,6 +4,8 @@ package cl.uchile.dcc.finalreality.model.character;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.AbstractEntity;
+import cl.uchile.dcc.finalreality.model.character.states.Normal;
+import cl.uchile.dcc.finalreality.model.character.states.State;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +23,8 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
   protected int defense;
   protected final LinkedBlockingQueue<GameCharacter> turnsQueue;
   private State state;
+  private int turn;
+  private int turnEffect;
 
   protected ScheduledExecutorService scheduledExecutor;
 
@@ -46,6 +50,7 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
     this.defense = defense;
     this.turnsQueue = turnsQueue;
     this.setState(new Normal());
+    this.turn = 0;
   }
 
   @SuppressWarnings("checkstyle:ParameterName")
@@ -121,6 +126,22 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
     return defense;
   }
 
+  public int getTurn() {
+    return turn;
+  }
+
+  public void setTurn(int value) {
+    this.turn = value;
+  }
+
+  public int getTurnEffect() {
+    return turnEffect;
+  }
+
+  public void setTurnEffect(int value) {
+    this.turnEffect = value;
+  }
+
   @Override
   public void setCurrentHp(int hp) throws InvalidStatValueException {
     Require.statValueAtLeast(0, hp, "Current HP");
@@ -130,6 +151,14 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
 
   public LinkedBlockingQueue<GameCharacter> getQueue() {
     return turnsQueue;
+  }
+
+  /**
+   * Applies an effect depending on the state.
+   */
+
+  public void applyEffect() throws InvalidStatValueException {
+    state.applyEffect(this);
   }
 
 

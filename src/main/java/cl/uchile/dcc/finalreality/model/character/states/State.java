@@ -1,4 +1,7 @@
-package cl.uchile.dcc.finalreality.model.character;
+package cl.uchile.dcc.finalreality.model.character.states;
+
+import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 
 /**
  * This class represents a state of a GameCharacter.
@@ -14,23 +17,23 @@ public class State {
     gameCharacter.setState(state);
   }
 
-  void error() {
+  public void error() {
     throw new AssertionError("Wrong state.");
   }
 
-  void paralyze() {
+  public void paralyze() {
     error();
   }
 
-  void burn() {
+  public void burn() {
     error();
   }
 
-  void poison() {
+  public void poison() {
     error();
   }
 
-  void undo() {
+  public void undo() {
     error();
   }
 
@@ -49,6 +52,15 @@ public class State {
   public boolean isNormal() {
     return false;
   }
+
+  /**
+   * Applies an effect depending on the state.
+   */
+
+  public void applyEffect(GameCharacter gameCharacter) throws InvalidStatValueException {
+    error();
+  }
+
 
 
 }

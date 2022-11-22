@@ -67,7 +67,7 @@ public class GameDriver {
     inventory.add(rod);
 
     Random random = new Random();
-    int r = random.nextInt(8 - 1) + 1;
+    int r = random.nextInt(8 - 3) + 3;
     for (int i = 0; i < r; i++) {
       Enemy enemy = new Enemy("Mindless Ghoul " + i,
           10, 100, 3, queue);

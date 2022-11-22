@@ -84,18 +84,24 @@ public class WhiteMage extends AbstractMage {
   public void castHeal(GameCharacter gameCharacter) throws InvalidStatValueException {
     assert getCurrentMp() - 15 >= 0;
     int hp = gameCharacter.getCurrentHp();
-    gameCharacter.setCurrentHp(Math.min(hp + (int) (0.3 * hp), gameCharacter.getMaxHp()));
+    gameCharacter.setCurrentHp(Math.min(hp + (int) (0.3 * gameCharacter.getMaxHp()),
+        gameCharacter.getMaxHp()));
     this.setCurrentMp(Math.max(0, getCurrentMp() - 15));
+    System.out.println("You spent " + 15 + " mana.");
+    System.out.println("Now you have " + getCurrentMp() + " mana.");
     System.out.println(this.getName() + " heals "
-        + gameCharacter.getName() + " healing " + Math.min(gameCharacter.getMaxHp()
-        - gameCharacter.getCurrentHp(), (int) (0.3 * hp)) + " hp.");
+        + gameCharacter.getName() + " healing " +  ((int) (0.3 * gameCharacter.getMaxHp()))
+        + " hp.");
   }
 
   @Override
   public void castPoison(GameCharacter gameCharacter) throws InvalidStatValueException {
     assert getCurrentMp() - 40 >= 0;
     this.setCurrentMp(Math.max(0, getCurrentMp() - 40));
+    System.out.println("You spent " + 40 + " mana.");
+    System.out.println("Now you have " + getCurrentMp() + " mana.");
     if (!gameCharacter.isPoisoned()) {
+      gameCharacter.setTurnEffect(gameCharacter.getTurn());
       gameCharacter.poison();
       System.out.println(gameCharacter.getName() + " is poisoned.");
     }
@@ -105,7 +111,10 @@ public class WhiteMage extends AbstractMage {
   public void castParalysis(GameCharacter gameCharacter) throws InvalidStatValueException {
     assert getCurrentMp() - 25 >= 0;
     this.setCurrentMp(Math.max(0, getCurrentMp() - 25));
+    System.out.println("You spent " + 25 + " mana.");
+    System.out.println("Now you have " + getCurrentMp() + " mana.");
     if (!gameCharacter.isParalyzed()) {
+      gameCharacter.setTurnEffect(gameCharacter.getTurn());
       gameCharacter.paralyze();
       System.out.println(gameCharacter.getName() + " is paralyzed.");
     }

@@ -32,6 +32,7 @@ public class FinalReality {
 
 
 
+
   /**
    * Creates the game.
    *
@@ -134,7 +135,16 @@ public class FinalReality {
     }
     GameCharacter character = queue.poll();
     assert character != null;
-    if (character.getCurrentHp() > 0) {
+    character.setTurn(character.getTurn() + 1);
+    int turn = character.getTurn();
+    System.out.println("Character: " + character.getName() + " | Turn: " + turn);
+    int turnEffect = character.getTurnEffect();
+    if (character.isParalyzed() && (turn - turnEffect == 2)) {
+      character.undo();
+      System.out.println(character.getName() + " is no longer paralyzed.");
+    }
+    character.applyEffect();
+    if (character.getCurrentHp() > 0 && !character.isParalyzed()) {
       character.execute(this, character);
     }
 
@@ -150,7 +160,6 @@ public class FinalReality {
    */
   public void attackEnemy(String line, PlayerCharacter partyMember)
       throws InvalidStatValueException {
-    assert !this.isOver();
     boolean found = false;
     for (Enemy enemy : enemies) {
       if (line.equals(enemy.getName())) {
@@ -171,7 +180,6 @@ public class FinalReality {
    */
   public void castSpell(String line, String line2, PlayerCharacter partyMember)
       throws InvalidStatValueException, InvalidSkillException {
-    assert !this.isOver();
     try {
       switch (line) {
         case "T" -> castSpellThunder(line2, partyMember);
@@ -189,7 +197,6 @@ public class FinalReality {
 
   private void castSpellThunder(String line2, PlayerCharacter partyMember)
       throws InvalidSkillException, InvalidStatValueException {
-    assert !this.isOver();
     boolean found = false;
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
@@ -204,7 +211,6 @@ public class FinalReality {
 
   private void castSpellFire(String line2, PlayerCharacter partyMember)
       throws InvalidSkillException, InvalidStatValueException {
-    assert !this.isOver();
     boolean found = false;
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
@@ -219,7 +225,6 @@ public class FinalReality {
 
   private void castSpellHeal(String line2, PlayerCharacter partyMember)
       throws InvalidSkillException, InvalidStatValueException {
-    assert !this.isOver();
     boolean found = false;
     for (PlayerCharacter ally : party) {
       if (line2.equals(ally.getName())) {
@@ -235,7 +240,6 @@ public class FinalReality {
 
   private void castSpellPoison(String line2, PlayerCharacter partyMember)
       throws InvalidSkillException, InvalidStatValueException {
-    assert !this.isOver();
     boolean found = false;
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
@@ -250,7 +254,6 @@ public class FinalReality {
 
   private void castSpellParalysis(String line2, PlayerCharacter partyMember)
       throws InvalidSkillException, InvalidStatValueException {
-    assert !this.isOver();
     boolean found = false;
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
@@ -267,7 +270,6 @@ public class FinalReality {
    * Equips a weapon, if it exists and if the character can equip it.
    */
   public void equip(String line, PlayerCharacter partyMember) throws InvalidStatValueException {
-    assert !this.isOver();
     assert !inventory.isEmpty();
     boolean found = false;
     for (Weapons weapon : inventory) {
@@ -288,7 +290,6 @@ public class FinalReality {
    * An enemy attacks a random party member.
    */
   public void attackParty(GameCharacter character) throws InvalidStatValueException {
-    assert !this.isOver();
     ArrayList<PlayerCharacter> party = getParty();
     int index = (int) (Math.random() * party.size());
     PlayerCharacter partyMember = party.get(index);

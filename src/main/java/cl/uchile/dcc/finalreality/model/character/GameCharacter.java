@@ -3,6 +3,7 @@ package cl.uchile.dcc.finalreality.model.character;
 import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.model.character.states.State;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -46,6 +47,15 @@ public interface GameCharacter {
    */
   void setCurrentHp(int hp) throws InvalidStatValueException;
 
+  int getTurn();
+
+  void setTurn(int value);
+
+  int getTurnEffect();
+
+  void setTurnEffect(int value);
+
+
   /**
    * Sets wait turn depending on the case.
    */
@@ -76,4 +86,6 @@ public interface GameCharacter {
   boolean isNormal();
 
   void attack(GameCharacter gameCharacter) throws InvalidStatValueException;
+
+  void applyEffect() throws InvalidStatValueException;
 }

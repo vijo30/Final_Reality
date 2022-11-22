@@ -176,4 +176,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     System.out.print(realDamage + " damage!\n");
   }
 
+
+
+
 }
