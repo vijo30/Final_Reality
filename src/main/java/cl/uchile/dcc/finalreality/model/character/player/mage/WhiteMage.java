@@ -86,9 +86,10 @@ public class WhiteMage extends AbstractMage {
     int hp = gameCharacter.getCurrentHp();
     gameCharacter.setCurrentHp(Math.min(hp + (int) (0.3 * gameCharacter.getMaxHp()),
         gameCharacter.getMaxHp()));
+    System.out.println(this.getName() + " | Maximum mana: " + this.getMaxMp() + " mana.");
     this.setCurrentMp(Math.max(0, getCurrentMp() - 15));
-    System.out.println("You spent " + 15 + " mana.");
-    System.out.println("Now you have " + getCurrentMp() + " mana.");
+    System.out.println(this.getName() + " has spent " + 15 + " mana.");
+    System.out.println(this.getName() + " now has " + getCurrentMp() + " mana.");
     System.out.println(this.getName() + " heals "
         + gameCharacter.getName() + " healing " +  ((int) (0.3 * gameCharacter.getMaxHp()))
         + " hp.");
@@ -97,9 +98,10 @@ public class WhiteMage extends AbstractMage {
   @Override
   public void castPoison(GameCharacter gameCharacter) throws InvalidStatValueException {
     assert getCurrentMp() - 40 >= 0;
+    System.out.println(this.getName() + " | Maximum mana: " + this.getMaxMp() + " mana.");
     this.setCurrentMp(Math.max(0, getCurrentMp() - 40));
-    System.out.println("You spent " + 40 + " mana.");
-    System.out.println("Now you have " + getCurrentMp() + " mana.");
+    System.out.println(this.getName() + " has spent " + 40 + " mana.");
+    System.out.println(this.getName() + " now has " + getCurrentMp() + " mana.");
     if (!gameCharacter.isPoisoned()) {
       gameCharacter.setTurnEffect(gameCharacter.getTurn());
       gameCharacter.poison();
@@ -110,9 +112,10 @@ public class WhiteMage extends AbstractMage {
   @Override
   public void castParalysis(GameCharacter gameCharacter) throws InvalidStatValueException {
     assert getCurrentMp() - 25 >= 0;
+    System.out.println(this.getName() + " | Maximum mana: " + this.getMaxMp() + " mana.");
     this.setCurrentMp(Math.max(0, getCurrentMp() - 25));
-    System.out.println("You spent " + 25 + " mana.");
-    System.out.println("Now you have " + getCurrentMp() + " mana.");
+    System.out.println(this.getName() + " has spent " + 25 + " mana.");
+    System.out.println(this.getName() + " now has " + getCurrentMp() + " mana.");
     if (!gameCharacter.isParalyzed()) {
       gameCharacter.setTurnEffect(gameCharacter.getTurn());
       gameCharacter.paralyze();

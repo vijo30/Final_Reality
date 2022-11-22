@@ -43,6 +43,13 @@ public abstract class AbstractMage extends AbstractPlayerCharacter {
   }
 
   /**
+   * Returns the max MP of the character.
+   */
+  public int getMaxMp() {
+    return maxMp;
+  }
+
+  /**
    * Returns the current MP of the character.
    */
   public int getCurrentMp() {

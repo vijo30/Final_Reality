@@ -274,10 +274,14 @@ public class FinalReality {
     boolean found = false;
     for (Weapons weapon : inventory) {
       if (line.equals(weapon.getName())) {
-        partyMember.equip(weapon);
-        found = true;
         System.out.println(partyMember.getName() + " equips "
             + weapon.getName() + "!");
+        System.out.println(partyMember.getEquippedWeapon().getName() + " is now in the inventory.");
+        inventory.add(partyMember.getEquippedWeapon());
+        partyMember.equip(weapon);
+        inventory.remove(weapon);
+        found = true;
+
       }
     }
     if (!found) {

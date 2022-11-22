@@ -104,9 +104,10 @@ public class BlackMage extends AbstractMage {
     int realDamage = Math.max(0, weaponDamage - enemyDefense);
     int newHp = Math.max(0, hp - realDamage);
     gameCharacter.setCurrentHp(newHp);
+    System.out.println(this.getName() + " | Maximum mana: " + this.getMaxMp() + " mana.");
     this.setCurrentMp(Math.max(0, getCurrentMp() - 15));
-    System.out.println("You spent " + 15 + " mana.");
-    System.out.println("Now you have " + getCurrentMp() + " mana.");
+    System.out.println(this.getName() + " has spent " + 15 + " mana.");
+    System.out.println(this.getName() + " now has " + getCurrentMp() + " mana.");
     random = new Random();
     int res = random.nextInt(100) + 1;
     System.out.println(this.getName() + " smacks "
@@ -128,12 +129,13 @@ public class BlackMage extends AbstractMage {
     int realDamage = Math.max(0, weaponDamage - enemyDefense);
     int newHp = Math.max(0, hp - realDamage);
     gameCharacter.setCurrentHp(newHp);
+    System.out.println(this.getName() + " | Maximum mana: " + this.getMaxMp() + " mana.");
     this.setCurrentMp(Math.max(0, getCurrentMp() - 15));
-    System.out.println("You spent " + 15 + " mana.");
-    System.out.println("Now you have " + getCurrentMp() + " mana.");
+    System.out.println(this.getName() + " has spent " + 15 + " mana.");
+    System.out.println(this.getName() + " now has " + getCurrentMp() + " mana.");
     random = new Random();
     int res = random.nextInt(100) + 1;
-    System.out.println(this.getName() + " toats "
+    System.out.println(this.getName() + " roasts "
         + gameCharacter.getName() + " with the power of fire, dealing " + realDamage + " damage.");
     if (!gameCharacter.isBurned() && res <= 20) {
       gameCharacter.setTurnEffect(gameCharacter.getTurn());

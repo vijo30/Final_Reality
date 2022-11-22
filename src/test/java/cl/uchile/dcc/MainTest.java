@@ -22,6 +22,7 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Knight;
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief;
 import cl.uchile.dcc.finalreality.model.character.player.mage.BlackMage;
 import cl.uchile.dcc.finalreality.model.character.player.mage.WhiteMage;
+import cl.uchile.dcc.finalreality.model.character.states.State;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
@@ -47,47 +48,47 @@ import org.junit.jupiter.api.DisplayName;
 
 
 public class MainTest {
-  private LinkedBlockingQueue<GameCharacter> queue;
-  private GameCharacter gc1;
-  private Enemy e1;
-  private Enemy e2;
-  private Enemy e3;
-  private Engineer en1;
-  private Engineer en2;
-  private Engineer en3;
-  private Knight k1;
-  private Knight k2;
-  private Knight k3;
-  private Thief t1;
-  private Thief t2;
-  private Thief t3;
-  private BlackMage bm1;
-  private BlackMage bm2;
-  private BlackMage bm3;
-  private WhiteMage wm1;
-  private WhiteMage wm2;
-  private WhiteMage wm3;
-  private Axe ax1;
-  private Axe ax2;
-  private Axe ax3;
-  private Bow bw1;
-  private Bow bw2;
-  private Bow bw3;
-  private Knife kf1;
-  private Knife kf2;
-  private Knife kf3;
-  private Staff sf1;
-  private Staff sf2;
-  private Staff sf3;
-  private Sword sw1;
-  private Sword sw2;
-  private Sword sw3;
-  private Random rng;
-  private FinalReality finalReality;
-  private ArrayList<PlayerCharacter> party1;
-  private ArrayList<Enemy> enemies1;
-  private ArrayList<Weapons> weapons1;
-  private Player player;
+  protected LinkedBlockingQueue<GameCharacter> queue;
+  protected GameCharacter gc1;
+  protected Enemy e1;
+  protected Enemy e2;
+  protected Enemy e3;
+  protected Engineer en1;
+  protected Engineer en2;
+  protected Engineer en3;
+  protected Knight k1;
+  protected Knight k2;
+  protected Knight k3;
+  protected Thief t1;
+  protected Thief t2;
+  protected Thief t3;
+  protected BlackMage bm1;
+  protected BlackMage bm2;
+  protected BlackMage bm3;
+  protected WhiteMage wm1;
+  protected WhiteMage wm2;
+  protected WhiteMage wm3;
+  protected Axe ax1;
+  protected Axe ax2;
+  protected Axe ax3;
+  protected Bow bw1;
+  protected Bow bw2;
+  protected Bow bw3;
+  protected Knife kf1;
+  protected Knife kf2;
+  protected Knife kf3;
+  protected Staff sf1;
+  protected Staff sf2;
+  protected Staff sf3;
+  protected Sword sw1;
+  protected Sword sw2;
+  protected Sword sw3;
+  protected Random rng;
+  protected FinalReality finalReality;
+  protected ArrayList<PlayerCharacter> party1;
+  protected ArrayList<Enemy> enemies1;
+  protected ArrayList<Weapons> weapons1;
+  protected Player player;
 
 
   @Before
@@ -340,6 +341,12 @@ public class MainTest {
   }
 
   @Test
+  public void testWeaponGetMagicDamage() {
+    assertEquals(ax1.getMagicDamage(), 0);
+    assertEquals(sf1.getMagicDamage(),10);
+  }
+
+  @Test
   public void testMageGetCurrentMp() {
     assertEquals(bm1.getCurrentMp(), 100);
   }
@@ -476,6 +483,17 @@ public class MainTest {
     String generatedString = RandomStringUtils.randomAlphabetic(10);
     InvalidStatValueException exception = assertThrows(InvalidStatValueException.class, () -> {
       throw new InvalidStatValueException(generatedString);
+    });
+    assertEquals(PREFIX + generatedString, exception.getMessage());
+  }
+
+  @DisplayName("An invalid stat value exception can be thrown with a message.")
+  @Test
+  public void InvalidSkillExceptionTest() {
+    final String PREFIX = "You don't have that skill. ";
+    String generatedString = RandomStringUtils.randomAlphabetic(10);
+    InvalidSkillException exception = assertThrows(InvalidSkillException.class, () -> {
+      throw new InvalidSkillException(generatedString);
     });
     assertEquals(PREFIX + generatedString, exception.getMessage());
   }
@@ -636,7 +654,153 @@ public class MainTest {
     Player n_player = new Player("Vijo30", "A", "Mindless Ghoul 0", "T");
     FinalReality fr = new FinalReality(party1, enemies1, weapons1, n_player);
     fr.update();
+    for (Enemy enemy : enemies1) {
+      if (enemy.getName().equals("Mindless Ghoul 0")) {
+        assertEquals(enemy.getCurrentHp(), enemy.getMaxHp()
+            - jorge.getEquippedWeapon().getDamage() + enemy.getDefense());
+      }
+    }
   }
+
+  @Test
+  public void stateNormalTest() throws InvalidStatValueException {
+    assertTrue(bm1.isNormal());
+    bm1.applyEffect(); // does nothing
+    assertThrows(AssertionError.class, () -> bm1.undo());
+  }
+
+  @Test
+  public void stateParalyzeTest() throws InvalidStatValueException {
+    bm1.paralyze();
+    assertTrue(bm1.isParalyzed());
+    bm1.applyEffect(); // does nothing just prints a message
+    assertThrows(AssertionError.class, () -> bm1.paralyze());
+    assertThrows(AssertionError.class, () -> bm1.burn());
+    assertThrows(AssertionError.class, () -> bm1.poison());
+    bm1.undo();
+    assertTrue(bm1.isNormal());
+  }
+
+  @Test
+  public void stateBurnTest() throws InvalidStatValueException {
+    bm1.burn();
+    assertTrue(bm1.isBurned());
+    bm1.applyEffect();
+    assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ((int) (bm1.getMaxHp() / 2)));
+    assertThrows(AssertionError.class, () -> bm1.paralyze());
+    assertThrows(AssertionError.class, () -> bm1.burn());
+    assertThrows(AssertionError.class, () -> bm1.poison());
+    bm1.undo();
+    assertTrue(bm1.isNormal());
+  }
+
+  @Test
+  public void statePoisonTest() throws InvalidStatValueException {
+    bm1.poison();
+    assertTrue(bm1.isPoisoned());
+    bm1.applyEffect();
+    assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ((int) (bm1.getMaxHp() / 3)));
+    assertThrows(AssertionError.class, () -> bm1.paralyze());
+    assertThrows(AssertionError.class, () -> bm1.burn());
+    assertThrows(AssertionError.class, () -> bm1.poison());
+    bm1.undo();
+    assertTrue(bm1.isNormal());
+  }
+
+  @Test
+  public void testState() throws InvalidStatValueException {
+    State state = new State();
+    assertFalse(state.isParalyzed());
+    assertFalse(state.isBurned());
+    assertFalse(state.isParalyzed());
+    assertFalse(state.isNormal());
+    assertThrows(AssertionError.class, () -> state.applyEffect(bm1));
+  }
+
+  @Test
+  public void testTurn() {
+    assertEquals(bm1.getTurn(), 0);
+    bm1.setTurn(1);
+    assertEquals(bm1.getTurn(), 1);
+    bm1.setTurnEffect(bm1.getTurn());
+    assertEquals(bm1.getTurnEffect(), 1);
+  }
+
+  @Test
+  public void testCastThunder() throws InvalidStatValueException {
+    wm1.equip(sf1);
+    assertThrows(InvalidSkillException.class, () -> wm1.castThunder(bm1));
+    bm1.equip(sf1);
+    bm1.castThunder(wm1);
+    int hp = wm1.getCurrentHp();
+    int weaponDamage = bm1.getEquippedWeapon().getMagicDamage();
+    int defense = wm1.getDefense();
+    int realDamage = Math.max(0, weaponDamage - defense);
+    int newHp = Math.max(0, hp - realDamage);
+    assertEquals(hp, newHp);
+    bm1.setCurrentMp(0);
+    assertThrows(AssertionError.class, () -> bm1.castThunder(wm1));
+  }
+
+  @Test
+  public void testCastFire() throws InvalidStatValueException {
+    wm1.equip(sf1);
+    assertThrows(InvalidSkillException.class, () -> wm1.castFire(bm1));
+    bm1.equip(sf1);
+    bm1.castFire(wm1);
+    int hp = wm1.getCurrentHp();
+    int weaponDamage = bm1.getEquippedWeapon().getMagicDamage();
+    int defense = wm1.getDefense();
+    int realDamage = Math.max(0, weaponDamage - defense);
+    int newHp = Math.max(0, hp - realDamage);
+    assertEquals(hp, newHp);
+    bm1.setCurrentMp(0);
+    assertThrows(AssertionError.class, () -> bm1.castFire(wm1));
+  }
+
+
+
+  @Test
+  public void testCastHeal() throws InvalidStatValueException {
+    bm1.equip(sf1);
+    assertThrows(InvalidSkillException.class, () -> bm1.castHeal(wm1));
+    wm1.equip(sf1);
+    wm1.castHeal(bm1);
+    int hp = bm1.getCurrentHp();
+    int newHp = Math.min(hp + (int) (0.3 * bm1.getMaxHp()), bm1.getMaxHp());
+    bm1.setCurrentHp(Math.min(hp + (int) (0.3 * bm1.getMaxHp()), bm1.getMaxHp()));
+    assertEquals(hp, newHp);
+    wm1.setCurrentMp(0);
+    assertThrows(AssertionError.class, () -> wm1.castHeal(bm1));
+  }
+
+  @Test
+  public void testCastPoison() throws InvalidStatValueException {
+    bm1.equip(sf1);
+    assertThrows(InvalidSkillException.class, () -> bm1.castPoison(wm1));
+    wm1.equip(sf1);
+    wm1.castPoison(bm1);
+    assertTrue(bm1.isPoisoned());
+    wm1.setCurrentMp(0);
+    assertThrows(AssertionError.class, () -> wm1.castPoison(bm1));
+  }
+
+  @Test
+  public void testCastParalysis() throws InvalidStatValueException {
+    bm1.equip(sf1);
+    assertThrows(InvalidSkillException.class, () -> bm1.castParalysis(wm1));
+    wm1.equip(sf1);
+    wm1.castParalysis(bm1);
+    assertTrue(bm1.isParalyzed());
+    wm1.setCurrentMp(0);
+    assertThrows(AssertionError.class, () -> wm1.castParalysis(bm1));
+  }
+
+
+
+
+
+
 
 
 
