@@ -29,8 +29,9 @@ public class Player {
    *
    * @param name The name of the user.
    * @param in  An input from the player, in this case, what action is going to make.
-   * @param in2 A second input which reffers to which enemy is going to attack or
-   *            what weapon is going to equip
+   * @param in2 A second input from the player, in this case, what spell is going to cast.
+   * @param in3 A thrid input which reffers to which enemy is going to attack or
+   *    *            what weapon is going to equip.
    */
   public Player(String name, BufferedReader in, BufferedReader in2, BufferedReader in3) {
     this.name = name;
@@ -54,6 +55,18 @@ public class Player {
    * Special constructor meant for testing. Player that plays a premade action from a move1,
    * and selects a target from a move2.
    */
+
+  public Player(String name, String move1, String move2) {
+    this(name, new BufferedReader(new StringReader(move1)),
+        new BufferedReader(new StringReader(move2)),
+        new BufferedReader(new StringReader("default")));
+  }
+
+  /**
+   * Special constructor meant for testing. Player that plays a premade action from a move1,
+   * and selects a spell from a move2, and select a character from move3.
+   */
+
   public Player(String name, String move1, String move2, String move3) {
     this(name, new BufferedReader(new StringReader(move1)),
         new BufferedReader(new StringReader(move2)),

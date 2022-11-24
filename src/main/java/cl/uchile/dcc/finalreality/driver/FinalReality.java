@@ -43,7 +43,6 @@ public class FinalReality {
    */
   public FinalReality(ArrayList<PlayerCharacter> party, ArrayList<Enemy> enemies,
                       ArrayList<Weapons> inventory, Player player) throws InterruptedException {
-    assert !party.isEmpty() && !enemies.isEmpty();
     assert party.size() <= 5 && enemies.size() <= 10;
     this.party = party;
     this.enemies = enemies;
@@ -150,9 +149,7 @@ public class FinalReality {
 
   }
 
-  public String toString() {
-    return "FinalReality\n";
-  }
+
 
 
   /**

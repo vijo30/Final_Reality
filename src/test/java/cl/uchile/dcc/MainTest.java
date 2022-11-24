@@ -48,47 +48,48 @@ import org.junit.jupiter.api.DisplayName;
 
 
 public class MainTest {
-  protected LinkedBlockingQueue<GameCharacter> queue;
-  protected GameCharacter gc1;
-  protected Enemy e1;
-  protected Enemy e2;
-  protected Enemy e3;
-  protected Engineer en1;
-  protected Engineer en2;
-  protected Engineer en3;
-  protected Knight k1;
-  protected Knight k2;
-  protected Knight k3;
-  protected Thief t1;
-  protected Thief t2;
-  protected Thief t3;
-  protected BlackMage bm1;
-  protected BlackMage bm2;
-  protected BlackMage bm3;
-  protected WhiteMage wm1;
-  protected WhiteMage wm2;
-  protected WhiteMage wm3;
-  protected Axe ax1;
-  protected Axe ax2;
-  protected Axe ax3;
-  protected Bow bw1;
-  protected Bow bw2;
-  protected Bow bw3;
-  protected Knife kf1;
-  protected Knife kf2;
-  protected Knife kf3;
-  protected Staff sf1;
-  protected Staff sf2;
-  protected Staff sf3;
-  protected Sword sw1;
-  protected Sword sw2;
-  protected Sword sw3;
-  protected Random rng;
-  protected FinalReality finalReality;
-  protected ArrayList<PlayerCharacter> party1;
-  protected ArrayList<Enemy> enemies1;
-  protected ArrayList<Weapons> weapons1;
-  protected Player player;
+  private LinkedBlockingQueue<GameCharacter> queue;
+  private GameCharacter gc1;
+  private Enemy e1;
+  private Enemy e2;
+  private Enemy e3;
+  private Engineer en1;
+  private Engineer en2;
+  private Engineer en3;
+  private Knight k1;
+  private Knight k2;
+  private Knight k3;
+  private Thief t1;
+  private Thief t2;
+  private Thief t3;
+  private BlackMage bm1;
+  private BlackMage bm2;
+  private BlackMage bm3;
+  private WhiteMage wm1;
+  private WhiteMage wm2;
+  private WhiteMage wm3;
+  private Axe ax1;
+  private Axe ax2;
+  private Axe ax3;
+  private Bow bw1;
+  private Bow bw2;
+  private Bow bw3;
+  private Knife kf1;
+  private Knife kf2;
+  private Knife kf3;
+  private Staff sf1;
+  private Staff sf2;
+  private Staff sf3;
+  private Sword sw1;
+  private Sword sw2;
+  private Sword sw3;
+  private Random rng;
+  private FinalReality finalReality;
+  private ArrayList<PlayerCharacter> party;
+  private ArrayList<Enemy> enemies;
+  private ArrayList<Weapons> inventory;
+  private Player player;
+
 
 
   @Before
@@ -144,10 +145,11 @@ public class MainTest {
     sw3 = new Sword("sw3", 10, 10);
     //
     rng = new Random();
-    party1 = new ArrayList<>();
-    enemies1 = new ArrayList<>();
-    weapons1 = new ArrayList<>();
+    party = new ArrayList<>();
+    enemies = new ArrayList<>();
+    inventory = new ArrayList<>();
     player = new Player("Tete");
+
 
   }
 
@@ -380,7 +382,7 @@ public class MainTest {
       enemy.waitTurn();
     }
     // Waits for 6 seconds to ensure that all characters have finished waiting
-    Thread.sleep(6000);
+    Thread.sleep(7000);
     assertEquals(Objects.requireNonNull(queue.poll()), c1);
     System.out.println(queue);
     //while (!queue.isEmpty()) {
@@ -501,17 +503,17 @@ public class MainTest {
   @Test
   public void finalRealityInit() throws InvalidStatValueException, InterruptedException {
     k1.equip(ax1);
-    party1.add(k1);
+    party.add(k1);
 
 
-    enemies1.add(e1);
-    enemies1.add(e2);
-    enemies1.add(e3);
+    enemies.add(e1);
+    enemies.add(e2);
+    enemies.add(e3);
 
-    weapons1.add(ax1);
-    weapons1.add(sf1);
+    inventory.add(ax1);
+    inventory.add(sf1);
     Player player = new Player("A");
-    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    finalReality = new FinalReality(party, enemies, inventory, player);
 
     assertNotNull(finalReality);
     assertNotNull(finalReality.getParty());
@@ -526,11 +528,11 @@ public class MainTest {
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
     enemy.setCurrentHp(0);
     e1.setCurrentHp(0);
-    party1.add(knight);
-    enemies1.add(enemy);
-    enemies1.add(e1);
+    party.add(knight);
+    enemies.add(enemy);
+    enemies.add(e1);
     Player player = new Player("A");
-    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    finalReality = new FinalReality(party, enemies, inventory, player);
     assertTrue(finalReality.isOver());
     assertTrue(finalReality.deadEnemy());
     assertFalse(finalReality.deadPlayer());
@@ -544,11 +546,11 @@ public class MainTest {
     t1.equip(kf1);
     knight.setCurrentHp(0);
     t1.setCurrentHp(0);
-    party1.add(knight);
-    party1.add(t1);
-    enemies1.add(enemy);
+    party.add(knight);
+    party.add(t1);
+    enemies.add(enemy);
     Player player = new Player("A");
-    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    finalReality = new FinalReality(party, enemies, inventory, player);
     assertTrue(finalReality.isOver());
     assertTrue(finalReality.deadPlayer());
     assertFalse(finalReality.deadEnemy());
@@ -560,14 +562,14 @@ public class MainTest {
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
     knight.equip(ax1);
     t1.equip(kf1);
-    party1.add(knight);
+    party.add(knight);
     t1.setCurrentHp(0);
-    party1.add(t1);
-    enemies1.add(enemy);
-    enemies1.add(e1);
+    party.add(t1);
+    enemies.add(enemy);
+    enemies.add(e1);
     Player player = new Player("A");
 
-    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    finalReality = new FinalReality(party, enemies, inventory, player);
     assertFalse(finalReality.isOver());
     assertFalse(finalReality.deadPlayer());
     assertFalse(finalReality.deadEnemy());
@@ -580,9 +582,9 @@ public class MainTest {
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
     Axe ax1 = new Axe("Elacha2000", 10, 20);
     knight.equip(ax1);
-    party1.add(knight);
-    enemies1.add(enemy);
-    finalReality = new FinalReality(party1, enemies1, weapons1, player);
+    party.add(knight);
+    enemies.add(enemy);
+    finalReality = new FinalReality(party, enemies, inventory, player);
     finalReality.update();
 
   }
@@ -597,10 +599,10 @@ public class MainTest {
     knight.equip(ax1);
     knight.waitTurn();
     enemy.waitTurn();
-    party1.add(knight);
-    enemies1.add(enemy);
-    Player player2 = new Player("A", "A", "Enemy", "T");
-    finalReality = new FinalReality(party1, enemies1, weapons1, player2);
+    party.add(knight);
+    enemies.add(enemy);
+    Player player2 = new Player("A", "A", "Enemy");
+    finalReality = new FinalReality(party, enemies, inventory, player2);
     finalReality.update();
     assertEquals(enemy.getCurrentHp(), 60);
 
@@ -617,16 +619,183 @@ public class MainTest {
     knight.equip(ax1);
     knight.waitTurn();
     enemy.waitTurn();
-    party1.add(knight);
-    enemies1.add(enemy);
-    weapons1.add(kf1);
-    Player player2 = new Player("A", "E", "El'kucharon", "T");
-    finalReality = new FinalReality(party1, enemies1, weapons1, player2);
+    party.add(knight);
+    enemies.add(enemy);
+    inventory.add(kf1);
+    Player player2 = new Player("A", "E", "El'kucharon");
+    finalReality = new FinalReality(party, enemies, inventory, player2);
     finalReality.update();
     assertEquals(knight.getEquippedWeapon(), kf1);
+    assertEquals(inventory.get(0), ax1);
 
   }
 
+  @Test
+  public void finalRealityUpdate4()
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+
+    Random random = new Random();
+    WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
+        100, queue);
+    BlackMage marcellus = new BlackMage("Dark Lord Marcellus", 100, 2,
+        100, queue);
+    Staff purifier = new Staff("The Purifier", 10, 12, 50);
+    Staff soul = new Staff("The Soulripper", 10, 2, 60);
+    Staff rod = new Staff("Wisdom Rod", 10, 1, 40);
+    marcellus.equip(soul);
+    benedictus.equip(purifier);
+    party.add(marcellus);
+    party.add(benedictus);
+    inventory.add(rod);
+    int r = random.nextInt(5 - 1) + 1;
+    for (int i = 0; i < r; i++) {
+      Enemy enemy = new Enemy("Mindless Ghoul " + i,
+          10, 100, 3, queue);
+      enemies.add(enemy);
+    }
+    Player n_player = new Player("Vijo30", "S", "T", "Mindless Ghoul 0");
+    FinalReality fr = new FinalReality(party, enemies, inventory, n_player);
+    fr.update();
+    for (Enemy enemy : enemies) {
+      if (enemy.getName().equals("Mindless Ghoul 0")) {
+        assertEquals(enemy.getCurrentHp(), enemy.getMaxHp()
+            - marcellus.getEquippedWeapon().getMagicDamage() + enemy.getDefense());
+      }
+    }
+  }
+
+  @Test
+  public void finalRealityUpdate5()
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+
+    Random random = new Random();
+    WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
+        100, queue);
+    BlackMage marcellus = new BlackMage("Dark Lord Marcellus", 100, 2,
+        100, queue);
+    Staff purifier = new Staff("The Purifier", 10, 12, 50);
+    Staff soul = new Staff("The Soulripper", 10, 2, 60);
+    Staff rod = new Staff("Wisdom Rod", 10, 1, 40);
+    marcellus.equip(soul);
+    benedictus.equip(purifier);
+    party.add(marcellus);
+    party.add(benedictus);
+    inventory.add(rod);
+    int r = random.nextInt(5 - 1) + 1;
+    for (int i = 0; i < r; i++) {
+      Enemy enemy = new Enemy("Mindless Ghoul " + i,
+          10, 100, 3, queue);
+      enemies.add(enemy);
+    }
+    Player n_player = new Player("Vijo30", "S", "F", "Mindless Ghoul 0");
+    FinalReality fr = new FinalReality(party, enemies, inventory, n_player);
+    fr.update();
+    for (Enemy enemy : enemies) {
+      if (enemy.getName().equals("Mindless Ghoul 0")) {
+        assertEquals(enemy.getCurrentHp(), enemy.getMaxHp()
+            - marcellus.getEquippedWeapon().getMagicDamage() + enemy.getDefense());
+      }
+    }
+  }
+
+  @Test
+  public void finalRealityUpdate6()
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+
+    Random random = new Random();
+    WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
+        100, queue);
+    BlackMage marcellus = new BlackMage("Dark Lord Marcellus", 100, 2,
+        100, queue);
+    Staff purifier = new Staff("The Purifier", 10, 2, 50);
+    Staff soul = new Staff("The Soulripper", 10, 12, 60);
+    Staff rod = new Staff("Wisdom Rod", 10, 1, 40);
+    marcellus.equip(soul);
+    benedictus.equip(purifier);
+    party.add(marcellus);
+    party.add(benedictus);
+    inventory.add(rod);
+    int r = random.nextInt(5 - 1) + 1;
+    for (int i = 0; i < r; i++) {
+      Enemy enemy = new Enemy("Mindless Ghoul " + i,
+          10, 100, 3, queue);
+      enemies.add(enemy);
+    }
+    Player n_player = new Player("Vijo30", "S", "Po", "Mindless Ghoul 0");
+    FinalReality fr = new FinalReality(party, enemies, inventory, n_player);
+    fr.update();
+    for (Enemy enemy : enemies) {
+      if (enemy.getName().equals("Mindless Ghoul 0")) {
+        assertTrue(enemy.isPoisoned());
+      }
+    }
+  }
+
+  @Test
+  public void finalRealityUpdate7()
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+
+    Random random = new Random();
+    WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
+        100, queue);
+    BlackMage marcellus = new BlackMage("Dark Lord Marcellus", 100, 2,
+        100, queue);
+    Staff purifier = new Staff("The Purifier", 10, 2, 50);
+    Staff soul = new Staff("The Soulripper", 10, 12, 60);
+    Staff rod = new Staff("Wisdom Rod", 10, 1, 40);
+    marcellus.equip(soul);
+    benedictus.equip(purifier);
+    party.add(marcellus);
+    party.add(benedictus);
+    inventory.add(rod);
+    int r = random.nextInt(5 - 1) + 1;
+    for (int i = 0; i < r; i++) {
+      Enemy enemy = new Enemy("Mindless Ghoul " + i,
+          10, 100, 3, queue);
+      enemies.add(enemy);
+    }
+    Player n_player = new Player("Vijo30", "S", "Pa", "Mindless Ghoul 0");
+    FinalReality fr = new FinalReality(party, enemies, inventory, n_player);
+    fr.update();
+    for (Enemy enemy : enemies) {
+      if (enemy.getName().equals("Mindless Ghoul 0")) {
+        assertTrue(enemy.isParalyzed());
+      }
+    }
+  }
+
+  @Test
+  public void finalRealityUpdate8()
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+
+    Random random = new Random();
+    WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
+        100, queue);
+    BlackMage marcellus = new BlackMage("Dark Lord Marcellus", 100, 2,
+        100, queue);
+    Staff purifier = new Staff("The Purifier", 10, 2, 50);
+    Staff soul = new Staff("The Soulripper", 10, 12, 60);
+    Staff rod = new Staff("Wisdom Rod", 10, 1, 40);
+    marcellus.equip(soul);
+    benedictus.equip(purifier);
+    party.add(marcellus);
+    party.add(benedictus);
+    inventory.add(rod);
+    int r = random.nextInt(5 - 1) + 1;
+    for (int i = 0; i < r; i++) {
+      Enemy enemy = new Enemy("Mindless Ghoul " + i,
+          10, 100, 3, queue);
+      enemies.add(enemy);
+    }
+    Player n_player = new Player("Vijo30", "S", "H", "Brother Benedictus");
+    FinalReality fr = new FinalReality(party, enemies, inventory, n_player);
+    fr.update();
+    for (PlayerCharacter ally : party) {
+      if (ally.getName().equals("Brother Benedictus")) {
+        assertEquals(ally.getMaxHp(), 100);
+      }
+    }
+  }
   @Test
   public void finalRealityUpdateBig()
       throws InvalidStatValueException, InterruptedException, IOException, InvalidSkillException {
@@ -641,20 +810,20 @@ public class MainTest {
     roderick.equip(coldbringer);
     jorge.equip(gutsripper);
     marcus.equip(mech);
-    party1.add(roderick);
-    party1.add(jorge);
-    party1.add(marcus);
-    weapons1.add(rod);
+    party.add(roderick);
+    party.add(jorge);
+    party.add(marcus);
+    inventory.add(rod);
     int r = random.nextInt(5 - 1) + 1;
     for (int i = 0; i < r; i++) {
       Enemy enemy = new Enemy("Mindless Ghoul " + i,
           10, 100, 3, queue);
-      enemies1.add(enemy);
+      enemies.add(enemy);
     }
-    Player n_player = new Player("Vijo30", "A", "Mindless Ghoul 0", "T");
-    FinalReality fr = new FinalReality(party1, enemies1, weapons1, n_player);
+    Player n_player = new Player("Vijo30", "A", "Mindless Ghoul 0");
+    FinalReality fr = new FinalReality(party, enemies, inventory, n_player);
     fr.update();
-    for (Enemy enemy : enemies1) {
+    for (Enemy enemy : enemies) {
       if (enemy.getName().equals("Mindless Ghoul 0")) {
         assertEquals(enemy.getCurrentHp(), enemy.getMaxHp()
             - jorge.getEquippedWeapon().getDamage() + enemy.getDefense());
@@ -686,7 +855,7 @@ public class MainTest {
     bm1.burn();
     assertTrue(bm1.isBurned());
     bm1.applyEffect();
-    assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ((int) (bm1.getMaxHp() / 2)));
+    assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ( (bm1.getMaxHp() / 2)));
     assertThrows(AssertionError.class, () -> bm1.paralyze());
     assertThrows(AssertionError.class, () -> bm1.burn());
     assertThrows(AssertionError.class, () -> bm1.poison());
@@ -699,7 +868,7 @@ public class MainTest {
     bm1.poison();
     assertTrue(bm1.isPoisoned());
     bm1.applyEffect();
-    assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ((int) (bm1.getMaxHp() / 3)));
+    assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ( (bm1.getMaxHp() / 3)));
     assertThrows(AssertionError.class, () -> bm1.paralyze());
     assertThrows(AssertionError.class, () -> bm1.burn());
     assertThrows(AssertionError.class, () -> bm1.poison());
@@ -708,7 +877,7 @@ public class MainTest {
   }
 
   @Test
-  public void testState() throws InvalidStatValueException {
+  public void testState() {
     State state = new State();
     assertFalse(state.isParalyzed());
     assertFalse(state.isBurned());
@@ -796,6 +965,41 @@ public class MainTest {
     assertThrows(AssertionError.class, () -> wm1.castParalysis(bm1));
   }
 
+  @Test
+  public void testGetPlayerName() {
+    assertEquals(player.getName(), "Tete");
+  }
+
+  @Test
+  public void testFinalRealityEqualsHashCode() throws InterruptedException {
+    Player p1 = new Player("A");
+    Player p2 = new Player("B");
+    FinalReality fr1 = new FinalReality(party, enemies, inventory, p1);
+    FinalReality fr2 = new FinalReality(party, enemies, inventory, p2);
+    FinalReality fr3 = new FinalReality(party, enemies, inventory, p1);
+    assertNotEquals(fr1,fr2);
+    assertEquals(fr1,fr3);
+    assertNotEquals(fr1.hashCode(), fr2.hashCode());
+    assertEquals(fr1.hashCode(), fr3.hashCode());
+  }
+
+
+
+  @Test
+  public void testFinalRealityRefillQueue()
+      throws InterruptedException, InvalidSkillException, InvalidStatValueException, IOException {
+    Player p1 = new Player("A");
+    enemies.add(e1);
+    bm1.equip(sf1);
+    party.add(bm1);
+    bm1.setCurrentHp(0);
+    e1.setCurrentHp(0);
+    FinalReality fr1 = new FinalReality(party, enemies, inventory, p1);
+    e1.getQueue().poll();
+    fr1.update();
+    assertFalse(bm1.getQueue().isEmpty());
+
+  }
 
 
 
