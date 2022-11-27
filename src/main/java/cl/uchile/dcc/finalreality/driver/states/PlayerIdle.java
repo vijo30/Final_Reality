@@ -1,8 +1,10 @@
 package cl.uchile.dcc.finalreality.driver.states;
 
 import cl.uchile.dcc.finalreality.driver.Player;
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import java.io.IOException;
@@ -45,7 +47,8 @@ public class PlayerIdle extends State {
 
   @Override
   public void execute(GameCharacter character)
-      throws IOException, InvalidStatValueException, InvalidSkillException {
+      throws IOException, InvalidStatValueException, InvalidSkillException, InvalidInputException,
+      InvalidTargetException {
 
     PlayerCharacter partyMember = (PlayerCharacter) character;
     System.out.println("It's " + character.getName() + " turn!");
@@ -58,7 +61,7 @@ public class PlayerIdle extends State {
     line = player.getIn().readLine();
 
     if (line == null) {
-      throw new IOException("end of input");
+      throw new IOException("End of input.");
     }
     try {
       switch (line) {
@@ -74,9 +77,10 @@ public class PlayerIdle extends State {
           finalReality.playerCast();
           finalReality.execute(character);
         }
-        default -> throw new InvalidStatValueException("Invalid command.");
+        default -> throw new InvalidInputException("Invalid command.");
       }
-    } catch (InvalidStatValueException | AssertionError | InvalidSkillException e) {
+    } catch (InvalidStatValueException | AssertionError | InvalidSkillException
+             | InvalidInputException | InvalidTargetException e) {
       System.err.println(e.getMessage());
       finalReality.playerIdle();
       finalReality.execute(character);

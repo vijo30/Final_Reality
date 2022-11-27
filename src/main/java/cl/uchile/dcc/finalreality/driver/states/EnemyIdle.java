@@ -1,7 +1,9 @@
 package cl.uchile.dcc.finalreality.driver.states;
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import java.io.IOException;
 
@@ -24,7 +26,8 @@ public class EnemyIdle extends State {
 
   @Override
   public void execute(GameCharacter character)
-      throws InvalidStatValueException, IOException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InvalidSkillException, InvalidInputException,
+      InvalidTargetException {
     finalReality.enemyAttack();
     finalReality.execute(character);
   }

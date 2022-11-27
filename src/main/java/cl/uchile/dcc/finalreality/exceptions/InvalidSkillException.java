@@ -2,7 +2,7 @@ package cl.uchile.dcc.finalreality.exceptions;
 
 
 /**
- * This error is used to represent an invalid stat value.
+ * This error is used to represent an invalid skill.
  *
  * @author <a href="https://github.com/vijo30">V30</a>
  * @author ~José Videla~

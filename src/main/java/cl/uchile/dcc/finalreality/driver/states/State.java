@@ -2,8 +2,10 @@ package cl.uchile.dcc.finalreality.driver.states;
 
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import java.io.IOException;
 
@@ -84,7 +86,8 @@ public class State {
   }
 
   public void execute(GameCharacter character)
-      throws IOException, InvalidStatValueException, InvalidSkillException {
+      throws IOException, InvalidStatValueException, InvalidSkillException, InvalidTargetException,
+      InvalidInputException {
     error();
   }
 

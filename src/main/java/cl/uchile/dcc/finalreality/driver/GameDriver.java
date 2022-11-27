@@ -1,8 +1,10 @@
 package cl.uchile.dcc.finalreality.driver;
 
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
@@ -94,7 +96,8 @@ public class GameDriver {
       }
     } catch (IOException err) {
       System.out.println("Game Terminated!");
-    } catch (InvalidStatValueException | InterruptedException | InvalidSkillException e) {
+    } catch (InvalidStatValueException | InterruptedException | InvalidSkillException
+             | InvalidInputException | InvalidTargetException e) {
       throw new RuntimeException(e);
     }
   }

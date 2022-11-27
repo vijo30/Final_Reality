@@ -11,8 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.driver.Player;
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
@@ -577,7 +579,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 10, 100, 10, queue);
     Axe ax1 = new Axe("Elacha2000", 10, 20);
@@ -591,7 +594,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate2()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
 
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
@@ -610,7 +614,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate3()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
     Axe ax1 = new Axe("Elacha2000", 50, 10);
@@ -634,7 +639,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate4()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
 
     Random random = new Random();
     WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
@@ -668,7 +674,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate5()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
 
     Random random = new Random();
     WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
@@ -702,7 +709,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate6()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
 
     Random random = new Random();
     WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
@@ -735,7 +743,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate7()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
 
     Random random = new Random();
     WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
@@ -768,7 +777,8 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate8()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
 
     Random random = new Random();
     WhiteMage benedictus = new WhiteMage("Brother Benedictus", 100, 2,
@@ -800,7 +810,8 @@ public class MainTest {
   }
   @Test
   public void finalRealityUpdateBig()
-      throws InvalidStatValueException, InterruptedException, IOException, InvalidSkillException {
+      throws InvalidStatValueException, InterruptedException, IOException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
     Random random = new Random();
     Knight roderick = new Knight("Sir Roderick", 100, 30, queue);
     Thief jorge = new Thief("Don Jorge", 100, 10, queue);
@@ -989,7 +1000,8 @@ public class MainTest {
 
   @Test
   public void testFinalRealityRefillQueue()
-      throws InterruptedException, InvalidSkillException, InvalidStatValueException, IOException {
+      throws InterruptedException, InvalidSkillException, InvalidStatValueException, IOException,
+      InvalidInputException, InvalidTargetException {
     Player p1 = new Player("A");
     enemies.add(e1);
     bm1.equip(sf1);

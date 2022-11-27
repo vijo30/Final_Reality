@@ -1,7 +1,9 @@
 package cl.uchile.dcc.finalreality.driver.states;
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
@@ -30,7 +32,8 @@ public class PlayerCast extends State {
 
   @Override
   public void execute(GameCharacter character)
-      throws IOException, InvalidStatValueException, InvalidSkillException {
+      throws IOException, InvalidStatValueException, InvalidSkillException, InvalidInputException,
+      InvalidTargetException {
 
     System.out.println("Casters can cast the following spells: ");
     System.out.println("* Thunder (Black Mage) (Type 'T')");
@@ -52,11 +55,21 @@ public class PlayerCast extends State {
         + "Type 'B' to go back.");
     System.out.println("Your enemies: ");
     for (Enemy enemy : finalReality.getEnemies()) {
-      System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp());
+      if (enemy.getCurrentHp() > 0) {
+        System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp());
+      } else {
+        System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp()
+            + " (dead)");
+      }
     }
     System.out.println("Your allies: ");
     for (PlayerCharacter ally : finalReality.getParty()) {
-      System.out.println("* Ally name: " + ally.getName() + " | HP : " + ally.getCurrentHp());
+      if (ally.getCurrentHp() > 0) {
+        System.out.println("* Ally name: " + ally.getName() + " | HP : " + ally.getCurrentHp());
+      } else {
+        System.out.println("* Ally name: " + ally.getName() + " | HP : " + ally.getCurrentHp()
+            + " (dead)");
+      }
     }
     String line2;
     line2 = finalReality.getPlayer().getIn3().readLine();
@@ -70,19 +83,23 @@ public class PlayerCast extends State {
       case "H" -> castSpellHeal(line2, partyMember);
       case "Po" -> castSpellPoison(line2, partyMember);
       case "Pa" -> castSpellParalysis(line2, partyMember);
-      default -> throw new InvalidSkillException("Invalid spell name.");
+      default -> throw new InvalidInputException("Invalid spell name.");
     }
 
   }
 
   private void castSpellThunder(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
+      throws InvalidSkillException, InvalidStatValueException, InvalidTargetException {
     boolean found = false;
     ArrayList<Enemy> enemies = finalReality.getEnemies();
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castThunder(enemy);
+        if (enemy.getCurrentHp() > 0) {
+          found = true;
+          partyMember.castThunder(enemy);
+        } else {
+          throw new InvalidTargetException("This target is dead.");
+        }
       }
     }
     if (!found) {
@@ -92,13 +109,17 @@ public class PlayerCast extends State {
   }
 
   private void castSpellFire(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
+      throws InvalidSkillException, InvalidStatValueException, InvalidTargetException {
     boolean found = false;
     ArrayList<Enemy> enemies = finalReality.getEnemies();
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castFire(enemy);
+        if (enemy.getCurrentHp() > 0) {
+          found = true;
+          partyMember.castFire(enemy);
+        } else {
+          throw new InvalidTargetException("This target is dead.");
+        }
       }
     }
     if (!found) {
@@ -107,13 +128,17 @@ public class PlayerCast extends State {
   }
 
   private void castSpellHeal(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
+      throws InvalidSkillException, InvalidStatValueException, InvalidTargetException {
     boolean found = false;
     ArrayList<PlayerCharacter> party = finalReality.getParty();
     for (PlayerCharacter ally : party) {
       if (line2.equals(ally.getName())) {
-        found = true;
-        partyMember.castHeal(ally);
+        if (ally.getCurrentHp() > 0) {
+          found = true;
+          partyMember.castHeal(ally);
+        } else {
+          throw new InvalidTargetException("This target is dead.");
+        }
       }
     }
     if (!found) {
@@ -123,13 +148,17 @@ public class PlayerCast extends State {
   }
 
   private void castSpellPoison(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
+      throws InvalidSkillException, InvalidStatValueException, InvalidTargetException {
     boolean found = false;
     ArrayList<Enemy> enemies = finalReality.getEnemies();
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castPoison(enemy);
+        if (enemy.getCurrentHp() > 0) {
+          found = true;
+          partyMember.castPoison(enemy);
+        } else {
+          throw new InvalidTargetException("This target is dead.");
+        }
       }
     }
     if (!found) {
@@ -138,13 +167,17 @@ public class PlayerCast extends State {
   }
 
   private void castSpellParalysis(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
+      throws InvalidSkillException, InvalidStatValueException, InvalidTargetException {
     boolean found = false;
     ArrayList<Enemy> enemies = finalReality.getEnemies();
     for (Enemy enemy : enemies) {
       if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castParalysis(enemy);
+        if (enemy.getCurrentHp() > 0) {
+          found = true;
+          partyMember.castParalysis(enemy);
+        } else {
+          throw new InvalidTargetException("This target is dead.");
+        }
       }
     }
     if (!found) {

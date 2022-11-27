@@ -1,7 +1,9 @@
 package cl.uchile.dcc.finalreality.driver.states;
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
 import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
@@ -25,7 +27,8 @@ public class PlayerEquip extends State {
 
   @Override
   public void execute(GameCharacter character)
-      throws IOException, InvalidStatValueException, InvalidSkillException {
+      throws IOException, InvalidStatValueException, InvalidSkillException, InvalidTargetException,
+      InvalidInputException {
     System.out.println("Select a weapon from the inventory. Type its name.");
     System.out.println("Type 'B' to go back.");
     System.out.println("Your inventory: ");
@@ -57,7 +60,7 @@ public class PlayerEquip extends State {
       }
     }
     if (!found) {
-      throw new InvalidStatValueException("Weapon not found.");
+      throw new InvalidTargetException("Weapon not found.");
     }
     finalReality.playerIdle();
     finalReality.execute(character);

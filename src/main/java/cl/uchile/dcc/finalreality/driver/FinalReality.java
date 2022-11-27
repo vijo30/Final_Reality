@@ -3,8 +3,10 @@ package cl.uchile.dcc.finalreality.driver;
 
 import cl.uchile.dcc.finalreality.driver.states.Init;
 import cl.uchile.dcc.finalreality.driver.states.State;
+import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
+import cl.uchile.dcc.finalreality.exceptions.InvalidTargetException;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
@@ -127,7 +129,8 @@ public class FinalReality {
   }
 
   public void execute(GameCharacter gameCharacter)
-      throws InvalidStatValueException, IOException, InvalidSkillException {
+      throws InvalidStatValueException, IOException, InvalidSkillException, InvalidInputException,
+      InvalidTargetException {
     state.execute(gameCharacter);
   }
 
@@ -200,7 +203,8 @@ public class FinalReality {
    * Updates the game state.
    */
   public void update()
-      throws IOException, InvalidStatValueException, InterruptedException, InvalidSkillException {
+      throws IOException, InvalidStatValueException, InterruptedException, InvalidSkillException,
+      InvalidInputException, InvalidTargetException {
     LinkedBlockingQueue<GameCharacter> queue = party.get(0).getQueue();
     if (queue.isEmpty()) {
       refillQueue();
