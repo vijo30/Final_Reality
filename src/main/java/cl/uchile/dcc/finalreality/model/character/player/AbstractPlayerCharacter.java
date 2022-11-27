@@ -20,7 +20,6 @@ import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Knife;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Staff;
 import cl.uchile.dcc.finalreality.model.object.weapon.types.Sword;
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -131,9 +130,12 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     throw new InvalidStatValueException("This weapon can't be equipped!");
   }
 
-  public void execute(FinalReality finalReality, GameCharacter character) throws
-      InvalidStatValueException, IOException, InvalidSkillException {
-    finalReality.getPlayer().action(finalReality, character);
+  /**
+   * Sets the initial state for a player character.
+   */
+
+  public void setInit(FinalReality finalReality) {
+    finalReality.playerIdle();
   }
 
 

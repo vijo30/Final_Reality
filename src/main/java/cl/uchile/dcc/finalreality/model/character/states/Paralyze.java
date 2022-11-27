@@ -7,6 +7,7 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter;
  * A paralyze state.
  */
 public class Paralyze extends State {
+  @Override
   public void undo() {
     this.changeState(new Normal());
   }
@@ -18,7 +19,7 @@ public class Paralyze extends State {
 
   @Override
   public void applyEffect(GameCharacter gameCharacter) throws InvalidStatValueException {
-    System.out.println(gameCharacter.getName() + " is paralized. " + gameCharacter.getName()
+    System.out.println(gameCharacter.getName() + " is paralyzed. " + gameCharacter.getName()
         + " can't attack in this turn!");
   }
 }

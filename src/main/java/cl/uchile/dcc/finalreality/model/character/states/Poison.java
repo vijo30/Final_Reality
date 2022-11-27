@@ -8,6 +8,7 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter;
  * A poison state.
  */
 public class Poison extends State {
+  @Override
   public void undo() {
     this.changeState(new Normal());
   }

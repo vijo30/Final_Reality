@@ -1,10 +1,8 @@
 package cl.uchile.dcc.finalreality.model.character;
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
-import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.states.State;
-import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -63,8 +61,7 @@ public interface GameCharacter {
 
   LinkedBlockingQueue<GameCharacter> getQueue();
 
-  void execute(FinalReality finalReality, GameCharacter character) throws IOException,
-      InvalidStatValueException, InvalidSkillException;
+
 
   @SuppressWarnings("checkstyle:ParameterName")
   void setState(State aState);
@@ -88,4 +85,7 @@ public interface GameCharacter {
   void attack(GameCharacter gameCharacter) throws InvalidStatValueException;
 
   void applyEffect() throws InvalidStatValueException;
+
+
+  void setInit(FinalReality finalReality);
 }

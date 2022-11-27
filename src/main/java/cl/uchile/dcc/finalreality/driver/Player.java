@@ -1,14 +1,7 @@
 package cl.uchile.dcc.finalreality.driver;
 
 
-import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
-import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
-import cl.uchile.dcc.finalreality.model.character.Enemy;
-import cl.uchile.dcc.finalreality.model.character.GameCharacter;
-import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
-import cl.uchile.dcc.finalreality.model.object.weapon.Weapons;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 
@@ -24,6 +17,8 @@ public class Player {
   private final BufferedReader in2;
   private final BufferedReader in3;
 
+
+
   /**
    * Constructor to specify an alternative source of moves.
    *
@@ -31,7 +26,7 @@ public class Player {
    * @param in  An input from the player, in this case, what action is going to make.
    * @param in2 A second input from the player, in this case, what spell is going to cast.
    * @param in3 A thrid input which reffers to which enemy is going to attack or
-   *    *            what weapon is going to equip.
+   *              what weapon is going to equip.
    */
   public Player(String name, BufferedReader in, BufferedReader in2, BufferedReader in3) {
     this.name = name;
@@ -80,110 +75,17 @@ public class Player {
     return name;
   }
 
-  /**
-   * Executes an action depending on the input. Write 'A' for attacking,
-   * write 'E' for equipping.
-   */
-  public void action(FinalReality finalReality, GameCharacter character) throws
-      InvalidStatValueException, IOException, InvalidSkillException {
-    PlayerCharacter partyMember = (PlayerCharacter) character;
-    System.out.println("It's " + character.getName() + " turn!");
-    System.out.println("Your HP : " + character.getCurrentHp());
-    System.out.println("Your Weapon : " + partyMember.getEquippedWeapon());
-    System.out.println("Type 'A' to attack. Type 'E' to equip. "
-        + "Type 'S' to cast a spell.");
-    String line;
-    line = in.readLine();
-
-    if (line == null) {
-      throw new IOException("end of input");
-    }
-    try {
-      switch (line) {
-        case "A" -> attackE(finalReality, partyMember);
-        case "E" -> equipW(finalReality, partyMember);
-        case "S" -> castS(finalReality, partyMember);
-        default -> throw new InvalidStatValueException("Invalid command.");
-      }
-    } catch (InvalidStatValueException e) {
-      System.err.println("Invalid command.");
-      action(finalReality, character);
-    } catch (InvalidSkillException e) {
-      System.err.println("You can't use that skill.");
-      action(finalReality, character);
-    } catch (AssertionError e) {
-      System.err.println("Not enough mana.");
-    }
+  public BufferedReader getIn() {
+    return in;
   }
 
-  /**
-   * Decides which weapon to equip.
-   */
-  public void equipW(FinalReality finalReality,
-                      PlayerCharacter partyMember) throws IOException, InvalidStatValueException {
-    System.out.println("Select a weapon from the inventory. Type its name.");
-    System.out.println("Your inventory: ");
-    for (Weapons weapon : finalReality.getInventory()) {
-      System.out.println("* " + weapon.getName());
-    }
-    String line;
-    line = in2.readLine();
-    if (line == null) {
-      throw new IOException("End of input.");
-    }
-    finalReality.equip(line, partyMember);
+  public BufferedReader getIn2() {
+    return in2;
   }
 
-  /**
-   * Decides which spell will be cast.
-   */
-
-  public void castS(FinalReality finalReality,
-                     PlayerCharacter partyMember)
-      throws IOException, InvalidStatValueException, InvalidSkillException {
-    System.out.println("Casters can cast the following spells: ");
-    System.out.println("* Thunder (Black Mage) (Type 'T')");
-    System.out.println("* Fire (Black Mage) (Type 'F')");
-    System.out.println("* Heal (White Mage) (Type 'H')");
-    System.out.println("* Poison (White Mage) (Type 'Po')");
-    System.out.println("* Paralysis (White Mage) (Type 'Pa')");
-    String line;
-    line = in2.readLine();
-    if (line == null) {
-      throw new IOException("End of input.");
-    }
-    System.out.println("Select an enemy or ally to cast a spell. Type its name.");
-    System.out.println("Your enemies: ");
-    for (Enemy enemy : finalReality.getEnemies()) {
-      System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp());
-    }
-    System.out.println("Your allies: ");
-    for (PlayerCharacter ally : finalReality.getParty()) {
-      System.out.println("* Ally name: " + ally.getName() + " | HP : " + ally.getCurrentHp());
-    }
-    String line2;
-    line2 = in3.readLine();
-    finalReality.castSpell(line, line2, partyMember);
-
-
+  public BufferedReader getIn3() {
+    return in3;
   }
 
-  /**
-   * Decides which enemy will be attacked.
-   */
-  public void attackE(FinalReality finalReality,
-                          PlayerCharacter partyMember) throws IOException,
-      InvalidStatValueException {
-    System.out.println("Select an enemy to attack or an ally to heal. Type its name.");
-    System.out.println("Your enemies: ");
-    for (Enemy enemy : finalReality.getEnemies()) {
-      System.out.println("* Enemy name: " + enemy.getName() + " | HP : " + enemy.getCurrentHp());
-    }
-    String line;
-    line = in2.readLine();
-    if (line == null) {
-      throw new IOException("End of input.");
-    }
-    finalReality.attackEnemy(line, partyMember);
-  }
+
 }

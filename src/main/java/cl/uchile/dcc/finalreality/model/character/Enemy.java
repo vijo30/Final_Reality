@@ -83,12 +83,11 @@ public class Enemy extends AbstractCharacter {
 
 
   /**
-   * An enemy attacks a random member of the party.
+   * Sets the initial state for an enemy.
    */
-  public void execute(FinalReality finalReality, GameCharacter character)
-      throws InvalidStatValueException {
-    finalReality.attackParty(character);
 
+  public void setInit(FinalReality finalReality) {
+    finalReality.enemyIdle();
   }
 
   /**

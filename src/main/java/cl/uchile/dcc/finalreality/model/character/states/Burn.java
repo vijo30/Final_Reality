@@ -8,6 +8,8 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter;
  * A burn state.
  */
 public class Burn extends State {
+
+  @Override
   public void undo() {
     this.changeState(new Normal());
   }

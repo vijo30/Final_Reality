@@ -1,6 +1,8 @@
 package cl.uchile.dcc.finalreality.driver;
 
 
+import cl.uchile.dcc.finalreality.driver.states.Init;
+import cl.uchile.dcc.finalreality.driver.states.State;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.Enemy;
@@ -28,6 +30,7 @@ public class FinalReality {
   private final Player player;
   boolean isPlayerDead;
   boolean isEnemyDead;
+  private State state;
 
 
 
@@ -55,7 +58,77 @@ public class FinalReality {
       enemy.waitTurn();
     }
     Thread.sleep(5000);
+    this.setState(new Init());
 
+  }
+
+  @SuppressWarnings("checkstyle:ParameterName")
+  public void setState(State aState) {
+    state = aState;
+    state.setFinalReality(this);
+  }
+
+  public void init() {
+    state.init();
+  }
+
+  public void playerIdle() {
+    state.playerIdle();
+  }
+
+  public void playerAttack() {
+    state.playerAttack();
+  }
+
+  public void enemyIdle() {
+    state.enemyIdle();
+  }
+
+  public void enemyAttack() {
+    state.enemyAttack();
+  }
+  
+
+  public void playerEquip() {
+    state.playerEquip();
+  }
+
+  public void playerCast() {
+    state.playerCast();
+  }
+
+  public boolean isInit() {
+    return state.isInit();
+  }
+
+  public boolean isPlayerIdling() {
+    return state.isPlayerIdling();
+  }
+
+  public boolean isAttacking() {
+    return state.isPlayerAttacking();
+  }
+
+  public boolean isEnemyIdling() {
+    return state.isEnemyIdling();
+  }
+
+  public boolean isEnemyAttacking() {
+    return state.isEnemyAttacking();
+  }
+  
+
+  public boolean isPlayerEquipping() {
+    return state.isPlayerEquipping();
+  }
+
+  public boolean isPlayerCasting() {
+    return state.isPlayerCasting();
+  }
+
+  public void execute(GameCharacter gameCharacter)
+      throws InvalidStatValueException, IOException, InvalidSkillException {
+    state.execute(gameCharacter);
   }
 
 
@@ -144,160 +217,12 @@ public class FinalReality {
     }
     character.applyEffect();
     if (character.getCurrentHp() > 0 && !character.isParalyzed()) {
-      character.execute(this, character);
+      character.setInit(this);
+      this.execute(character);
     }
 
   }
 
-
-
-
-  /**
-   * A party member attacks an enemy based on what's written in line.
-   */
-  public void attackEnemy(String line, PlayerCharacter partyMember)
-      throws InvalidStatValueException {
-    boolean found = false;
-    for (Enemy enemy : enemies) {
-      if (line.equals(enemy.getName())) {
-        System.out.print(partyMember.getName() + " attacks "
-            + enemy.getName() + " dealing ");
-        partyMember.attack(enemy);
-        found = true;
-      }
-    }
-    if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
-    }
-
-  }
-
-  /**
-   * A party member casts a spell to an enemy.
-   */
-  public void castSpell(String line, String line2, PlayerCharacter partyMember)
-      throws InvalidStatValueException, InvalidSkillException {
-    try {
-      switch (line) {
-        case "T" -> castSpellThunder(line2, partyMember);
-        case "F" -> castSpellFire(line2, partyMember);
-        case "H" -> castSpellHeal(line2, partyMember);
-        case "Po" -> castSpellPoison(line2, partyMember);
-        case "Pa" -> castSpellParalysis(line2, partyMember);
-        default -> throw new InvalidStatValueException("Invalid option.");
-      }
-    } catch (InvalidSkillException e) {
-      throw new InvalidSkillException("Invalid skill.");
-    }
-
-  }
-
-  private void castSpellThunder(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
-    boolean found = false;
-    for (Enemy enemy : enemies) {
-      if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castThunder(enemy);
-      }
-    }
-    if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
-    }
-  }
-
-  private void castSpellFire(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
-    boolean found = false;
-    for (Enemy enemy : enemies) {
-      if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castFire(enemy);
-      }
-    }
-    if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
-    }
-  }
-
-  private void castSpellHeal(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
-    boolean found = false;
-    for (PlayerCharacter ally : party) {
-      if (line2.equals(ally.getName())) {
-        found = true;
-        partyMember.castHeal(ally);
-      }
-    }
-    if (!found) {
-      throw new InvalidStatValueException("Ally not found.");
-    }
-
-  }
-
-  private void castSpellPoison(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
-    boolean found = false;
-    for (Enemy enemy : enemies) {
-      if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castPoison(enemy);
-      }
-    }
-    if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
-    }
-  }
-
-  private void castSpellParalysis(String line2, PlayerCharacter partyMember)
-      throws InvalidSkillException, InvalidStatValueException {
-    boolean found = false;
-    for (Enemy enemy : enemies) {
-      if (line2.equals(enemy.getName())) {
-        found = true;
-        partyMember.castParalysis(enemy);
-      }
-    }
-    if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
-    }
-  }
-
-  /**
-   * Equips a weapon, if it exists and if the character can equip it.
-   */
-  public void equip(String line, PlayerCharacter partyMember) throws InvalidStatValueException {
-    assert !inventory.isEmpty();
-    boolean found = false;
-    for (Weapons weapon : inventory) {
-      if (line.equals(weapon.getName())) {
-        System.out.println(partyMember.getName() + " equips "
-            + weapon.getName() + "!");
-        System.out.println(partyMember.getEquippedWeapon().getName() + " is now in the inventory.");
-        inventory.add(partyMember.getEquippedWeapon());
-        partyMember.equip(weapon);
-        inventory.remove(weapon);
-        found = true;
-
-      }
-    }
-    if (!found) {
-      throw new InvalidStatValueException("Weapon not found.");
-    }
-
-  }
-
-  /**
-   * An enemy attacks a random party member.
-   */
-  public void attackParty(GameCharacter character) throws InvalidStatValueException {
-    ArrayList<PlayerCharacter> party = getParty();
-    int index = (int) (Math.random() * party.size());
-    PlayerCharacter partyMember = party.get(index);
-    System.out.print(character.getName() + " attacks "
-        + partyMember.getName() + " dealing ");
-    character.attack(partyMember);
-  }
 
   /**
    * Refills the queue.

@@ -611,7 +611,6 @@ public class MainTest {
   @Test
   public void finalRealityUpdate3()
       throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException {
-
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
     Axe ax1 = new Axe("Elacha2000", 50, 10);
@@ -624,9 +623,12 @@ public class MainTest {
     inventory.add(kf1);
     Player player2 = new Player("A", "E", "El'kucharon");
     finalReality = new FinalReality(party, enemies, inventory, player2);
-    finalReality.update();
-    assertEquals(knight.getEquippedWeapon(), kf1);
-    assertEquals(inventory.get(0), ax1);
+    try {
+      finalReality.update();
+    } catch (IOException e) {
+      assertEquals(knight.getEquippedWeapon(), kf1);
+      assertEquals(inventory.get(0), ax1);
+    }
 
   }
 
