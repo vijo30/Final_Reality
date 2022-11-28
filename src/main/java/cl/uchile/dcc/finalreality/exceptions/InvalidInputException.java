@@ -15,6 +15,6 @@ public class InvalidInputException extends Exception {
    * error.
    */
   public InvalidInputException(String description) {
-    super("You don't have that skill. " + description);
+    super("Invalid input. " + description);
   }
 }

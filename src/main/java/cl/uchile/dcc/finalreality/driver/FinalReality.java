@@ -2,7 +2,7 @@ package cl.uchile.dcc.finalreality.driver;
 
 
 import cl.uchile.dcc.finalreality.driver.states.Init;
-import cl.uchile.dcc.finalreality.driver.states.State;
+import cl.uchile.dcc.finalreality.driver.states.StateFinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
@@ -32,7 +32,7 @@ public class FinalReality {
   private final Player player;
   boolean isPlayerDead;
   boolean isEnemyDead;
-  private State state;
+  private StateFinalReality state;
 
 
 
@@ -65,7 +65,7 @@ public class FinalReality {
   }
 
   @SuppressWarnings("checkstyle:ParameterName")
-  public void setState(State aState) {
+  public void setState(StateFinalReality aState) {
     state = aState;
     state.setFinalReality(this);
   }
@@ -107,7 +107,7 @@ public class FinalReality {
     return state.isPlayerIdling();
   }
 
-  public boolean isAttacking() {
+  public boolean isPlayerAttacking() {
     return state.isPlayerAttacking();
   }
 
@@ -207,7 +207,7 @@ public class FinalReality {
       InvalidInputException, InvalidTargetException {
     LinkedBlockingQueue<GameCharacter> queue = party.get(0).getQueue();
     if (queue.isEmpty()) {
-      refillQueue();
+      this.refillQueue();
     }
     GameCharacter character = queue.poll();
     assert character != null;

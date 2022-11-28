@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Enemy idle.
  */
-public class EnemyIdle extends State {
+public class EnemyIdle extends StateFinalReality {
 
 
 

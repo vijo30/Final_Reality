@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * PLayer cast.
  */
-public class PlayerCast extends State {
+public class PlayerCast extends StateFinalReality {
 
   @Override
   public void enemyIdle() {

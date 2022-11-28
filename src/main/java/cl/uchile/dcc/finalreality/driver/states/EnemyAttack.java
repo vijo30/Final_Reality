@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Enemy attack.
  */
-public class EnemyAttack extends State {
+public class EnemyAttack extends StateFinalReality {
 
   @Override
   public void playerIdle() {

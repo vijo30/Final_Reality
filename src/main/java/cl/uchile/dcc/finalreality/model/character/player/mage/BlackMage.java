@@ -97,7 +97,7 @@ public class BlackMage extends AbstractMage {
 
   @Override
   public void castThunder(GameCharacter gameCharacter) throws InvalidStatValueException {
-    assert getCurrentMp() - 15 >= 0;
+    assert getCurrentMp() - 15 >= 0 : "Out of mana.";
     int hp = gameCharacter.getCurrentHp();
     int weaponDamage = this.getEquippedWeapon().getMagicDamage();
     int enemyDefense = gameCharacter.getDefense();
@@ -122,7 +122,7 @@ public class BlackMage extends AbstractMage {
 
   @Override
   public void castFire(GameCharacter gameCharacter) throws InvalidStatValueException {
-    assert getCurrentMp() - 15 >= 0;
+    assert getCurrentMp() - 15 >= 0 : "Out of mana.";
     int hp = gameCharacter.getCurrentHp();
     int weaponDamage = this.getEquippedWeapon().getMagicDamage();
     int enemyDefense = gameCharacter.getDefense();

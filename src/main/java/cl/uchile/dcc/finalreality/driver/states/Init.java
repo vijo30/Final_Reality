@@ -5,7 +5,7 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter;
 /**
  * Init state.
  */
-public class Init extends State {
+public class Init extends StateFinalReality {
   @Override
   public void playerIdle() {
     this.changeState(new PlayerIdle());

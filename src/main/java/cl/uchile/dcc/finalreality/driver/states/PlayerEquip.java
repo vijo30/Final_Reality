@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Player equip.
  */
-public class PlayerEquip extends State {
+public class PlayerEquip extends StateFinalReality {
 
   @Override
   public void playerIdle() {

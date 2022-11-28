@@ -12,17 +12,13 @@ import java.io.IOException;
 /**
  * Player idle.
  */
-public class PlayerIdle extends State {
+public class PlayerIdle extends StateFinalReality {
   @Override
   public void playerAttack() {
     this.changeState(new PlayerAttack());
   }
 
 
-  @Override
-  public void playerIdle() {
-    this.changeState(new PlayerIdle());
-  }
 
   @Override
   public void playerEquip() {

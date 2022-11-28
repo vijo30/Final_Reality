@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Player attack.
  */
-public class PlayerAttack extends State {
+public class PlayerAttack extends StateFinalReality {
 
   @Override
   public void playerIdle() {

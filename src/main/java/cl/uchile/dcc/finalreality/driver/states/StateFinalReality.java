@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Generic state.
  */
-public class State {
+public class StateFinalReality {
 
   protected FinalReality finalReality;
 
@@ -20,7 +20,7 @@ public class State {
     this.finalReality = finalReality;
   }
 
-  protected void changeState(State state) {
+  protected void changeState(StateFinalReality state) {
     finalReality.setState(state);
   }
 

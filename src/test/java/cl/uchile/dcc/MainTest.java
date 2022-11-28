@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.driver.Player;
+import cl.uchile.dcc.finalreality.driver.states.StateFinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidInputException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidSkillException;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
@@ -502,6 +503,30 @@ public class MainTest {
     assertEquals(PREFIX + generatedString, exception.getMessage());
   }
 
+  @DisplayName("An invalid stat value exception can be thrown with a message.")
+  @Test
+  public void InvalidInputExceptionTest() {
+    final String PREFIX = "Invalid input. ";
+    String generatedString = RandomStringUtils.randomAlphabetic(10);
+    InvalidInputException exception = assertThrows(InvalidInputException.class, () -> {
+      throw new InvalidInputException(generatedString);
+    });
+    assertEquals(PREFIX + generatedString, exception.getMessage());
+  }
+
+  @DisplayName("An invalid stat value exception can be thrown with a message.")
+  @Test
+  public void InvalidTargetExceptionTest() {
+    final String PREFIX = "Invalid target. ";
+    String generatedString = RandomStringUtils.randomAlphabetic(10);
+    InvalidTargetException exception = assertThrows(InvalidTargetException.class, () -> {
+      throw new InvalidTargetException(generatedString);
+    });
+    assertEquals(PREFIX + generatedString, exception.getMessage());
+  }
+
+
+
   @Test
   public void finalRealityInit() throws InvalidStatValueException, InterruptedException {
     k1.equip(ax1);
@@ -614,7 +639,7 @@ public class MainTest {
 
   @Test
   public void finalRealityUpdate3()
-      throws InvalidStatValueException, IOException, InterruptedException, InvalidSkillException,
+      throws InvalidStatValueException, InterruptedException, InvalidSkillException,
       InvalidInputException, InvalidTargetException {
     Knight knight = new Knight("Knight", 100, 10, queue);
     Enemy enemy = new Enemy("Enemy", 20, 100, 10, queue);
@@ -1002,17 +1027,125 @@ public class MainTest {
   public void testFinalRealityRefillQueue()
       throws InterruptedException, InvalidSkillException, InvalidStatValueException, IOException,
       InvalidInputException, InvalidTargetException {
-    Player p1 = new Player("A");
+
+    Player p1 = new Player("A","A", "e1");
     enemies.add(e1);
     bm1.equip(sf1);
     party.add(bm1);
-    bm1.setCurrentHp(0);
-    e1.setCurrentHp(0);
+    bm1.setCurrentHp(10);
+    e1.setCurrentHp(1);
     FinalReality fr1 = new FinalReality(party, enemies, inventory, p1);
+    e1.getQueue().poll();
     e1.getQueue().poll();
     fr1.update();
     assertFalse(bm1.getQueue().isEmpty());
 
+  }
+
+  @Test
+  public void testInit() throws InterruptedException, InvalidInputException, InvalidTargetException,
+      InvalidSkillException, InvalidStatValueException, IOException {
+    FinalReality fr = new FinalReality(party, enemies, inventory, player);
+    assertTrue(fr.isInit());
+    fr.execute(e1);
+  }
+
+  @Test
+  public void testPlayerIdle() throws InterruptedException {
+    FinalReality fr = new FinalReality(party, enemies, inventory, player);
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+    assertThrows(AssertionError.class, fr::playerIdle);
+    assertThrows(AssertionError.class, fr::enemyIdle);
+    assertThrows(AssertionError.class, fr::enemyAttack);
+    fr.playerAttack();
+    assertTrue(fr.isPlayerAttacking());
+
+  }
+
+  @Test
+  public void testPlayerAttack() throws InterruptedException {
+    FinalReality fr = new FinalReality(party, enemies, inventory, player);
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+    fr.playerAttack();
+    assertTrue(fr.isPlayerAttacking());
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+    fr.playerAttack();
+    fr.enemyIdle();
+    assertTrue(fr.isEnemyIdling());
+
+  }
+
+  @Test
+  public void testPlayerEquip() throws InterruptedException {
+    FinalReality fr = new FinalReality(party, enemies, inventory, player);
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+    fr.playerEquip();
+    assertTrue(fr.isPlayerEquipping());
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+  }
+
+  @Test
+  public void testPlayerCast() throws InterruptedException {
+    FinalReality fr = new FinalReality(party, enemies, inventory, player);
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+    fr.playerCast();
+    assertTrue(fr.isPlayerCasting());
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+    fr.playerCast();
+    fr.enemyIdle();
+    assertTrue(fr.isEnemyIdling());
+  }
+
+  @Test
+  public void testEnemyIdle() throws InterruptedException {
+    FinalReality fr = new FinalReality(party, enemies, inventory, player);
+    fr.enemyIdle();
+    assertTrue(fr.isEnemyIdling());
+    assertThrows(AssertionError.class, fr::playerIdle);
+    assertThrows(AssertionError.class, fr::enemyIdle);
+    assertThrows(AssertionError.class, fr::playerAttack);
+    assertThrows(AssertionError.class, fr::playerEquip);
+    assertThrows(AssertionError.class, fr::playerCast);
+
+    fr.enemyAttack();
+    assertTrue(fr.isEnemyAttacking());
+
+  }
+
+  @Test
+  public void testEnemyAttack() throws InterruptedException {
+    FinalReality fr = new FinalReality(party, enemies, inventory, player);
+    fr.enemyIdle();
+    assertTrue(fr.isEnemyIdling());
+    fr.enemyAttack();
+    assertTrue(fr.isEnemyAttacking());
+    fr.enemyIdle();
+    assertTrue(fr.isEnemyIdling());
+    fr.enemyAttack();
+    assertTrue(fr.isEnemyAttacking());
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
+
+  }
+
+  @Test
+  public void testState2() {
+    StateFinalReality state = new StateFinalReality();
+    assertFalse(state.isInit());
+    assertFalse(state.isPlayerIdling());
+    assertFalse(state.isPlayerEquipping());
+    assertFalse(state.isPlayerCasting());
+    assertFalse(state.isEnemyIdling());
+    assertFalse(state.isEnemyAttacking());
+    assertThrows(AssertionError.class, () -> state.execute(e1));
+    assertThrows(AssertionError.class, state::init);
   }
 
 
