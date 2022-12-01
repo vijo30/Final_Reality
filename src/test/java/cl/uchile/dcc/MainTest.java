@@ -881,9 +881,14 @@ public class MainTest {
     bm1.paralyze();
     assertTrue(bm1.isParalyzed());
     bm1.applyEffect(); // does nothing just prints a message
-    assertThrows(AssertionError.class, () -> bm1.paralyze());
-    assertThrows(AssertionError.class, () -> bm1.burn());
-    assertThrows(AssertionError.class, () -> bm1.poison());
+    bm1.paralyze();
+    assertTrue(bm1.isParalyzed());
+    bm1.poison();
+    assertTrue(bm1.isPoisoned());
+    bm1.burn();
+    assertTrue(bm1.isBurned());
+    bm1.paralyze();
+    assertTrue(bm1.isParalyzed());
     bm1.undo();
     assertTrue(bm1.isNormal());
   }
@@ -894,9 +899,12 @@ public class MainTest {
     assertTrue(bm1.isBurned());
     bm1.applyEffect();
     assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ( (bm1.getMaxHp() / 2)));
-    assertThrows(AssertionError.class, () -> bm1.paralyze());
-    assertThrows(AssertionError.class, () -> bm1.burn());
-    assertThrows(AssertionError.class, () -> bm1.poison());
+    bm1.poison();
+    assertTrue(bm1.isPoisoned());
+    bm1.burn();
+    assertTrue(bm1.isBurned());
+    bm1.paralyze();
+    assertTrue(bm1.isParalyzed());
     bm1.undo();
     assertTrue(bm1.isNormal());
   }
@@ -907,9 +915,12 @@ public class MainTest {
     assertTrue(bm1.isPoisoned());
     bm1.applyEffect();
     assertEquals(bm1.getCurrentHp(), bm1.getMaxHp() - ( (bm1.getMaxHp() / 3)));
-    assertThrows(AssertionError.class, () -> bm1.paralyze());
-    assertThrows(AssertionError.class, () -> bm1.burn());
-    assertThrows(AssertionError.class, () -> bm1.poison());
+    bm1.poison();
+    assertTrue(bm1.isPoisoned());
+    bm1.burn();
+    assertTrue(bm1.isBurned());
+    bm1.paralyze();
+    assertTrue(bm1.isParalyzed());
     bm1.undo();
     assertTrue(bm1.isNormal());
   }
@@ -1055,7 +1066,8 @@ public class MainTest {
     FinalReality fr = new FinalReality(party, enemies, inventory, player);
     fr.playerIdle();
     assertTrue(fr.isPlayerIdling());
-    assertThrows(AssertionError.class, fr::playerIdle);
+    fr.playerIdle();
+    assertTrue(fr.isPlayerIdling());
     assertThrows(AssertionError.class, fr::enemyIdle);
     assertThrows(AssertionError.class, fr::enemyAttack);
     fr.playerAttack();
@@ -1109,7 +1121,8 @@ public class MainTest {
     fr.enemyIdle();
     assertTrue(fr.isEnemyIdling());
     assertThrows(AssertionError.class, fr::playerIdle);
-    assertThrows(AssertionError.class, fr::enemyIdle);
+    fr.enemyIdle();
+    assertTrue(fr.isEnemyIdling());
     assertThrows(AssertionError.class, fr::playerAttack);
     assertThrows(AssertionError.class, fr::playerEquip);
     assertThrows(AssertionError.class, fr::playerCast);
