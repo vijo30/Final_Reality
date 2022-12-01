@@ -26,6 +26,7 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
   private int turn;
   private int turnEffect;
 
+
   protected ScheduledExecutorService scheduledExecutor;
 
   /**
@@ -160,6 +161,8 @@ public abstract class AbstractCharacter extends AbstractEntity implements GameCh
   public void applyEffect() throws InvalidStatValueException {
     state.applyEffect(this);
   }
+
+
 
 
 

@@ -38,6 +38,8 @@ public class FinalReality {
 
 
 
+
+
   /**
    * Creates the game.
    *
@@ -213,14 +215,18 @@ public class FinalReality {
     assert character != null;
     character.setTurn(character.getTurn() + 1);
     int turn = character.getTurn();
-    System.out.println("Character: " + character.getName() + " | Turn: " + turn);
+
     int turnEffect = character.getTurnEffect();
     if (character.isParalyzed() && (turn - turnEffect == 2)) {
       character.undo();
       System.out.println(character.getName() + " is no longer paralyzed.");
     }
+    if (character.getCurrentHp() < 0 && !character.isNormal()) {
+      character.undo();
+    }
     character.applyEffect();
     if (character.getCurrentHp() > 0 && !character.isParalyzed()) {
+      System.out.println("Character: " + character.getName() + " | Turn: " + turn);
       character.setInit(this);
       this.execute(character);
     }

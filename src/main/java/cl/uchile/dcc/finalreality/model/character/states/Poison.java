@@ -8,6 +8,22 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter;
  * A poison state.
  */
 public class Poison extends State {
+
+  @Override
+  public void paralyze() {
+    this.changeState(new Paralyze());
+  }
+
+  @Override
+  public void burn() {
+    this.changeState(new Burn());
+  }
+
+  @Override
+  public void poison() {
+    this.changeState(new Poison());
+  }
+
   @Override
   public void undo() {
     this.changeState(new Normal());

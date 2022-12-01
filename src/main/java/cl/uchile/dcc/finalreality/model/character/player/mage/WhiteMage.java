@@ -80,6 +80,8 @@ public class WhiteMage extends AbstractMage {
     this.equippedWeapon = staff;
   }
 
+
+
   @Override
   public void castHeal(GameCharacter gameCharacter) throws InvalidStatValueException {
     assert getCurrentMp() - 15 >= 0 : "Out of mana.";

@@ -101,6 +101,7 @@ public class Enemy extends AbstractCharacter {
     int realDamage = Math.max(0, (enemyDamage - memberDefense));
     int newHp = (hp - realDamage);
     gameCharacter.setCurrentHp(newHp);
-    System.out.print(realDamage + " damage!\n");
+    System.out.println(this.getName() + " attacks "
+        + gameCharacter.getName() + " dealing " + realDamage + " damage!");
   }
 }

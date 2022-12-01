@@ -20,6 +20,11 @@ public class EnemyIdle extends StateFinalReality {
   }
 
   @Override
+  public void enemyIdle() {
+    this.changeState(new EnemyIdle());
+  }
+
+  @Override
   public boolean isEnemyIdling() {
     return true;
   }

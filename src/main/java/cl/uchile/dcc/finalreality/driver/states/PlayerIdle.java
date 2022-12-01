@@ -31,6 +31,11 @@ public class PlayerIdle extends StateFinalReality {
   }
 
   @Override
+  public void playerIdle() {
+    this.changeState(new PlayerIdle());
+  }
+
+  @Override
   public boolean isPlayerIdling() {
     return true;
   }

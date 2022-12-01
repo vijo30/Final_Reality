@@ -40,8 +40,6 @@ public class EnemyAttack extends StateFinalReality {
     int index = (int) (Math.random() * party.size());
     PlayerCharacter partyMember = party.get(index);
     if (partyMember.getCurrentHp() > 0) {
-      System.out.print(character.getName() + " attacks "
-          + partyMember.getName() + " dealing ");
       character.attack(partyMember);
     } else {
       finalReality.execute(character);

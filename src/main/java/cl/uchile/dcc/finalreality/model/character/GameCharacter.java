@@ -88,4 +88,8 @@ public interface GameCharacter {
 
 
   void setInit(FinalReality finalReality);
+
+
+
+
 }

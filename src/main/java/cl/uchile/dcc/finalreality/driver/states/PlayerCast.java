@@ -103,9 +103,8 @@ public class PlayerCast extends StateFinalReality {
       }
     }
     if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
+      throw new InvalidTargetException("Enemy not found.");
     }
-
   }
 
   private void castSpellFire(String line2, PlayerCharacter partyMember)
@@ -123,7 +122,7 @@ public class PlayerCast extends StateFinalReality {
       }
     }
     if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
+      throw new InvalidTargetException("Enemy not found.");
     }
   }
 
@@ -142,7 +141,7 @@ public class PlayerCast extends StateFinalReality {
       }
     }
     if (!found) {
-      throw new InvalidStatValueException("Ally not found.");
+      throw new InvalidTargetException("Ally not found.");
     }
 
   }
@@ -162,7 +161,7 @@ public class PlayerCast extends StateFinalReality {
       }
     }
     if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
+      throw new InvalidTargetException("Enemy not found.");
     }
   }
 
@@ -181,7 +180,7 @@ public class PlayerCast extends StateFinalReality {
       }
     }
     if (!found) {
-      throw new InvalidStatValueException("Enemy not found.");
+      throw new InvalidTargetException("Enemy not found.");
     }
   }
 
