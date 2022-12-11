@@ -385,6 +385,8 @@ public class MainTest {
       enemy.waitTurn();
     }
     // Waits for 6 seconds to ensure that all characters have finished waiting
+    // WARNING: Sometimes this test likes to fail when it shouldn't, please rerun this test when it
+    // fails.
     Thread.sleep(7000);
     assertEquals(Objects.requireNonNull(queue.poll()), c1);
     System.out.println(queue);
@@ -891,6 +893,9 @@ public class MainTest {
     assertTrue(bm1.isParalyzed());
     bm1.undo();
     assertTrue(bm1.isNormal());
+    bm1.paralyze();
+    bm1.burn();
+    assertTrue(bm1.isBurned());
   }
 
   @Test
@@ -905,6 +910,12 @@ public class MainTest {
     assertTrue(bm1.isBurned());
     bm1.paralyze();
     assertTrue(bm1.isParalyzed());
+    bm1.undo();
+    assertTrue(bm1.isNormal());
+    bm1.burn();
+    assertTrue(bm1.isBurned());
+    bm1.burn();
+    assertTrue(bm1.isBurned());
     bm1.undo();
     assertTrue(bm1.isNormal());
   }
@@ -923,6 +934,13 @@ public class MainTest {
     assertTrue(bm1.isParalyzed());
     bm1.undo();
     assertTrue(bm1.isNormal());
+    bm1.poison();
+    assertTrue(bm1.isPoisoned());
+    bm1.undo();
+    assertTrue(bm1.isNormal());
+    bm1.poison();
+    bm1.paralyze();
+    assertTrue(bm1.isParalyzed());
   }
 
   @Test
@@ -933,6 +951,9 @@ public class MainTest {
     assertFalse(state.isParalyzed());
     assertFalse(state.isNormal());
     assertThrows(AssertionError.class, () -> state.applyEffect(bm1));
+    assertThrows(AssertionError.class, state::paralyze);
+    assertThrows(AssertionError.class, state::burn);
+    assertThrows(AssertionError.class, state::poison);
   }
 
   @Test
@@ -1153,6 +1174,7 @@ public class MainTest {
     StateFinalReality state = new StateFinalReality();
     assertFalse(state.isInit());
     assertFalse(state.isPlayerIdling());
+    assertFalse(state.isPlayerAttacking());
     assertFalse(state.isPlayerEquipping());
     assertFalse(state.isPlayerCasting());
     assertFalse(state.isEnemyIdling());

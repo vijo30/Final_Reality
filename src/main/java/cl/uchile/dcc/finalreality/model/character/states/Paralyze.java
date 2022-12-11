@@ -35,7 +35,14 @@ public class Paralyze extends State {
 
   @Override
   public void applyEffect(GameCharacter gameCharacter) throws InvalidStatValueException {
-    System.out.println(gameCharacter.getName() + " is paralyzed. " + gameCharacter.getName()
-        + " can't attack in this turn!");
+    if (gameCharacter.getCurrentHp() < 0) {
+      this.undo();
+    } else if (gameCharacter.getTurn() - gameCharacter.getTurnEffect() == 2) {
+      this.undo();
+      System.out.println(gameCharacter.getName() + " is no longer paralyzed.");
+    } else {
+      System.out.println(gameCharacter.getName() + " is paralyzed. " + gameCharacter.getName()
+          + " can't attack in this turn!");
+    }
   }
 }

@@ -36,6 +36,9 @@ public class Burn extends State {
 
   @Override
   public void applyEffect(GameCharacter gameCharacter) throws InvalidStatValueException {
+    if (gameCharacter.getCurrentHp() < 0) {
+      this.undo();
+    }
     int maxHp = gameCharacter.getMaxHp();
     int currHp = gameCharacter.getCurrentHp();
     int damage = (int) (maxHp / 2);
