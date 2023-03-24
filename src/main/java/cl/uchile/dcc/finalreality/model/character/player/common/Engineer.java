@@ -6,12 +6,15 @@
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
 
-package cl.uchile.dcc.finalreality.model.character.player;
+package cl.uchile.dcc.finalreality.model.character.player.common;
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.model.character.GameCharacter;
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Axe;
+import cl.uchile.dcc.finalreality.model.object.weapon.types.Bow;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -21,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author ~Your name~
  */
-public class Engineer extends AbstractPlayerCharacter {
+public class Engineer extends AbstractCommonCharacter {
 
 
   /**
@@ -37,14 +40,14 @@ public class Engineer extends AbstractPlayerCharacter {
    *     the queue with the characters waiting for their turn
    */
   public Engineer(final @NotNull String name, final int maxHp, final int defense,
-      final @NotNull BlockingQueue<GameCharacter> turnsQueue)
+      final @NotNull LinkedBlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
   }
 
   @Override
   public String toString() {
-    return "Engineer{maxHp=%d, defense=%d, name='%s'}".formatted(maxHp, defense, name);
+    return "Engineer{name='%s', maxHp='%d', defense='%d'}".formatted(name, maxHp, defense);
   }
 
   @Override
@@ -64,5 +67,22 @@ public class Engineer extends AbstractPlayerCharacter {
         && name.equals(that.name)
         && maxHp == that.maxHp
         && defense == that.defense;
+  }
+
+
+  /**
+   * Equips an axe.
+   */
+  @Override
+  public void equipAxe(Axe axe) {
+    this.equippedWeapon = axe;
+  }
+
+  /**
+   * Equips a bow.
+   */
+  @Override
+  public void equipBow(Bow bow) {
+    this.equippedWeapon = bow;
   }
 }

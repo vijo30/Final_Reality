@@ -1,9 +1,13 @@
 package cl.uchile.dcc.finalreality.model.character;
 
+import cl.uchile.dcc.finalreality.driver.FinalReality;
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException;
 import cl.uchile.dcc.finalreality.exceptions.Require;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,12 +20,15 @@ public class Enemy extends AbstractCharacter {
 
   private final int weight;
 
+
+
+
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
    * play.
    */
   public Enemy(@NotNull final String name, final int weight, int maxHp, int defense,
-      @NotNull final BlockingQueue<GameCharacter> turnsQueue)
+               @NotNull final LinkedBlockingQueue<GameCharacter> turnsQueue)
       throws InvalidStatValueException {
     super(name, maxHp, defense, turnsQueue);
     Require.statValueAtLeast(1, weight, "Weight");
@@ -34,6 +41,7 @@ public class Enemy extends AbstractCharacter {
   public int getWeight() {
     return weight;
   }
+
 
   @Override
   public boolean equals(final Object o) {
@@ -53,5 +61,47 @@ public class Enemy extends AbstractCharacter {
   @Override
   public int hashCode() {
     return Objects.hash(Enemy.class, name, weight, maxHp, defense);
+  }
+
+  @Override
+  public String toString() {
+    return "Enemy{name=%s, weight=%d, maxHp='%d', defense='%d'}"
+        .formatted(name, weight, maxHp, defense);
+  }
+
+  /**
+   Sets waitTurn depending on the class.
+   */
+  @Override
+  public void setWaitTurn() {
+    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    scheduledExecutor.schedule(
+        /* command = */ this::addToQueue,
+        /* delay = */ this.getWeight() / 10,
+        /* unit = */ TimeUnit.SECONDS);
+  }
+
+
+  /**
+   * Sets the initial state for an enemy.
+   */
+
+  public void setInit(FinalReality finalReality) {
+    finalReality.enemyIdle();
+  }
+
+  /**
+   * Attacks a PlayerCharacter.
+   */
+  public void attack(GameCharacter gameCharacter) throws InvalidStatValueException {
+    Random random = new Random();
+    int hp = gameCharacter.getCurrentHp();
+    int enemyDamage = random.nextInt(30 - 10) + 10;
+    int memberDefense = gameCharacter.getDefense();
+    int realDamage = Math.max(0, (enemyDamage - memberDefense));
+    int newHp = (hp - realDamage);
+    gameCharacter.setCurrentHp(newHp);
+    System.out.println(this.getName() + " attacks "
+        + gameCharacter.getName() + " dealing " + realDamage + " damage!");
   }
 }
